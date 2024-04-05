@@ -1,12 +1,12 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+// import type { Metadata } from "next";
+import { Montserrat } from "next/font/google";
 import "@/app/globals.css";
 import Link from "next/link";
 import Image from "next/image";
 import DesktopMenu from "@/components/layout/desktopMenu";
 import LanguageSwitcher from "@/components/layout/languageSwitcher";
 
-const inter = Inter({ subsets: ["latin"] });
+const montserrat = Montserrat({ subsets: ["latin"] });
 
 export default function LocaleLayout({
      children,
@@ -17,7 +17,7 @@ export default function LocaleLayout({
 }) {
     return (
         <html lang={locale}>
-        <body className={inter.className}>
+        <body className={montserrat.className}>
         <header className="pt-[70px] pb-[40px] bg-white">
             <div className="container mx-auto">
                 <Link href="/">

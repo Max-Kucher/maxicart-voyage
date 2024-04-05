@@ -5,7 +5,6 @@ import ServiceCard from "@/components/ServiceCard";
 export default function Home() {
     return (
         <main className="bg-white">
-            <h1>Index</h1>
            <div className="container ">
                <FindApartment/>
               <div className={'grid grid-cols-3 gap-[20px] w-[1075px] mt-[100px] mx-auto'}>
