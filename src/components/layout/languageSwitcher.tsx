@@ -12,7 +12,7 @@ export default function LanguageSwitcher() {
                       href={`/`}
                       locale={lang as "ru" | "en"}
                       className={"uppercase text-[20px] leading-[24px] font-semibold p-[10px] rounded-[5px]"
-                                    + (locale === lang ? ' bg-primary text-primary-foreground hover:bg-primary/90 maxicart-language-switcher-active' : ' text-highlightedText')}
+                                    + (locale === lang ? ' !shadow-none bg-primary text-primary-foreground hover:bg-primary/90 maxicart-language-switcher-active' : ' text-highlightedText')}
                 >
                     { lang }
                 </Link>

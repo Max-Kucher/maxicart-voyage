@@ -1,17 +1,31 @@
 'use client'
-import React from 'react';
+import React, {FC} from 'react';
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
-import { cn } from '@/lib/utils';
-import { Button } from './button';
+import {cn} from '@/lib/utils';
+import {Button} from './button';
 import {CalendarDaysIcon} from 'lucide-react';
-import {add, format } from 'date-fns';
-import { Calendar } from './calendar';
+import {format} from 'date-fns';
+import {Calendar} from './calendar';
+import {ru, enUS} from 'date-fns/locale';
+import { DateRange } from 'react-day-picker';
+import {useLocale} from "next-intl";
 
-const Datepicker = ({className}: any) => {
-    const [date, setDate] = React.useState<any | undefined>({
-        from: new Date(),
-        to: add(new Date(), {days: 7}),
-    })
+interface DatepickerProps {
+    className?: string
+    date: {
+        from: Date
+        to: Date
+    }
+    placeholder?: string
+    setDate: (date?: DateRange) => void
+}
+
+const Datepicker: FC<DatepickerProps> = ({className,placeholder, date, setDate}) => {
+    const lng = useLocale()
+    const pikerLng = {
+        ru,
+        en: enUS
+    }[lng]
     return (
         <div className={cn("grid gap-2", className)}>
             <Popover>
@@ -24,21 +38,20 @@ const Datepicker = ({className}: any) => {
                             !date && "text-muted-foreground"
                         )}
                     >
-                        {/*TODO download icon and change*/}
                         <CalendarDaysIcon className="mr-2 h-[27px] w-[27px] text-primary"/>
-                        <span className={'inline-block px-[25px] text-lg'}>
+                        <span className={'inline-block px-[25px] text-lg text-[#5F5F5F]'}>
                         {date?.from ? (
-                            date.to ? (
-                                <>
-                                    {format(date.from, "LLL dd, y")} -{" "}
-                                    {format(date.to, "LLL dd, y")}
-                                </>
-                            ) : (
-                                format(date.from, "LLL dd, y")
-                            )
-                        ) : (
-                           'Дата заезда - Дата отьезда'
-                        )}
+                                date.to ? (
+                                    <>
+                                        {format(date.from, "LLL dd, y", {locale: pikerLng})} -{" "}
+                                        {format(date.to, "LLL dd, y", {locale: pikerLng})}
+                                    </>
+                                ) : (
+                                    format(date.from, "LLL dd, y", {locale: pikerLng})
+                                )
+                            ) :
+                            placeholder
+                        }
                         </span>
                     </Button>
                 </PopoverTrigger>

@@ -5,5 +5,40 @@
     "rentOut": "Rent",
     "workStages": "Stages of work",
     "contacts": "Contacts"
+  },
+  "filterForm": {
+    "date": "Date",
+    "peopleCount": "Number of guests & rooms",
+    "priceFrom": "Price from",
+    "priceTo": "Price to",
+    "adult": "Adults",
+    "child": "Children",
+    "human": "Adults",
+    "room": "Rooms",
+    "find": "Find",
+    "dateRange": "Chec-in date Check-out date"
+  },
+  "service": {
+    "title": "Our  services",
+    "first": {
+      "title": "Cleaning Services",
+      "description": "Organization of professional cleaning before each guest"
+    },
+    "second": {
+      "title": "Furniture Selection",
+      "description": "Help in choosing new furniture items and interior design for minimalistic living spaces."
+    },
+    "third": {
+      "title": "Photography",
+      "description": "Professional photo sessions of your property."
+    },
+    "fourth": {
+      "title": "Online Promotion",
+      "description": "Promotion of your property on platforms via SEO, collecting and managing responses."
+    },
+    "fifth": {
+      "title": "Property Safety",
+      "description": "All homes are registered with the DTCM, providing safety and comfort before each guest's arrival."
+    }
   }
 }
