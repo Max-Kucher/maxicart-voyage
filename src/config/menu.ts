@@ -3,23 +3,23 @@
 const menuConfig = {
     items: [
         {
-            title: "Услуги",
+            title: "services",
             href: "/services",
         },
         {
-            title: "Снять",
+            title: "rent",
             href: "/rent",
         },
         {
-            title: "Сдать",
+            title: "rentOut",
             href: "/rent-out",
         },
         {
-            title: "Этапы работы",
+            title: "workStages",
             href: "/work-stages",
         },
         {
-            title: "Контакты",
+            title: "contacts",
             href: "/contacts",
         },
     ]
