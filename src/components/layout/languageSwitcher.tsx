@@ -2,7 +2,6 @@ import { Link } from "@/navigation";
 import appConfig from "@/config/app";
 
 export default function LanguageSwitcher() {
-
     return (
         <div className={"flex"}>
             {Object.entries(appConfig.supportedLanguages).map(([ lang ]) => (
