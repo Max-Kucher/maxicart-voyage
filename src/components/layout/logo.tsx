@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function Logo() {
     return (
-        <Link href="/">
+        <Link className={`block mr-16`} href="/">
             <Image
                 alt="Voyage Logo"
                 width={169}

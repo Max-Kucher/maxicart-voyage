@@ -7,11 +7,11 @@ export default function DesktopMenu() {
 
     return (
         <nav>
-            <ul>
+            <ul className={`flex gap-x-9`}>
                 {menuConfig.items.map((item, index) => (
                     <li key={`desktop-menu-${index}`}>
                         <Link
-                            className={``}
+                            className={`font-semibold text-highlightedText p-[4px]`}
                             href={item.href}
                         >
                             { t(item.title) }
@@ -21,5 +21,5 @@ export default function DesktopMenu() {
             </ul>
         </nav>
     )
-}
+};
 
