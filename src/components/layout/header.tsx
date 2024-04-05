@@ -1,6 +1,7 @@
 import Logo from "@/components/layout/logo";
 import DesktopMenu from "@/components/layout/desktopMenu";
 import LanguageSwitcher from "@/components/layout/languageSwitcher";
+import CurrencySwitcher from "@/components/layout/currencySwitcher";
 
 
 export default function Header() {
@@ -11,6 +12,8 @@ export default function Header() {
         <DesktopMenu/>
 
         <LanguageSwitcher/>
+
+        <CurrencySwitcher />
     </div>
 </header>);
 };

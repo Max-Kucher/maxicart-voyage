@@ -8,7 +8,7 @@ export default function Logo() {
                 alt="Voyage Logo"
                 width={169}
                 height={57}
-                src="/voyage-logo.svg"
+                src="/images/voyage-logo.svg"
             />
         </Link>
     );
