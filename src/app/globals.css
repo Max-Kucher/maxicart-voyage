@@ -6,6 +6,7 @@
   :root {
     --background: #F5F5F5;
     --foreground: #2C444A;
+    --foreground-secondary: #6A6A6C;
 
     --card: 0 0% 100%;
     --card-foreground: 0 0% 3.9%;
