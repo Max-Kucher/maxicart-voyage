@@ -7,6 +7,7 @@ import BedIcon from "@/components/icons/bed";
 import BathIcon from "@/components/icons/bath";
 import {Link} from "@/navigation";
 import {useTranslations} from "next-intl";
+import appConfig from "@/config/app";
 
 interface ApartmentCardProps {
     image: string,
@@ -21,12 +22,13 @@ interface ApartmentCardProps {
     currency: string
     link: string | import("url").UrlObject
 }
+
 const ApartmentCard: FC<ApartmentCardProps> = ({image, link, currency, bedCount, bathCount, name, nights, price, location, roomSize, maxPeople}) => {
     const t = useTranslations('apartmentCard')
     return (
         <div className={'2xl:w-full bg-white rounded-lg'}>
             <div className={'p-[8px]'}>
-                <img className={'rounded-xl'} alt={name} src={image} />
+                <img className={'rounded-xl'} alt={name} src={image === null ? `/images/no-photo.png` : `${appConfig.backendBase}${image}`} />
             </div>
             <div className={'p-[30px] pt-[22px]'}>
                 <b className={'text-xl font-semibold'}>
