@@ -6,7 +6,6 @@ import {Input} from "@/components/ui/input";
 import {Button} from '../ui/button';
 import {Textarea} from "@/components/ui/textarea";
 import {Controller, useForm} from "react-hook-form";
-import {add} from "date-fns/index";
 
 const AddApartmentForm = () => {
     const {control, handleSubmit} = useForm({
