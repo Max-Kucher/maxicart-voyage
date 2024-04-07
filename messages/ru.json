@@ -6,6 +6,10 @@
     "workStages": "Этапы работы",
     "contacts": "Контакты"
   },
+  "images": {
+    "logo": "Логотип",
+    "us-flag": "Флаг США"
+  },
   "main": {
     "title": "Забронируйте свой идеальный дом для отпуска",
     "subtitle": "eva voyage holiday homes",
