@@ -6,6 +6,13 @@
     "workStages": "Stages of work",
     "contacts": "Contacts"
   },
+  "main": {
+    "title": "BOOK YOUR IDEAL VACATION HOME",
+    "subtitle": "EVA VOYAGE HOLIDAY HOMES",
+    "toRent": "RENT NOW",
+    "rent": "BOOK NOW",
+    "bestDeals": "The best"
+  },
   "filterForm": {
     "date": "Date",
     "peopleCount": "Number of guests & rooms",
@@ -71,5 +78,14 @@
     "price": "From {price} {currency}",
     "nights": "for {nights} nights",
     "book": "Book now"
+  },
+  "addApartmentForm": {
+    "title": "Do you own a property in Dubai?",
+    "subtitle": "Want to rent it out?",
+    "description": "Contact us for details and we will gladly assist you with your tenant search.",
+    "send": "Send",
+    "name": "Name",
+    "message": "Leave a comment",
+    "agreement": "I agree to the Privacy Policy"
   }
 }

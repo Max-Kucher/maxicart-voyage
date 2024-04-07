@@ -1,5 +1,6 @@
 import ApartmentCard from "@/components/ApartmentCard";
 import FindApartment from "@/components/FindApartamentForm";
+import AddApartmentForm from "@/src/blocks/addApartmentForm";
 
 
 export default function RentIndex() {
@@ -24,6 +25,7 @@ export default function RentIndex() {
                         />))
                     }
                 </div>
+                <AddApartmentForm/>
             </div>
         </main>
     );
