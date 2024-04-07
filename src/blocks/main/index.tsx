@@ -1,8 +1,35 @@
-import React from 'react';
+import React, {Suspense} from 'react';
 import FindApartment from "@/components/FindApartamentForm";
 import ApartmentCard from "@/components/ApartmentCard";
 import {Button} from "@/components/ui/button";
 import {useTranslations} from "next-intl";
+import useApartments from "@/composables/useAppartments";
+import Apartment from "@/types/Apartment";
+
+// 'https://www.apartments-mitte.de/wp-content/uploads/2023/10/alte-nationalgalerie-1.webp'
+
+async function CardsList() {
+    const { searchApartments } = useApartments();
+    const apartments = await searchApartments();
+
+    return apartments.map((apartment: Apartment) => (<ApartmentCard
+            key={`index-apartment-${apartment.id}`}
+            image={apartment.photos[0]?.photo ?? null}
+            price={apartment.smoobu.price.minimal}
+            name={apartment.smoobu.name}
+            link={`/book/${apartment.id}`}
+            currency={apartment.smoobu.currency}
+            bathCount={apartment.smoobu.rooms.bathrooms}
+            maxPeople={apartment.smoobu.rooms.maxOccupancy}
+
+            // Ждём правки с бэкенда
+            bedCount={3}
+            nights={2}
+            roomSize={50}
+            location={'Dubai/Elite 6 Sports Residence'}
+        />))
+    ;
+}
 
 const Main = () => {
     const t = useTranslations('main');
@@ -20,20 +47,12 @@ const Main = () => {
                 <FindApartment/>
                 <h2 className={'text-[30px] uppercase font-extrabold text-white mt-[48px] text-center'}>{t('bestDeals')}</h2>
                 <div className="grid grid-cols-3 gap-[20px] mt-[60px]">
-                    {
-                        Array.from({length: 3}).map((_, i) => (<ApartmentCard
-                            key={i}
-                            image={'https://www.apartments-mitte.de/wp-content/uploads/2023/10/alte-nationalgalerie-1.webp'}
-                            price={300} name={'1 ком. апартаменты в Marina gate'}
-                            location={'Dubai/Elite 6 Sports Residence'} link={''}
-                            currency={'USD'} bathCount={3} bedCount={3}
-                            maxPeople={4} nights={2} roomSize={50}
-                        />))
-                    }
+                    <Suspense fallback={<>Currently loading</>}>
+                        <CardsList />
+                    </Suspense>
                 </div>
             </div>
-        </div>
-    );
+    </div>);
 };
 
 export default Main;
