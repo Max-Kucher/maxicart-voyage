@@ -40,5 +40,36 @@
       "title": "Property Safety",
       "description": "All homes are registered with the DTCM, providing safety and comfort before each guest's arrival."
     }
+  },
+  "workStages": {
+    "title": "STAGES OF WORK",
+    "first": {
+      "title": "REGISTRATION",
+      "description": "Registration We will register your property, ensuring it is registered according to local regulatory standards. We will assist you with this."
+    },
+    "second": {
+      "title": "PREPARATION",
+      "description": "Advertising Your property will be listed on top platforms, including Booking.com and Airbnb, increasing the frequency of guest bookings"
+    },
+    "third": {
+      "title": "ADVERTISING",
+      "description": "Advertising Your property will be listed on top platforms, including Booking.com and Airbnb, increasing the frequency of guest bookings"
+    },
+    "fourth": {
+      "title": "BRIEFING",
+      "description": "Maintenance We provide full maintenance and repairs if necessary, saving you time and effort."
+    },
+    "fifth": {
+      "title": "DIVIDENDS",
+      "description": "Payments We handle all payment transactions, ensuring the full rental amount is received on time."
+    },
+    "days": "days",
+    "submit": "Leave a request"
+  },
+  "apartmentCard": {
+    "maxPeople": "Max {maxPeople} people",
+    "price": "From {price} {currency}",
+    "nights": "for {nights} nights",
+    "book": "Book now"
   }
 }
