@@ -2,11 +2,15 @@
 import Image from "next/image";
 import {useTranslations} from 'next-intl';
 
-export default function CurrencySwitcher({ ...props }) {
+interface CurrencySwitcherProps {
+    className?: string;
+}
+
+export default function CurrencySwitcher({ className, ...props }: CurrencySwitcherProps) {
     const t = useTranslations('images');
 
     return (
-        <div {...props}>
+        <div className={`flex items-center ${className}`} {...props}>
             <span className={"block font-semibold text-black mr-2 text-[20px]"}>USD</span>
             <Image
                 src={"/images/flags/us.svg"}

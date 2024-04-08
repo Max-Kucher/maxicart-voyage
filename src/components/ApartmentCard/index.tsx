@@ -6,6 +6,7 @@ import UsersIcon from "@/components/icons/users";
 import BedIcon from "@/components/icons/bed";
 import BathIcon from "@/components/icons/bath";
 import {Link} from "@/navigation";
+import Image from "next/image";
 import {useTranslations} from "next-intl";
 import appConfig from "@/config/app";
 
@@ -28,7 +29,13 @@ const ApartmentCard: FC<ApartmentCardProps> = ({image, link, currency, bedCount,
     return (
         <div className={'2xl:w-full bg-white rounded-lg'}>
             <div className={'p-[8px]'}>
-                <img className={'rounded-xl'} alt={name} src={image === null ? `/images/no-photo.png` : `${appConfig.backendBase}${image}`} />
+                {image === null ? (
+                    <Image src={`/images/no-photo.png`} alt={"No image"} width={507} height={570} />
+                    ) : (
+                    <img className={'rounded-xl'} alt={name} src={`${appConfig.backendBase}${image}`} />
+                )}
+
+
             </div>
             <div className={'p-[30px] pt-[22px]'}>
                 <b className={'text-xl font-semibold'}>

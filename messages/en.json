@@ -91,5 +91,11 @@
     "name": "Name",
     "message": "Leave a comment",
     "agreement": "I agree to the Privacy Policy"
+  },
+  "common": {
+    "company": "Company"
+  },
+  "location": {
+    "displayTitle": "CONTROL TOWER - Office Building - Motor City - Dubai"
   }
 }
