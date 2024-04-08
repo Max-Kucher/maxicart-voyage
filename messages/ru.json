@@ -92,5 +92,11 @@
     "name": "Имя",
     "message": "Cообщение",
     "agreement": "Отправляя данную форму вы соглашаетесь с политикой конфиденциальности"
+  },
+  "common": {
+    "company": "Компания"
+  },
+  "location": {
+    "displayTitle": "CONTROL TOWER - Office Building - Motor City - Dubai"
   }
 }

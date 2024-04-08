@@ -21,6 +21,7 @@ const menuConfig = {
         {
             title: "contacts",
             href: "/contacts",
+            showInFooter: false,
         },
     ]
 };

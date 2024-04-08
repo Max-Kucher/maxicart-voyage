@@ -15,7 +15,7 @@ export default function Header() {
 
         <LanguageSwitcher className={"mr-8 2xl:mr-0 hidden md:flex"} />
 
-        <CurrencySwitcher  className={"items-center hidden md:flex"} />
+        <CurrencySwitcher  className={"hidden md:flex"} />
 
         <PhoneLink className={"text-primary text-[20px] font-semibold hidden 2xl:block"} />
 

@@ -78,7 +78,7 @@ export default function MobileMenu() {
             <div className={"flex md:hidden items-center justify-center gap-[27px] mt-[60px]"}>
                 <LanguageSwitcher />
 
-                <CurrencySwitcher className={"flex items-center"} />
+                <CurrencySwitcher />
             </div>
         </div>
     </div>
