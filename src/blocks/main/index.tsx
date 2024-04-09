@@ -6,27 +6,28 @@ import {useTranslations} from "next-intl";
 import useApartments from "@/composables/useApartments";
 import Apartment from "@/types/Apartment";
 
-// 'https://www.apartments-mitte.de/wp-content/uploads/2023/10/alte-nationalgalerie-1.webp'
-
 async function CardsList() {
     const { searchApartments } = useApartments();
-    const apartments = await searchApartments();
+    const apartments = await searchApartments({
+        items_per_page: 3,
+        sort_by: 'id',
+        sort_order: 'asc',
+    });
 
     return apartments.data.map((apartment: Apartment) => (<ApartmentCard
             key={`index-apartment-${apartment.id}`}
             image={apartment.photos[0]?.photo ?? null}
             price={apartment.smoobu.price.minimal}
             name={apartment.smoobu.name}
-            link={`/book/${apartment.id}`}
+            link={`/rent/${apartment.id}`}
             currency={apartment.smoobu.currency}
             bathCount={apartment.smoobu.rooms.bathrooms}
             maxPeople={apartment.smoobu.rooms.maxOccupancy}
+            location={apartment.address}
+            roomSize={apartment.m2}
+            bedCount={apartment.smoobu.rooms.bedrooms}
 
-            // Ждём правки с бэкенда
-            bedCount={3}
-            nights={2}
-            roomSize={50}
-            location={'Dubai/Elite 6 Sports Residence'}
+            nights={2} // под вопросом как быть
         />))
     ;
 }
