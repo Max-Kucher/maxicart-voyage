@@ -1,6 +1,6 @@
 
-
-export default interface Photo {
+export default interface Photo
+{
     id: number;
     photo: string;
 };
