@@ -1,5 +1,5 @@
 import appConfig from "@/config/app";
-import Apartment from "@/types/Apartment";
+import ApartmentsSearch from "@/types/ApartmentsSearch";
 
 async function fetchApartments(params: Record<string, string | number>)
 {
@@ -15,16 +15,16 @@ async function fetchApartments(params: Record<string, string | number>)
 }
 
 export default function useApartments() {
-    const searchApartments = async (params: Record<string, string | number> = {}): Promise<Apartment[]> => {
-        let apartments: [] = [];
+    const searchApartments = async (params: Record<string, string | number> = {}): Promise<ApartmentsSearch> => {
+        let apartmentsSearch: ApartmentsSearch = new ApartmentsSearch();
 
         try {
-            apartments = await fetchApartments(params);
+            apartmentsSearch = await fetchApartments(params);
         } catch (error) {
             console.log(error);
         }
 
-        return apartments;
+        return apartmentsSearch;
     };
 
     return { searchApartments };

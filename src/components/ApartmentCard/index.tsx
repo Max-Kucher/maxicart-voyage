@@ -32,7 +32,7 @@ const ApartmentCard: FC<ApartmentCardProps> = ({image, link, currency, bedCount,
                 {image === null ? (
                     <Image src={`/images/no-photo.png`} alt={"No image"} width={507} height={570} />
                     ) : (
-                    <img className={'rounded-xl'} alt={name} src={`${appConfig.backendBase}${image}`} />
+                    <img className={'rounded-xl'} alt={name} src={image} />
                 )}
 
 
