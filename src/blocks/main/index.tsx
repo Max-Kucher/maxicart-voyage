@@ -3,7 +3,7 @@ import FindApartment from "@/components/FindApartamentForm";
 import ApartmentCard from "@/components/ApartmentCard";
 import {Button} from "@/components/ui/button";
 import {useTranslations} from "next-intl";
-import useApartments from "@/composables/useAppartments";
+import useApartments from "@/composables/useApartments";
 import Apartment from "@/types/Apartment";
 
 // 'https://www.apartments-mitte.de/wp-content/uploads/2023/10/alte-nationalgalerie-1.webp'
@@ -12,7 +12,7 @@ async function CardsList() {
     const { searchApartments } = useApartments();
     const apartments = await searchApartments();
 
-    return apartments.map((apartment: Apartment) => (<ApartmentCard
+    return apartments.data.map((apartment: Apartment) => (<ApartmentCard
             key={`index-apartment-${apartment.id}`}
             image={apartment.photos[0]?.photo ?? null}
             price={apartment.smoobu.price.minimal}
