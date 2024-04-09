@@ -13,19 +13,22 @@ import WhatsappIcon from "@/components/icons/whatsapp";
 
 export default function Footer() {
     const t = useTranslations();
+    const textBlockClass = `md:col-span-1 col-span-full xl:px-[20px] text-[20px] font-semibold`;
 
     return (<footer className={"bg-background"}>
-        <div className="container grid md:grid-cols-3 sm:grid-cols-2 gap-[30px] pt-[64px] pb-[51px]">
-            <div>
+        <div className="container grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-[30px] md:pt-[64px] pt-[35px] pb-[51px]">
+
+            <div className={`col-span-2 xl:col-span-1 order-1 xl:order-[0] flex items-baseline justify-between xl:block mt-[40px] md:mt-0`}>
                 <Logo width={219} height={74}/>
 
-                <div className={"flex gap-x-[27px] mt-[55px]"}>
+                <div className={"flex gap-x-[27px] xl:mt-[55px] relative -top-[15px] xl:top-0"}>
                     <LanguageSwitcher className={`flex gap-1`}/>
 
-                    <CurrencySwitcher/>
+                    <CurrencySwitcher className={`hidden md:flex`} />
                 </div>
             </div>
-            <div className={`px-[20px] text-[20px] font-semibold`}>
+
+            <div className={`${textBlockClass} text-center md:text-left`}>
                 <div className={`text-primary mb-[10px]`}>{t("common.company")}</div>
 
                 <nav>
@@ -46,8 +49,8 @@ export default function Footer() {
                 </nav>
             </div>
 
-            <div className={`px-[20px] text-[20px] font-semibold`}>
-                <div className={`text-primary mb-[10px]`}>{t("menu.contacts")}</div>
+            <div className={textBlockClass}>
+                <div className={`text-primary mb-[10px] text-center md:text-left`}>{t("menu.contacts")}</div>
 
                 <a className={`flex relative pl-[33px] py-[10px]`} href={`mailto:${appConfig.contacts.email.display}`}>
                     <MailIcon className={"w-[22px] absolute left-0 top-[50%] -translate-y-1/2 fill-primary"} />
@@ -64,7 +67,7 @@ export default function Footer() {
                     {t(appConfig.contacts.location.display)}
                 </div>
 
-                <div className={`flex gap-[33px] mt-[19px] px-1`}>
+                <div className={`flex gap-[33px] xl:mt-[19px] md:mt-[16px] mt-[14px] px-1 justify-center md:justify-normal`}>
                     <a href={appConfig.contacts.whatsapp.href}>
                         <WhatsappIcon className={`fill-primary w-[37.31px]`} />
                     </a>
