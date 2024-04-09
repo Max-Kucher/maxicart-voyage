@@ -5,6 +5,7 @@ import {Button} from "@/components/ui/button";
 import {useTranslations} from "next-intl";
 import useApartments from "@/composables/useApartments";
 import Apartment from "@/types/Apartment";
+import {Link} from "@/navigation";
 
 async function CardsList() {
     const { searchApartments } = useApartments();
@@ -43,7 +44,11 @@ const Main = () => {
                 </div>
                 <div className={'flex justify-center gap-[50px] mb-[100px]'}>
                     <Button variant={'secondary'} className={'min-w-[250px]'}>{t('toRent')}</Button>
-                    <Button>{t('rent')}</Button>
+                    <Button asChild={true}>
+                        <Link href={`/rent`}>
+                            {t('rent')}
+                        </Link>
+                    </Button>
                 </div>
                 <FindApartment/>
                 <h2 className={'text-[30px] uppercase font-extrabold text-white mt-[48px] text-center'}>{t('bestDeals')}</h2>
