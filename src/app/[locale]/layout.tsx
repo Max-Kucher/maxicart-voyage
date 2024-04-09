@@ -4,6 +4,7 @@ import "@/app/globals.css";
 import Header from "@/components/layout/header/header";
 import {NextIntlClientProvider, useMessages} from "next-intl";
 import Footer from "@/components/layout/footer";
+// import FindApartmentProvider from "@/context/FindApartmentProvider";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
@@ -23,7 +24,9 @@ export default function LocaleLayout({
 
             <Header />
 
-            {children}
+            {/*<FindApartmentProvider>*/}
+                {children}
+            {/*</FindApartmentProvider>*/}
 
             <Footer />
 
