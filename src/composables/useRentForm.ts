@@ -1,32 +1,43 @@
 import appConfig from "@/config/app";
 import RentOutFormData from "@/types/RentOutFormData";
 
-async function submitForm(params: Record<string, string | number>)
+async function submitForm(formData: RentOutFormData)
 {
-    // const url = new URL('/api/smoobu/apartments/', appConfig.backendBase);
-    // Object.entries(params).forEach(([key, value]) => url.searchParams.append(key, String(value)));
-    //
-    // const response = await fetch(url.toString());
-    // if (!response.ok) {
-    //     throw new Error('Failed to fetch Apartments');
-    // }
-    //
-    // return await response.json();
+    const url = new URL('/api/applications/', appConfig.backendBase);
+    const body = new FormData();
+
+    Object.entries(formData).forEach(([key, value]: [string, string]) => body.append(key, value));
+
+    const response = await fetch(url.toString(), {
+        method: 'POST',
+        body,
+    });
+
+    if (!response.ok) {
+        console.log(response);
+        throw new Error('Failed to submit form');
+    }
+
+    return {
+        ok: response.ok,
+        body: await response.json(),
+        headers: response.headers
+    };
 }
 
 export default function useRentForm() {
-    const submit = async (formData: RentOutFormData) => {
-        console.log(formData);
-
-        // let apartmentsSearch: ApartmentsSearch = new ApartmentsSearch();
-        //
-        // try {
-        //     apartmentsSearch = await fetchApartments(params);
-        // } catch (error) {
-        //     console.log(error);
-        // }
-        //
-        // return apartmentsSearch;
+    const submit = async (formData: RentOutFormData): Promise<{}> => {
+        try {
+            return await submitForm(formData);
+        } catch (error: any) {
+            console.log(error);
+            return new Promise((): { ok: boolean, error: any } => {
+                return {
+                    ok: false,
+                    error
+                };
+            });
+        }
     };
 
     return { submit };
