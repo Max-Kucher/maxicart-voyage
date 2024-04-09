@@ -50,7 +50,7 @@ const Main = () => {
                         </Link>
                     </Button>
                 </div>
-                <FindApartment/>
+                <FindApartment behavior={`redirect`} />
                 <h2 className={'text-[30px] uppercase font-extrabold text-white mt-[48px] text-center'}>{t('bestDeals')}</h2>
                 <div className="grid grid-cols-3 gap-[20px] mt-[60px]">
                     <Suspense fallback={<>Currently loading</>}>
