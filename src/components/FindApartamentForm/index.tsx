@@ -32,7 +32,7 @@ const FindApartment: FC<{}> = () => {
     const onSubmitForm = handleSubmit((data) => {})
 
     return (
-        <div className={'2xl:w-[1350px] md:w-[600px] mx-auto'}>
+        <form className={'2xl:w-[1350px] md:w-[600px] mx-auto'}>
             <div
                 className={'bg-white md:py-[30px] md:px-[95px] 2xl:py-[30px] 2xl:px-[40px] flex 2xl:justify-between 2xl:flex-row flex-col rounded-lg gap-[20px]'}>
                 <div>
@@ -102,7 +102,7 @@ const FindApartment: FC<{}> = () => {
                     {t('find')}
                 </Button>
             </div>
-        </div>
+        </form>
     );
 };
 

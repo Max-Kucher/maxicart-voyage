@@ -15,7 +15,7 @@ interface ApartmentCardProps {
     maxPeople: number
     bedCount: number
     bathCount: number
-    roomSize: number
+    roomSize: number|null
     price: number
     location: string
     nights: number
@@ -48,20 +48,30 @@ const ApartmentCard: FC<ApartmentCardProps> = ({image, link, currency, bedCount,
                         </span>
                     </div>
                 </div>
-                <div className={'flex flex-wrap gap-[15px] mt-[20px] text-foreground-secondary'}>
-                    <div className={'inline-flex items-center bg-background gap-[15px] py-[7px] px-[6px] rounded-[5px]'}>
-                        <BedIcon className={'w-[39px] h-[26px]'}/>
-                        <span className={'text-xl font-semibold'}>{bedCount}</span>
+                {(bedCount !== 0 || bathCount !== 0 || roomSize !== null) && (
+                    <div className={'flex flex-wrap gap-[15px] mt-[20px] text-foreground-secondary'}>
+                        <div
+                            className={'inline-flex items-center bg-background gap-[15px] py-[7px] px-[6px] rounded-[5px]'}>
+                            <BedIcon className={'w-[39px] h-[26px]'}/>
+                            <span className={'text-xl font-semibold'}>{bedCount}</span>
+                        </div>
+                        {bathCount !== 0 && (
+                            <div
+                                className={'inline-flex items-center bg-background gap-[15px] py-[7px] px-[6px] rounded-[5px]'}>
+                                <BathIcon className={'w-[39px] h-[26px]'}/>
+                                <span className={'text-xl font-semibold'}>{bathCount}</span>
+                            </div>
+                        )}
+                        {roomSize !== null && (
+                            <div
+                                className="inline-flex items-center bg-background gap-[15px] py-[7px] px-[6px] rounded-[5px]">
+                                <Maximize2Icon className="h-[23px] w-[23px]"/>
+                                <span className="text-xl font-semibold">{roomSize} M2</span>
+                            </div>
+                        )}
                     </div>
-                    <div className={'inline-flex items-center bg-background gap-[15px] py-[7px] px-[6px] rounded-[5px]'}>
-                        <BathIcon className={'w-[39px] h-[26px]'}/>
-                        <span className={'text-xl font-semibold'}>{bathCount}</span>
-                    </div>
-                    <div className={'inline-flex items-center bg-background gap-[15px] py-[7px] px-[6px] rounded-[5px]'}>
-                        <Maximize2Icon className={'h-[23px] w-[23px]'}/>
-                        <span className={'text-xl font-semibold'}>{roomSize} M2</span>
-                    </div>
-                </div>
+                )}
+
                 <div className={'flex items-center gap-[15px] mt-[27px] text-foreground-secondary'}>
                     <MapPinIcon className={'h-[26px] w-[21px]'}/>
                     <span className={'text-lg font-medium'}>{location}</span>
