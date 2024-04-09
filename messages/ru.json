@@ -93,6 +93,11 @@
     "message": "Cообщение",
     "agreement": "Отправляя данную форму вы соглашаетесь с политикой конфиденциальности"
   },
+  "apartmentsDetails": {
+    "maxPeople": "До {maxPeople} людей",
+    "price": "От {price} {currency}",
+    "nights": "за {nights} ночи"
+  },
   "common": {
     "company": "Компания"
   },

@@ -92,6 +92,11 @@
     "message": "Leave a comment",
     "agreement": "I agree to the Privacy Policy"
   },
+  "apartmentsDetails": {
+    "maxPeople": "Max {maxPeople} people",
+    "price": "From {price} {currency}",
+    "nights": "for {nights} nights"
+  },
   "common": {
     "company": "Company"
   },
