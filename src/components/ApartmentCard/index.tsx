@@ -8,7 +8,6 @@ import BathIcon from "@/components/icons/bath";
 import {Link} from "@/navigation";
 import Image from "next/image";
 import {useTranslations} from "next-intl";
-import appConfig from "@/config/app";
 
 interface ApartmentCardProps {
     image: string,
