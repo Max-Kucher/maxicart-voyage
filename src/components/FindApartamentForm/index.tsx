@@ -16,9 +16,11 @@ interface FindApartmentProps {
     behavior?: string; // Defines the behavior for the component. Supports "default"|redirect" options
 }
 
+const savedSearchKey = 'apartmentFormSearch';
+
 const FindApartment: FC<FindApartmentProps> = ({ behavior }) => {
     const router = useRouter();
-    // const pathname = usePathname();
+    const pathname = usePathname();
 
     const t = useTranslations('filterForm');
 
@@ -38,15 +40,27 @@ const FindApartment: FC<FindApartmentProps> = ({ behavior }) => {
         },
     };
 
+    useEffect(() => {
+        let savedSearch = localStorage.getItem(savedSearchKey);
+
+        if (savedSearch !== null) {
+            savedSearch = JSON.parse(savedSearch);
+
+            console.log(savedSearch);
+        }
+    }, [pathname]);
+
     const {control, handleSubmit} = useForm({
         defaultValues,
     });
 
     const onSubmit: SubmitHandler<SearchApartmentsFormData> = async (data: SearchApartmentsFormData) => {
-        if (behavior === 'redirect') {
-            localStorage.setItem('apartmentFormSearch', JSON.stringify(data));
-            router.push('/rent');
-        }
+        console.log(data);
+
+        // if (behavior === 'redirect') {
+        //     localStorage.setItem(savedSearchKey, JSON.stringify(data));
+        //     router.push('/rent');
+        // }
     };
 
     return (
