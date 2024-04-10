@@ -34,24 +34,24 @@ const Datepicker: FC<DatepickerProps> = ({className,placeholder, date, setDate})
                         id="date"
                         variant={"outline"}
                         className={cn(
-                            "justify-start text-left font-normal p-[20px] h-auto",
+                            "justify-start md:text-left font-normal md:p-[20px] p-[14px] h-auto",
                             !date && "text-muted-foreground"
                         )}
                     >
                         <CalendarDaysIcon className="mr-2 h-[27px] w-[27px] text-primary"/>
-                        <span className={'inline-block px-[25px] text-lg text-[#5F5F5F]'}>
-                        {date?.from ? (
-                                date.to ? (
-                                    <>
-                                        {format(date.from, "LLL dd, y", {locale: pikerLng})} -{" "}
-                                        {format(date.to, "LLL dd, y", {locale: pikerLng})}
-                                    </>
-                                ) : (
-                                    format(date.from, "LLL dd, y", {locale: pikerLng})
-                                )
-                            ) :
-                            placeholder
-                        }
+                        <span className={'inline-block md:px-[25px] md:text-lg text-sm text-[#5F5F5F]'}>
+                            {date?.from ? (
+                                    date.to ? (
+                                        <>
+                                            {format(date.from, "LLL dd, y", {locale: pikerLng})} -{" "}
+                                            {format(date.to, "LLL dd, y", {locale: pikerLng})}
+                                        </>
+                                    ) : (
+                                        format(date.from, "LLL dd, y", {locale: pikerLng})
+                                    )
+                                ) :
+                                placeholder
+                            }
                         </span>
                     </Button>
                 </PopoverTrigger>

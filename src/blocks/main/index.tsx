@@ -27,7 +27,6 @@ async function CardsList() {
             location={apartment.address}
             roomSize={apartment.m2}
             bedCount={apartment.smoobu.rooms.bedrooms}
-
             nights={2} // под вопросом как быть
         />))
     ;
@@ -36,7 +35,7 @@ async function CardsList() {
 const Main = () => {
     const t = useTranslations('main');
     return (
-        <div className="bg-main xl:pt-[100px] md:pt-[60px] pt-[40px] pb-[80px] bg-cover bg-no-repeat">
+        <div className="bg-main bg-[length:100%_800px] xl:pt-[100px] md:pt-[60px] pt-[40px] pb-[80px] xl:bg-cover bg-no-repeat">
             <div className="container">
                 <div className={'text-center'}>
                     <h2 className={'md:text-[30px] uppercase md:font-extrabold text-white text-lg font-medium'}>{t('subtitle')}</h2>
@@ -51,8 +50,8 @@ const Main = () => {
                     </Button>
                 </div>
                 <FindApartment behavior={`redirect`} />
-                <h2 className={'text-[30px] uppercase font-extrabold text-white mt-[48px] text-center'}>{t('bestDeals')}</h2>
-                <div className="grid md:grid-cols-3 gap-[20px] mt-[60px] grid-cols-1">
+                <h2 className={'xl:text-[30px] md:text-[25px] text-xl uppercase font-extrabold text-white mt-[48px] text-center'}>{t('bestDeals')}</h2>
+                <div className="grid md:grid-cols-3 gap-[20px] xl:mt-[60px] md:mt-[45px] mt-[30px] grid-cols-1">
                     <Suspense fallback={<>Currently loading</>}>
                         <CardsList />
                     </Suspense>
