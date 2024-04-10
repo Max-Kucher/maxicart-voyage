@@ -7,7 +7,7 @@ const OurWork = () => {
     const t = useTranslations('service');
 
     return (
-        <div className={'py-[100px]'}>
+        <div className={'2xl:py-[100px] xl:pt-[150px] xl:pb-[60px]'}>
             <div className="container">
                 <div
                     className={'grid 2xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-[20px] 2xl:w-[1075px] md:w-full md:max-w-[705px] 2xl:max-w-full w-[320px] mx-auto'}>

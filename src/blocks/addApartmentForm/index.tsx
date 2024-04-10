@@ -8,28 +8,16 @@ import {Controller, useForm, SubmitHandler} from "react-hook-form";
 import { useTranslations } from 'next-intl';
 import RentOutFormData from "@/types/RentOutFormData";
 import useRentForm from "@/composables/useRentForm";
+import AddApartmentForm from '@/src/components/AddApartmentForm';
 
-const AddApartmentForm = () => {
+const AddApartmentFormBlock = () => {
     const t = useTranslations('addApartmentForm');
-    const {control, handleSubmit} = useForm({
-        defaultValues: {
-            name: '',
-            email: '',
-            phone: '',
-            message: '',
-        },
-    });
-
-    const { submit: formSubmitHandler } = useRentForm();
-    const onSubmit: SubmitHandler<RentOutFormData> = async (data: RentOutFormData) => {
-        await formSubmitHandler(data);
-    };
 
     return (
-        <div className={'bg-background pb-[80px] pt-[100px]'}>
+        <div className={'2xl:bg-background xl:pb-[80px] xl:pt-[100px] md:pb-[60px] md:pt-[60px]'}>
             <div className={'container'}>
-                <div className={'flex px-[83px] py-[80px] gap-[80px] w-[1075px] mx-auto bg-white rounded-lg'}>
-                    <div className={'w-8/12 flex flex-col gap-[24px] '}>
+                <div className={'flex flex-wrap xl:flex-nowrap 2xl:px-[83px] 2xl:py-[80px] xl:px-[62px] xl:py-[60px] 2xl:gap-[80px] 2xl:w-[1075px] md:py-[60px] md:px-[50px] mx-auto bg-white rounded-lg'}>
+                    <div className={'w-8/12 flex flex-col xl:gap-[24px] xl:text-left text-center mx-auto xl:mx-0 md:gap-[15px]'}>
                         <h2 className={'text-3xl uppercase font-semibold'}>
                             {t('title')}
                         </h2>
@@ -38,69 +26,11 @@ const AddApartmentForm = () => {
                             {t('description')}
                         </p>
                     </div>
-
-                    <form onSubmit={handleSubmit(onSubmit)} className={'flex flex-col w-full gap-[15px]'}>
-                        <Controller
-                            render={({field}) => (
-                                <Input
-                                    type={`text`}
-                                    variant={'lite'}
-                                    placeholder={t('name')}
-                                    {...field}
-                                />
-                            )}
-                            name={'name'}
-                            control={control}
-                        />
-                        <Controller
-                            render={({field}) => (
-                                <Input
-                                    type={`email`}
-                                    variant={'lite'}
-                                    placeholder={'E-mail'}
-                                    {...field}
-                                />
-                            )}
-                            name={'email'}
-                            control={control}
-                        />
-                        <Controller
-                            render={({field}) => (
-                                <Input
-                                    type={`tel`}
-                                    variant={'lite'}
-                                    inputType={'number'}
-                                    value={field.value}
-                                    onChange={(value: any) => field.onChange(value)}
-                                />
-                            )}
-                            name={'phone'}
-                            control={control}
-                        />
-                        <Controller
-                            render={({field}) => (
-                                <Textarea
-                                    variant={'lite'}
-                                    placeholder={t('message')}
-                                    {...field}
-                                />
-                            )}
-                            name={'message'}
-                            control={control}
-                        />
-                        <div className={'font-semibold text-foreground-secondary text-base w-10/12 mt-[5px]'}>
-                            {t('agreement')}
-                        </div>
-                        <div className={'flex justify-center'}>
-                            <Button>
-                                {t('send')}
-                            </Button>
-                        </div>
-                    </form>
+                    <AddApartmentForm/>
                 </div>
             </div>
         </div>
     );
 };
 
-export default AddApartmentForm;
+export default AddApartmentFormBlock;

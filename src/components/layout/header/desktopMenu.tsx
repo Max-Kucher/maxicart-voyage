@@ -19,7 +19,7 @@ export default function DesktopMenu() {
                             className={`transition duration-150 ease-in hover:text-primary font-semibold text-[18px] text-highlightedText p-[4px]`}
                             href={item.href}
                         >
-                            { t(item.title) }
+                            {t(item.title) }
                         </Link>
                     </li>
                 )})}

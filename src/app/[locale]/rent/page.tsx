@@ -1,6 +1,7 @@
 import ApartmentCard from "@/components/ApartmentCard";
 import FindApartment from "@/components/FindApartamentForm";
 import AddApartmentForm from "@/src/blocks/addApartmentForm";
+import PageNavigation from "@/components/PageNavigation";
 
 
 export default function RentIndex() {
@@ -8,7 +9,7 @@ export default function RentIndex() {
         <main>
             <div className="container">
                 <div className={'mt-[70px]'}>
-                    Navigation
+                    <PageNavigation/>
                 </div>
                 <div className={'mt-[30px]'}>
                     <FindApartment/>

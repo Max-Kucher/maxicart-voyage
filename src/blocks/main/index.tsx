@@ -36,14 +36,14 @@ async function CardsList() {
 const Main = () => {
     const t = useTranslations('main');
     return (
-        <div className="bg-main pt-[100px] pb-[80px] bg-cover bg-no-repeat">
+        <div className="bg-main xl:pt-[100px] md:pt-[60px] pt-[40px] pb-[80px] bg-cover bg-no-repeat">
             <div className="container">
                 <div className={'text-center'}>
-                    <h2 className={'text-[30px] uppercase font-extrabold text-white'}>{t('subtitle')}</h2>
-                    <h1 className={'text-[40px] uppercase font-extrabold text-white mt-[30px] mb-[60px]'}>{t('title')}</h1>
+                    <h2 className={'md:text-[30px] uppercase md:font-extrabold text-white text-lg font-medium'}>{t('subtitle')}</h2>
+                    <h1 className={'md:text-[40px] uppercase md:font-extrabold text-white md:mt-[30px] mt-[20px] md:mb-[60px] mb-[20px] text-xl font-bold'}>{t('title')}</h1>
                 </div>
-                <div className={'flex justify-center gap-[50px] mb-[100px]'}>
-                    <Button variant={'secondary'} className={'min-w-[250px]'}>{t('toRent')}</Button>
+                <div className={'flex justify-center md:gap-[50px] gap-[15px] 2xl:mb-[100px] xl:mb-[62px] md:mb-[32px] mb-[42px] flex-wrap'}>
+                    <Button variant={'secondary'}>{t('toRent')}</Button>
                     <Button asChild={true}>
                         <Link href={`/rent`}>
                             {t('rent')}
@@ -52,7 +52,7 @@ const Main = () => {
                 </div>
                 <FindApartment behavior={`redirect`} />
                 <h2 className={'text-[30px] uppercase font-extrabold text-white mt-[48px] text-center'}>{t('bestDeals')}</h2>
-                <div className="grid grid-cols-3 gap-[20px] mt-[60px]">
+                <div className="grid md:grid-cols-3 gap-[20px] mt-[60px] grid-cols-1">
                     <Suspense fallback={<>Currently loading</>}>
                         <CardsList />
                     </Suspense>

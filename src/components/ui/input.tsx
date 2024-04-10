@@ -47,8 +47,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                         paddingRight: `${(textWidth) + 30.5}px`
                     }}
                     className={cn(
-                        `flex w-full rounded-lg border border-input md:pl-[28.5px] md:py-[20px] md:text-lg ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50`,
-                        inputVariants({variant}) ,className
+                        `flex w-full rounded-lg border border-input md:pl-[28.5px] md:py-[20px] py-[13px] px-[11px] text-sm md:text-lg ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50`,
+                        inputVariants({variant}), className
                     )}
                     ref={ref}
                     {...props}
