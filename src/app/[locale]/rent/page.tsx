@@ -2,7 +2,49 @@ import ApartmentCard from "@/components/ApartmentCard";
 import FindApartment from "@/components/FindApartamentForm";
 import AddApartmentForm from "@/src/blocks/addApartmentForm";
 import PageNavigation from "@/components/PageNavigation";
+import useApartments from "@/composables/useApartments";
+import Apartment from "@/types/Apartment";
+import React from "react";
+import { cookies } from 'next/headers'
+import ApartmentsSearchParams from "@/types/ApartmentsSearchParams";
+import {convertSearchApartmentsFormDataToApartmentsSearchParams} from "@/lib/utils";
 
+async function CardsList() {
+    const cookieStore = cookies();
+    const savedSearch = cookieStore.get('apartmentFormSearch-backend');
+    let searchParams: ApartmentsSearchParams = {};
+
+    if (savedSearch === null || savedSearch === undefined) {
+        searchParams = {
+            items_per_page: 15,
+            sort_by: 'id',
+            sort_order: 'asc',
+        };
+    } else {
+        searchParams = JSON.parse(savedSearch.value);
+    }
+
+    // console.log(searchParams);
+
+    const { searchApartments } = useApartments();
+    const apartments = await searchApartments(searchParams);
+
+    return apartments.data.map((apartment: Apartment) => (<ApartmentCard
+        key={`index-apartment-${apartment.id}`}
+        image={apartment.photos[0]?.photo ?? null}
+        price={apartment.smoobu.price.minimal}
+        name={apartment.smoobu.name}
+        link={`/rent/${apartment.id}`}
+        currency={apartment.smoobu.currency}
+        bathCount={apartment.smoobu.rooms.bathrooms}
+        maxPeople={apartment.smoobu.rooms.maxOccupancy}
+        location={apartment.address}
+        roomSize={apartment.m2}
+        bedCount={apartment.smoobu.rooms.bedrooms}
+
+        nights={2} // под вопросом как быть
+    />));
+}
 
 export default function RentIndex() {
     return (
@@ -15,16 +57,7 @@ export default function RentIndex() {
                     <FindApartment/>
                 </div>
                 <div className="grid grid-cols-3 gap-[20px] mt-[80px]">
-                    {
-                        Array.from({length: 6}).map((_, i) => (<ApartmentCard
-                            key={i}
-                            image={'https://www.apartments-mitte.de/wp-content/uploads/2023/10/alte-nationalgalerie-1.webp'}
-                            price={300} name={'1 ком. апартаменты в Marina gate'}
-                            location={'Dubai/Elite 6 Sports Residence'} link={''}
-                            currency={'USD'} bathCount={3} bedCount={3}
-                            maxPeople={4} nights={2} roomSize={50}
-                        />))
-                    }
+                    <CardsList />
                 </div>
                 <AddApartmentForm/>
             </div>
