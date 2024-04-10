@@ -36,4 +36,9 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
 ## Deploy with Docker
-Here is some [docs](https://nextjs.org/docs/pages/building-your-application/deploying#docker-image).
+<ol>
+<li><a href="https://docs.docker.com/get-docker/" rel="noopener noreferrer nofollow" target="_blank">Install Docker<span class="inline-flex"><svg class="with-icon_icon__MHUeb" data-testid="geist-icon" fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="24" style="color:currentColor;width:14px;height:14px"><path d="M7 17L17 7"></path><path d="M7 7h10v10"></path></svg></span></a> on your machine</li>
+<li><a href="https://github.com/vercel/next.js/tree/canary/examples/with-docker" rel="noopener noreferrer" target="_blank">Clone our example<span class="inline-flex"><svg class="with-icon_icon__MHUeb" data-testid="geist-icon" fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="24" style="color:currentColor;width:14px;height:14px"><path d="M7 17L17 7"></path><path d="M7 7h10v10"></path></svg></span></a> (or the <a href="https://github.com/vercel/next.js/tree/canary/examples/with-docker-multi-env" rel="noopener noreferrer" target="_blank">multi-environment example<span class="inline-flex"><svg class="with-icon_icon__MHUeb" data-testid="geist-icon" fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="24" style="color:currentColor;width:14px;height:14px"><path d="M7 17L17 7"></path><path d="M7 7h10v10"></path></svg></span></a>)</li>
+<li>Build your container: <code>docker build -t nextjs-docker .</code></li>
+<li>Run your container: <code>docker run -p 3000:3000 nextjs-docker</code></li>
+</ol>
