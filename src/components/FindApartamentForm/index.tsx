@@ -1,15 +1,18 @@
 'use client'
 
-import React, {FC, useContext, useEffect} from 'react';
+import React, {FC, useMemo, useEffect, useState} from 'react';
 import Datepicker from "@/components/ui/datepicker";
 import {Button} from "@/components/ui/button";
 import CountPiker from "@/components/ui/countpiker";
 import {Input} from "@/components/ui/input";
 import {Controller, useForm, SubmitHandler} from 'react-hook-form';
-import { add } from 'date-fns';
+import {add} from 'date-fns';
 import {useTranslations} from "next-intl";
 import SearchApartmentsFormData from "@/types/SearchApartmentsFormData";
-import { useRouter, usePathname } from "@/navigation";
+import { useRouter } from "@/navigation";
+import useApartments from "@/composables/useApartments";
+import ApartmentsSearchParams from "@/types/ApartmentsSearchParams";
+import {convertDateToSearch} from "@/lib/utils";
 // import { ApartmentsFormContext } from "@/context/FindApartmentProvider";
 
 interface FindApartmentProps {
@@ -20,11 +23,11 @@ const savedSearchKey = 'apartmentFormSearch';
 
 const FindApartment: FC<FindApartmentProps> = ({ behavior }) => {
     const router = useRouter();
-    const pathname = usePathname();
+    const { searchApartments } = useApartments();
 
     const t = useTranslations('filterForm');
 
-    const defaultValues: SearchApartmentsFormData = {
+    const defaultValues: SearchApartmentsFormData = useMemo(() => ({
         date: {
             from: add(new Date(), { days: 1 }),
             to: add(new Date(), { days: 2 }),
@@ -38,29 +41,81 @@ const FindApartment: FC<FindApartmentProps> = ({ behavior }) => {
             from: 0,
             to: 0,
         },
-    };
+    }), []);
 
-    useEffect(() => {
-        let savedSearch = localStorage.getItem(savedSearchKey);
-
-        if (savedSearch !== null) {
-            savedSearch = JSON.parse(savedSearch);
-
-            console.log(savedSearch);
-        }
-    }, [pathname]);
-
-    const {control, handleSubmit} = useForm({
+    const {control, handleSubmit, setValue} = useForm({
         defaultValues,
     });
 
-    const onSubmit: SubmitHandler<SearchApartmentsFormData> = async (data: SearchApartmentsFormData) => {
-        console.log(data);
+    useEffect(() => {
+        let savedSearch: any = localStorage.getItem(savedSearchKey);
 
-        // if (behavior === 'redirect') {
-        //     localStorage.setItem(savedSearchKey, JSON.stringify(data));
-        //     router.push('/rent');
-        // }
+        if (savedSearch === null) {
+            return;
+        }
+
+        savedSearch = JSON.parse(savedSearch);
+
+        if (typeof savedSearch !== 'object' || savedSearch === null) {
+            return;
+        }
+
+        if (savedSearch.date !== undefined) {
+            setValue('date.from', new Date(savedSearch.date.from))
+            setValue('date.to', new Date(savedSearch.date.to))
+        }
+
+        if (savedSearch.general !== undefined) {
+            setValue('general', savedSearch.general);
+        }
+
+        if (savedSearch.price !== undefined) {
+            setValue('price', savedSearch.price);
+        }
+    });
+
+    const [formLoading, setFormLoading] = useState(false);
+
+    const onSubmit: SubmitHandler<SearchApartmentsFormData> = async (data: SearchApartmentsFormData) => {
+        localStorage.setItem(savedSearchKey, JSON.stringify(data));
+
+        if (behavior === 'redirect') {
+            router.push('/rent');
+        } else {
+            setFormLoading(true);
+            const searchParams: ApartmentsSearchParams = {
+                items_per_page: 15,
+            };
+
+            if (data.date.from) {
+                searchParams.arrival_date = convertDateToSearch(data.date.from);
+            }
+
+            if (data.date.to) {
+                searchParams.departure_date = convertDateToSearch(data.date.to);
+            }
+
+            if (data.price.from) {
+                searchParams.min_price = data.price.from;
+            }
+
+            if (data.price.to) {
+                searchParams.max_price = data.price.to;
+            }
+
+            // if (data.general.room) {
+            //     searchParams.rooms = data.general.room;
+            // }
+
+            if (data.general.adult || data.general.child) {
+                searchParams.guests = data.general.adult + data.general.child;
+            }
+
+            const searchResults = await searchApartments(searchParams);
+
+            setFormLoading(false);
+            console.log(searchResults);
+        }
     };
 
     return (
@@ -74,8 +129,13 @@ const FindApartment: FC<FindApartmentProps> = ({ behavior }) => {
                     <Controller
                         name={'date'}
                         control={control}
-                        render={({field: {onChange, value}}) => (
-                            <Datepicker placeholder={t('dateRange')} date={value} setDate={(data) => onChange(data)}/>
+                        render={({field: {onChange, value, ...field}}) => (
+                            <Datepicker
+                                placeholder={t('dateRange')}
+                                date={value}
+                                setDate={(data) => onChange(data)}
+                                {...field}
+                            />
                         )}
                     />
                 </div>
@@ -88,13 +148,7 @@ const FindApartment: FC<FindApartmentProps> = ({ behavior }) => {
                         control={control}
                         render={({field: {onChange, value}}) => (
                             <CountPiker
-                                onSetValue={(id, num) => onChange(() => {
-                                    if (num < 0) {
-                                        num = 0;
-                                    }
-
-                                    return {...value, [id]: num};
-                                })}
+                                onSetValue={(id, num) => onChange({...value, [id]: num})}
                                 list={[
                                     {
                                         label: t('adult', { count: value.adult }),
@@ -121,7 +175,7 @@ const FindApartment: FC<FindApartmentProps> = ({ behavior }) => {
                            </span>
                         <Controller
                             render={({field: {value, onChange, ...field}}) =>
-                                <Input type={"number"} value={value} onChange={(event) => onChange(() => { return parseFloat(event.target.value.replace(/[^0-9\b]/g, '')) })} className={"[appearance:textfield]"} rightText={'USD'} {...field} />
+                                <Input type={"number"} value={value} onChange={(event) => onChange(parseFloat(event.target.value.replace(/[^0-9\b]/g, '')))} className={"[appearance:textfield]"} rightText={'USD'} {...field} />
                             }
                             name={'price.from'}
                             control={control}
@@ -134,7 +188,7 @@ const FindApartment: FC<FindApartmentProps> = ({ behavior }) => {
                             </span>
                       <Controller
                         render={({field: {value, onChange, ...field}}) =>
-                          <Input type={"number"} value={value} onChange={(event) => onChange(() => { return parseFloat(event.target.value.replace(/[^0-9\b]/g, '')) })} className={"[appearance:textfield]"} rightText={'USD'} {...field} />
+                          <Input type={"number"} value={value} onChange={(event) => onChange(parseFloat(event.target.value.replace(/[^0-9\b]/g, '')))} className={"[appearance:textfield]"} rightText={'USD'} {...field} />
                         }
                         name={'price.to'}
                         control={control}

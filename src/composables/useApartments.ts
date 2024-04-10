@@ -7,6 +7,14 @@ async function fetchApartments(params?: ApartmentsSearchParams)
     const url = new URL('/api/smoobu/apartments/', appConfig.backendBase);
 
     if (params !== undefined) {
+        if (params.min_price !== undefined) {
+            params.min_price *= 100;
+        }
+
+        if (params.max_price !== undefined) {
+            params.max_price *= 100;
+        }
+
         Object.entries(params).forEach(([key, value]) => url.searchParams.append(key, String(value)));
     }
 

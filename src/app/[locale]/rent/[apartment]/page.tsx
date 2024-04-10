@@ -3,8 +3,12 @@ import React from 'react';
 import ApartmentPhotos from "@/components/ApartmentPhotos";
 import ApartmentDetails from '@/src/components/ApartmentDetails';
 import ApartmentBookBlock from "@/components/ApartmentBookBlock";
+import useApartments from "@/composables/useApartments";
+import ApartmentsSearchParams from "@/types/ApartmentsSearchParams";
 
 const Page = () => {
+    const { searchApartments } = useApartments();
+
     return (
         <div className={'container'}>
             <div className={'flex gap-[20px]'}>

@@ -1,5 +1,6 @@
 'use client'
-import React, {FC} from 'react';
+
+import React, {FC, useEffect, useState} from 'react';
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 import {cn} from '@/lib/utils';
 import {Button} from './button';
@@ -20,12 +21,13 @@ interface DatepickerProps {
     setDate: (date?: DateRange) => void
 }
 
-const Datepicker: FC<DatepickerProps> = ({className,placeholder, date, setDate}) => {
+const Datepicker: FC<DatepickerProps> = ({className, placeholder, date, setDate}) => {
     const lng = useLocale()
     const pikerLng = {
         ru,
         en: enUS
-    }[lng]
+    }[lng];
+
     return (
         <div className={cn("grid gap-2", className)}>
             <Popover>
