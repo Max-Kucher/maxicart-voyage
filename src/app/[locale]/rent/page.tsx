@@ -8,13 +8,13 @@ export default function RentIndex() {
     return (
         <main>
             <div className="container">
-                <div className={'mt-[70px]'}>
+                <div className={'mt-[20px] md:mt-[40px] 2xl:mt-[70px]'}>
                     <PageNavigation/>
                 </div>
                 <div className={'mt-[30px]'}>
                     <FindApartment/>
                 </div>
-                <div className="grid grid-cols-3 gap-[20px] mt-[80px]">
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-[20px] md:mt-[80px] mt-[40px]">
                     {
                         Array.from({length: 6}).map((_, i) => (
                             <ApartmentCard
@@ -34,8 +34,8 @@ export default function RentIndex() {
                         ))
                     }
                 </div>
-                <AddApartmentForm/>
             </div>
+            <AddApartmentForm/>
         </main>
     );
 }

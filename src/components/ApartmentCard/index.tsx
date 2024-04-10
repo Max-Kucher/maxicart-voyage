@@ -34,14 +34,14 @@ const ApartmentCard: FC<ApartmentCardProps> = ({image, link, currency, bedCount,
                     <img className={'rounded-xl xl:h-[370px] w-full object-cover h-[316px]'} alt={name} src={image} />
                 )}
             </div>
-            <div className={'p-[30px] pt-[22px]'}>
-                <b className={'text-xl font-semibold'}>
+            <div className={'px-[15px] py-[20px] md:p-[30px] md:pt-[22px]'}>
+                <b className={'text-base md:text-xl font-semibold'}>
                     {name}
                 </b>
-                <div className={'mt-[30px]'}>
-                    <div className={'flex items-center gap-[15px]'}>
-                        <UsersIcon className={'text-primary w-[27px] h-[27px]'}/>
-                        <span className={'text-lg font-medium'}>
+                <div className={'mt-[18px] md:mt-[30px]'}>
+                    <div className={'flex items-center md:gap-[15px] gap-[10px]'}>
+                        <UsersIcon className={'text-primary md:w-[27px] md:h-[27px] w-[20px] h-[20px]'}/>
+                        <span className={'text-sm md:text-lg font-medium'}>
                            {t('maxPeople', {maxPeople})}
                         </span>
                     </div>
@@ -51,36 +51,36 @@ const ApartmentCard: FC<ApartmentCardProps> = ({image, link, currency, bedCount,
                         <div
                             className={'inline-flex items-center bg-background gap-[15px] py-[7px] px-[6px] rounded-[5px]'}>
                             <BedIcon className={'w-[39px] h-[26px]'}/>
-                            <span className={'text-xl font-semibold'}>{bedCount}</span>
+                            <span className={'text-base md:text-xl font-semibold'}>{bedCount}</span>
                         </div>
                         {bathCount !== 0 && (
                             <div
                                 className={'inline-flex items-center bg-background gap-[15px] py-[7px] px-[6px] rounded-[5px]'}>
                                 <BathIcon className={'w-[39px] h-[26px]'}/>
-                                <span className={'text-xl font-semibold'}>{bathCount}</span>
+                                <span className={'text-base md:text-xl font-semibold'}>{bathCount}</span>
                             </div>
                         )}
                         {roomSize !== null && (
                             <div
                                 className="inline-flex items-center bg-background gap-[15px] py-[7px] px-[6px] rounded-[5px]">
                                 <Maximize2Icon className="h-[23px] w-[23px]"/>
-                                <span className="text-xl font-semibold">{roomSize} M2</span>
+                                <span className="text-base md:text-xl font-semibold">{roomSize} M2</span>
                             </div>
                         )}
                     </div>
                 )}
 
-                <div className={'flex items-center gap-[15px] mt-[27px] text-foreground-secondary'}>
+                <div className={'flex items-center gap-[10px] md:gap-[15px] mt-[17px] md:mt-[27px] text-foreground-secondary'}>
                     <MapPinIcon className={'h-[26px] w-[21px]'}/>
-                    <span className={'text-lg font-medium'}>{location}</span>
+                    <span className={'text-sm md:text-lg font-medium'}>{location}</span>
                 </div>
-                <div className={'flex justify-between items-center mt-[30px]'}>
+                <div className={'flex justify-between items-center mt-[25px] md:mt-[30px]'}>
                     <div className={'flex flex-col'}>
-                        <b className={'text-2xl font-semibold'}>{t('price', {price, currency})}</b>
-                        <span className={'text-lg font-medium text-foreground-secondary'}>{t('nights', {nights})}</span>
+                        <b className={'text-base md:text-2xl font-semibold'}>{t('price', {price, currency})}</b>
+                        <span className={'text-sm md:text-lg font-medium text-foreground-secondary'}>{t('nights', {nights})}</span>
                     </div>
                     <Link href={`/${link}`}>
-                        <Button className={cn('min-w-[200px]')}>{t('book')}</Button>
+                        <Button className={cn('!min-w-[200px]')}>{t('book')}</Button>
                     </Link>
                 </div>
             </div>
