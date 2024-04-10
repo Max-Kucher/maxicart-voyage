@@ -12,7 +12,7 @@ const menuConfig = {
         },
         {
             title: "rentOut",
-            href: "/rent-out",
+            href: "/?rentOut=true",
         },
         {
             title: "workStages",
