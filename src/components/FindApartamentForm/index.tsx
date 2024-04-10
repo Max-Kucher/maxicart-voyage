@@ -12,7 +12,8 @@ import SearchApartmentsFormData from "@/types/SearchApartmentsFormData";
 import { useRouter } from "@/navigation";
 import useApartments from "@/composables/useApartments";
 import ApartmentsSearchParams from "@/types/ApartmentsSearchParams";
-import {convertDateToSearch} from "@/lib/utils";
+import {convertDateToSearch, convertSearchApartmentsFormDataToApartmentsSearchParams} from "@/lib/utils";
+import { getCookie, setCookie } from 'cookies-next';
 // import { ApartmentsFormContext } from "@/context/FindApartmentProvider";
 
 interface FindApartmentProps {
@@ -48,9 +49,9 @@ const FindApartment: FC<FindApartmentProps> = ({ behavior }) => {
     });
 
     useEffect(() => {
-        let savedSearch: any = localStorage.getItem(savedSearchKey);
+        let savedSearch: any = getCookie(savedSearchKey);
 
-        if (savedSearch === null) {
+        if (savedSearch === null || savedSearch === undefined) {
             return;
         }
 
@@ -77,46 +78,29 @@ const FindApartment: FC<FindApartmentProps> = ({ behavior }) => {
     const [formLoading, setFormLoading] = useState(false);
 
     const onSubmit: SubmitHandler<SearchApartmentsFormData> = async (data: SearchApartmentsFormData) => {
-        localStorage.setItem(savedSearchKey, JSON.stringify(data));
+        const today = new Date();
+        setCookie(savedSearchKey, JSON.stringify(data), {
+            path: '/',
+            expires: new Date(today.setDate(today.getDate() + 3)),
+        });
+        setCookie(savedSearchKey + '-backend', convertSearchApartmentsFormDataToApartmentsSearchParams(data), {
+            path: '/',
+            expires: new Date(today.setDate(today.getDate() + 3)),
+        });
 
         if (behavior === 'redirect') {
             router.push('/rent');
         } else {
             setFormLoading(true);
-            const searchParams: ApartmentsSearchParams = {
-                items_per_page: 15,
-            };
-
-            if (data.date.from) {
-                searchParams.arrival_date = convertDateToSearch(data.date.from);
-            }
-
-            if (data.date.to) {
-                searchParams.departure_date = convertDateToSearch(data.date.to);
-            }
-
-            if (data.price.from) {
-                searchParams.min_price = data.price.from;
-            }
-
-            if (data.price.to) {
-                searchParams.max_price = data.price.to;
-            }
-
-            // if (data.general.room) {
-            //     searchParams.rooms = data.general.room;
-            // }
-
-            if (data.general.adult || data.general.child) {
-                searchParams.guests = data.general.adult + data.general.child;
-            }
-
+            const searchParams = convertSearchApartmentsFormDataToApartmentsSearchParams(data);
             const searchResults = await searchApartments(searchParams);
 
             setFormLoading(false);
-            console.log(searchResults);
+            router.refresh();
         }
     };
+
+    const btnClass = `inline-block transition-opacity duration-150 hover:opacity-90 ${formLoading ? 'opacity-40 pointer-events-none' : ''}`;
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={'2xl:w-[1350px] md:w-[600px] mx-auto'}>
@@ -196,14 +180,14 @@ const FindApartment: FC<FindApartmentProps> = ({ behavior }) => {
                     </div>
                 </div>
                 <div className={'flex items-center justify-center 2xl:hidden'}>
-                    <Button className={'inline-block'}>
-                        {t('find')}
+                    <Button className={btnClass}>
+                        {formLoading ? t('searching') : t('find')}
                     </Button>
                 </div>
             </div>
             <div className={'2xl:flex hidden flex-col mt-[30px] items-end'}>
-                <Button className={'inline-block'}>
-                    {t('find')}
+                <Button className={btnClass}>
+                    {formLoading ? t('searching') : t('find')}
                 </Button>
             </div>
         </form>

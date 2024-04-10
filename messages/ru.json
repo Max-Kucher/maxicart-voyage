@@ -27,7 +27,8 @@
     "human": "Человек",
     "room": "{count, plural, zero {Комнат} one {Комната} few {Комнаты} other {Комнат}}",
     "find": "Найти",
-    "dateRange": "Дата заезда - Дата отьезда  "
+    "dateRange": "Дата заезда - Дата отьезда  ",
+    "searching": "Поиск..."
   },
   "service": {
     "title": "наши услуги",

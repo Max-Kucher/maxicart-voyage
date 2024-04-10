@@ -5,14 +5,29 @@ import PageNavigation from "@/components/PageNavigation";
 import useApartments from "@/composables/useApartments";
 import Apartment from "@/types/Apartment";
 import React from "react";
+import { cookies } from 'next/headers'
+import ApartmentsSearchParams from "@/types/ApartmentsSearchParams";
+import {convertSearchApartmentsFormDataToApartmentsSearchParams} from "@/lib/utils";
 
 async function CardsList() {
+    const cookieStore = cookies();
+    const savedSearch = cookieStore.get('apartmentFormSearch-backend');
+    let searchParams: ApartmentsSearchParams = {};
+
+    if (savedSearch === null || savedSearch === undefined) {
+        searchParams = {
+            items_per_page: 15,
+            sort_by: 'id',
+            sort_order: 'asc',
+        };
+    } else {
+        searchParams = JSON.parse(savedSearch.value);
+    }
+
+    // console.log(searchParams);
+
     const { searchApartments } = useApartments();
-    const apartments = await searchApartments({
-        items_per_page: 15,
-        sort_by: 'id',
-        sort_order: 'asc',
-    });
+    const apartments = await searchApartments(searchParams);
 
     return apartments.data.map((apartment: Apartment) => (<ApartmentCard
         key={`index-apartment-${apartment.id}`}
