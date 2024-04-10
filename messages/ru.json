@@ -22,10 +22,10 @@
     "peopleCount": "Количество людей и комнат",
     "priceFrom": "Цена от",
     "priceTo": "Цена до",
-    "adult": "Взрослыx",
-    "child": "Детей",
+    "adult": "{count, plural, zero {Взрослых} one {Взрослый} other {Взрослых}}",
+    "child": "{count, plural, zero {Детей} one {Ребёнок} other {Детей}}",
     "human": "Человек",
-    "room": "Комнат",
+    "room": "{count, plural, zero {Комнат} one {Комната} few {Комнаты} other {Комнат}}",
     "find": "Найти",
     "dateRange": "Дата заезда - Дата отьезда  "
   },

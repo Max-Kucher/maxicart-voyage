@@ -9,7 +9,7 @@ import {Controller, useForm, SubmitHandler} from 'react-hook-form';
 import { add } from 'date-fns';
 import {useTranslations} from "next-intl";
 import SearchApartmentsFormData from "@/types/SearchApartmentsFormData";
-import { useRouter } from "@/navigation";
+import { useRouter, usePathname } from "@/navigation";
 // import { ApartmentsFormContext } from "@/context/FindApartmentProvider";
 
 interface FindApartmentProps {
@@ -18,6 +18,8 @@ interface FindApartmentProps {
 
 const FindApartment: FC<FindApartmentProps> = ({ behavior }) => {
     const router = useRouter();
+    // const pathname = usePathname();
+
     const t = useTranslations('filterForm');
 
     const defaultValues: SearchApartmentsFormData = {
@@ -26,19 +28,15 @@ const FindApartment: FC<FindApartmentProps> = ({ behavior }) => {
             to: add(new Date(), { days: 2 }),
         },
         general: {
-            room: 0,
-            adult: 0,
+            room: 1,
+            adult: 1,
             child: 0,
         },
         price: {
-            from: undefined,
-            to: undefined,
+            from: 0,
+            to: 0,
         },
     };
-
-    // const { data: formCtxData, setData: setFromCtxData } = useContext(ApartmentsFormContext);
-    // console.log(formCtxData);
-    // setFromCtxData(defaultValues);
 
     const {control, handleSubmit} = useForm({
         defaultValues,
@@ -76,23 +74,29 @@ const FindApartment: FC<FindApartmentProps> = ({ behavior }) => {
                         control={control}
                         render={({field: {onChange, value}}) => (
                             <CountPiker
-                                onSetValue={(id, num) => onChange({...value, [id]: num})}
+                                onSetValue={(id, num) => onChange(() => {
+                                    if (num < 0) {
+                                        num = 0;
+                                    }
+
+                                    return {...value, [id]: num};
+                                })}
                                 list={[
                                     {
-                                        label: t('adult'),
+                                        label: t('adult', { count: value.adult }),
                                         id: 'adult'
                                     },
                                     {
-                                        label: t('child'),
+                                        label: t('child', { count: value.child }),
                                         id: 'child',
                                     },
                                     {
-                                        label: t('room'),
+                                        label: t('room', { count: value.room }),
                                         id: 'room'
                                     }
                                 ]}
                                 values={value}
-                                text={`${value.adult} ${t('human')} - ${value.child} ${t('child')} - ${value.room} ${t('room')}`}
+                                text={`${value.adult} ${t('human')} - ${value.child} ${t('child', { count: value.child })} - ${value.room} ${t('room', { count: value.room })}`}
                             />
                         )}/>
                 </div>
@@ -101,14 +105,26 @@ const FindApartment: FC<FindApartmentProps> = ({ behavior }) => {
                            <span className={'mb-[10px] text-lg'}>
                                {t('priceFrom')}
                            </span>
-                        <Controller render={({field}) => <Input type={"number"} rightText={'USD'} {...field}/>} name={'price.from'} control={control}/>
+                        <Controller
+                            render={({field: {value, onChange, ...field}}) =>
+                                <Input type={"number"} value={value} onChange={(event) => onChange(() => { return parseFloat(event.target.value.replace(/[^0-9\b]/g, '')) })} className={"[appearance:textfield]"} rightText={'USD'} {...field} />
+                            }
+                            name={'price.from'}
+                            control={control}
+                        />
                     </div>
                     <div className={'w-[20px] h-[4px] bg-primary rounded-[5px] mt-[6%]'}/>
                     <div>
                             <span className={'mb-[10px] text-lg'}>
                                 {t('priceTo')}
                             </span>
-                      <Controller render={({field}) => <Input type={"number"} rightText={'USD'} {...field}/>} name={'price.to'} control={control}/>
+                      <Controller
+                        render={({field: {value, onChange, ...field}}) =>
+                          <Input type={"number"} value={value} onChange={(event) => onChange(() => { return parseFloat(event.target.value.replace(/[^0-9\b]/g, '')) })} className={"[appearance:textfield]"} rightText={'USD'} {...field} />
+                        }
+                        name={'price.to'}
+                        control={control}
+                      />
                     </div>
                 </div>
                 <div className={'flex items-center justify-center 2xl:hidden'}>

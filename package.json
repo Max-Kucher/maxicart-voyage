@@ -25,6 +25,7 @@
     "react-dom": "^18",
     "react-hook-form": "^7.51.2",
     "react-phone-input-2": "^2.15.1",
+    "sharp": "^0.33.3",
     "tailwind-merge": "^2.2.2",
     "tailwindcss-animate": "^1.0.7",
     "yet-another-react-lightbox": "^3.17.2"
