@@ -82,7 +82,7 @@
   "apartmentCard": {
     "maxPeople": "До {maxPeople} людей",
     "price": "От {price} {currency}",
-    "nights": "за {nights} ночи",
+    "nights": "за {count, plural, zero {# ночей} one {# ночь} few {# ночи} other {# ночей}}",
     "book": "Забронировать"
   },
   "addApartmentForm": {
@@ -97,7 +97,7 @@
   "apartmentsDetails": {
     "maxPeople": "До {maxPeople} людей",
     "price": "От {price} {currency}",
-    "nights": "за {nights} ночи"
+    "nights": "за {count, plural, zero {# ночей} one {# ночь} few {# ночи} other {# ночей}}"
   },
   "common": {
     "company": "Компания"

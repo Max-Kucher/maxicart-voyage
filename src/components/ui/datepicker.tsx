@@ -65,6 +65,7 @@ const Datepicker: FC<DatepickerProps> = ({className, placeholder, date, setDate}
                         selected={date}
                         onSelect={setDate}
                         numberOfMonths={2}
+                        fromDate={new Date()}
                     />
                 </PopoverContent>
             </Popover>

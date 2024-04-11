@@ -26,11 +26,11 @@ export const convertSearchApartmentsFormDataToApartmentsSearchParams = (data: Se
     searchParams.departure_date = convertDateToSearch(data.date.to);
   }
 
-  if (data.price.from) {
+  if (data?.price?.from) {
     searchParams.min_price = data.price.from;
   }
 
-  if (data.price.to) {
+  if (data?.price?.to) {
     searchParams.max_price = data.price.to;
   }
 

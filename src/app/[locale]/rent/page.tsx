@@ -8,11 +8,12 @@ import React from "react";
 import { cookies } from 'next/headers'
 import ApartmentsSearchParams from "@/types/ApartmentsSearchParams";
 import {NoSSRFindApartamentForm} from "@/components/FindApartamentForm/NoSSRFindApartamentForm";
+import appConfig from "@/config/app";
 
 
 async function CardsList() {
     const cookieStore = cookies();
-    const savedSearch = cookieStore.get('apartmentFormSearch-backend');
+    const savedSearch = cookieStore.get(`${appConfig.cookieKeys.apartmentFormSearch}-backend`);
     let searchParams: ApartmentsSearchParams = {};
 
     if (savedSearch === null || savedSearch === undefined) {
@@ -28,6 +29,8 @@ async function CardsList() {
     const { searchApartments } = useApartments();
     const apartments = await searchApartments(searchParams);
 
+    console.log(apartments.data.length);
+
     return apartments.data.map((apartment: Apartment) => (<ApartmentCard
         key={`index-apartment-${apartment.id}`}
         image={apartment.photos[0]?.photo ?? null}
@@ -40,8 +43,7 @@ async function CardsList() {
         location={apartment.address}
         roomSize={apartment.m2}
         bedCount={apartment.smoobu.rooms.bedrooms}
-
-        nights={2} // под вопросом как быть
+        nights={apartment.nights ?? 1}
     />));
 }
 

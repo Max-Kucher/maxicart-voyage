@@ -42,7 +42,7 @@ const ApartmentDetails: FC<ApartmentDetailsProps> = ({
                 <h1 className={'text-2xl text-black font-semibold'}>{name}</h1>
                 <div className={'flex flex-col'}>
                     <b className={'text-2xl text-primary font-extrabold'}>{t('price', {price, currency})}</b>
-                    <span className={'text-lg text-foreground-secondary'}>{t('nights', {nights})}</span>
+                    <span className={'text-lg text-foreground-secondary'}>{t('nights', {count: nights})}</span>
                 </div>
             </div>
             <div className={'mt-[3px]'}>

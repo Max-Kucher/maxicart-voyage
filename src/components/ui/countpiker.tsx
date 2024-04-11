@@ -11,9 +11,10 @@ interface CountPikerProps {
     values: { [id: string]: number }
     text?: string
     onSetValue: (id: string, value: number) => void
+    disabled?: string[]
 }
 
-const CountPiker: FC<CountPikerProps> = ({className, text, onSetValue, values, list}) => {
+const CountPiker: FC<CountPikerProps> = ({className, text, onSetValue, values, list, disabled}) => {
     return (
         <div className={cn("grid gap-2", className)}>
             <Popover>
@@ -35,15 +36,18 @@ const CountPiker: FC<CountPikerProps> = ({className, text, onSetValue, values, l
                     <div
                         className={'md:px-[34px] md:py-[41px] px-[10px] py-[20px] bg-white rounded-xl w-full flex flex-col gap-[40px]'}>
                         {list?.map(({id, label}) => {
-                            const value = values[id]
+                            const value = values[id];
+                            const isDisabled = disabled !== undefined && (!!~disabled.indexOf(id));
+
                             return <div key={id}
                                         className={'text-lg items-center flex justify-between gap-[20vw] md:gap-[130px]'}>
                                 <span>{label}</span>
                                 <div className={'flex items-center justify-center'}>
-                                    <Minus onClick={() => onSetValue(id, value === 0 ? 0 : value - 1)} className={`${value === 0 ? 'text-gray-400' : 'text-primary cursor-pointer'}`}/>
-                                    <input className={'w-10 text-center [appearance:textfield]'} type="number" min={0} value={values[id]} onChange={(e) => onSetValue(id, +e.target.value)}/>
-                                    <Plus onClick={() => onSetValue(id, value + 1)}
-                                          className={'text-primary cursor-pointer'}/>
+                                    <Minus onClick={() => {if (!isDisabled) { return onSetValue(id, value === 0 ? 0 : value - 1) } return value; }}
+                                           className={`${(value === 0) || isDisabled ? 'text-gray-400' : 'text-primary cursor-pointer'}`} />
+                                    <input disabled={isDisabled} className={'w-10 text-center [appearance:textfield]'} type="number" min={0} value={values[id]} onChange={(e) => onSetValue(id, +e.target.value)}/>
+                                    <Plus onClick={() => {if (!isDisabled) { return onSetValue(id, value + 1) } return value; }}
+                                          className={`${isDisabled ? 'text-gray-400' : 'text-primary cursor-pointer'}`} />
                                 </div>
                             </div>
                         })}

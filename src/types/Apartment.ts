@@ -34,8 +34,14 @@ export default interface Apartment {
         Kitchen: string[];
         Bedroom: string[];
     },
+    addons: {
+        id: number;
+        title: string;
+        price: number;
+    }[],
     smoobu_price: {
         price: number;
     };
     address: string; // Full address string from backend
+    nights?: number;
 };
