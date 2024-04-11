@@ -8,10 +8,10 @@ export default function Home() {
 
     return (
         <main className="bg-white">
-            <Main/>
-            <OurWork/>
-            <AddApartmentForm/>
-            <WorkStages/>
+            <Main />
+            <OurWork id={`homegage-our-work`} />
+            <AddApartmentForm />
+            <WorkStages />
         </main>
     )
 }
