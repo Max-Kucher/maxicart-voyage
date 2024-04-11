@@ -9,12 +9,11 @@ import {Controller, useForm, SubmitHandler} from 'react-hook-form';
 import {add} from 'date-fns';
 import {useTranslations} from "next-intl";
 import SearchApartmentsFormData from "@/types/SearchApartmentsFormData";
-import { useRouter } from "@/navigation";
+import { useRouter, usePathname } from "@/navigation";
 import useApartments from "@/composables/useApartments";
 import ApartmentsSearchParams from "@/types/ApartmentsSearchParams";
-import {convertDateToSearch, convertSearchApartmentsFormDataToApartmentsSearchParams} from "@/lib/utils";
+import {convertSearchApartmentsFormDataToApartmentsSearchParams} from "@/lib/utils";
 import { getCookie, setCookie } from 'cookies-next';
-// import { ApartmentsFormContext } from "@/context/FindApartmentProvider";
 
 interface FindApartmentProps {
     behavior?: string; // Defines the behavior for the component. Supports "default"|redirect" options
@@ -24,7 +23,7 @@ const savedSearchKey = 'apartmentFormSearch';
 
 const FindApartment: FC<FindApartmentProps> = ({ behavior }) => {
     const router = useRouter();
-    const { searchApartments } = useApartments();
+    const pathname = usePathname();
 
     const t = useTranslations('filterForm');
 
@@ -44,9 +43,38 @@ const FindApartment: FC<FindApartmentProps> = ({ behavior }) => {
         },
     }), []);
 
-    const {control, handleSubmit, setValue} = useForm({
+    const {formState, control, handleSubmit, setValue} = useForm({
         defaultValues,
     });
+
+    const [formLoading, setFormLoading] = useState(false);
+
+    const onSubmit: SubmitHandler<SearchApartmentsFormData> = async (data: SearchApartmentsFormData) => {
+        const today = new Date();
+        setCookie(savedSearchKey, JSON.stringify(data), {
+            path: '/',
+            expires: new Date(today.setDate(today.getDate() + 3)),
+        });
+        setCookie(savedSearchKey + '-backend', convertSearchApartmentsFormDataToApartmentsSearchParams(data), {
+            path: '/',
+            expires: new Date(today.setDate(today.getDate() + 3)),
+        });
+
+        if (behavior === 'redirect') {
+            router.push('/rent?send-form=true', {
+                scroll: false
+            });
+        } else {
+            setFormLoading(true);
+
+            setTimeout(() => {
+                router.push(pathname, {
+                    scroll: false,
+                });
+                setFormLoading(false);
+            }, 1000);
+        }
+    };
 
     useEffect(() => {
         let savedSearch: any = getCookie(savedSearchKey);
@@ -73,32 +101,15 @@ const FindApartment: FC<FindApartmentProps> = ({ behavior }) => {
         if (savedSearch.price !== undefined) {
             setValue('price', savedSearch.price);
         }
-    });
 
-    const [formLoading, setFormLoading] = useState(false);
+        if (window.location.search.length) {
+            const search = JSON.parse('{"' + decodeURI(window.location.search.substring(1)).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}');
 
-    const onSubmit: SubmitHandler<SearchApartmentsFormData> = async (data: SearchApartmentsFormData) => {
-        const today = new Date();
-        setCookie(savedSearchKey, JSON.stringify(data), {
-            path: '/',
-            expires: new Date(today.setDate(today.getDate() + 3)),
-        });
-        setCookie(savedSearchKey + '-backend', convertSearchApartmentsFormDataToApartmentsSearchParams(data), {
-            path: '/',
-            expires: new Date(today.setDate(today.getDate() + 3)),
-        });
-
-        if (behavior === 'redirect') {
-            router.push('/rent');
-        } else {
-            setFormLoading(true);
-            const searchParams = convertSearchApartmentsFormDataToApartmentsSearchParams(data);
-            const searchResults = await searchApartments(searchParams);
-
-            setFormLoading(false);
-            router.refresh();
+            if (search['send-form'] !== undefined) {
+                handleSubmit(onSubmit)()
+            }
         }
-    };
+    });
 
     const btnClass = `inline-block transition-opacity duration-150 hover:opacity-90 ${formLoading ? 'opacity-40 pointer-events-none' : ''}`;
 
