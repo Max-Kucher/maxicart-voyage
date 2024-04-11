@@ -34,7 +34,7 @@ export default function Footer() {
                 <nav>
                     <ul role={`navigation`}>
                         {menuConfig.items.map(item => {
-                            if (item.showInFooter === false) {
+                            if (item.showInFooter !== undefined && item.showInFooter === false) {
                                 return '';
                             }
 

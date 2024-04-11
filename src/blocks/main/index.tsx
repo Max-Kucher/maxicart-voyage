@@ -42,7 +42,11 @@ const Main = () => {
                     <h1 className={'md:text-[40px] md:leading-[50px] uppercase md:font-extrabold text-white md:mt-[30px] mt-[20px] md:mb-[60px] mb-[20px] text-xl font-bold'}>{t('title')}</h1>
                 </div>
                 <div className={'flex justify-center md:gap-[50px] gap-[15px] 2xl:mb-[100px] xl:mb-[62px] md:mb-[32px] mb-[42px] flex-wrap'}>
-                    <Button variant={'secondary'}>{t('toRent')}</Button>
+                    <Button asChild={true} variant={'secondary'}>
+                        <Link href={`/?rentOut=true`}>
+                            {t('toRent')}
+                        </Link>
+                    </Button>
                     <Button asChild={true}>
                         <Link href={`/rent`}>
                             {t('rent')}

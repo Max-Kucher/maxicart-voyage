@@ -17,12 +17,13 @@ const menuConfig = {
         {
             title: "workStages",
             href: "/work-stages",
+            showInFooter: true,
         },
-        {
-            title: "contacts",
-            href: "/contacts",
-            showInFooter: false,
-        },
+        // {
+        //     title: "contacts",
+        //     href: "/contacts",
+        //     showInFooter: false,
+        // },
     ]
 };
 
