@@ -10,13 +10,15 @@ interface ApartmentDetailsProps {
     name: string
     maxPeople: number
     bedCount: number
-    description: string
+    description: string | undefined
     bathCount: number
     roomSize: number
     price: number
     location: string
     nights: number
-    currency: string
+    currency: string,
+    lat?: number|null,
+    lng?: number|null,
 }
 
 const ApartmentDetails: FC<ApartmentDetailsProps> = ({
@@ -29,7 +31,9 @@ const ApartmentDetails: FC<ApartmentDetailsProps> = ({
                                                          location,
                                                          nights,
                                                          description,
-                                                         currency
+                                                         currency,
+                                                         lng,
+                                                         lat,
                                                      }) => {
     const t = useTranslations('apartmentsDetails')
     return (
@@ -80,9 +84,12 @@ const ApartmentDetails: FC<ApartmentDetailsProps> = ({
                     </Button>
                 </div>
             </div>
-            <div className={'mt-[50px] text-black text-lg font-medium'} dangerouslySetInnerHTML={{__html: description}} />
+            {description !== undefined && (
+                <div className={'mt-[50px] text-black text-lg font-medium'}
+                     dangerouslySetInnerHTML={{__html: description}}/>
+            )}
             <div className={'flex flex-wrap mt-[50px] gap-[15px]'}>
-                <div
+            <div
                     className={'flex items-center gap-[15px] px-[20px] py-[15px] rounded-[10px] bg-background'}>
                     <img src={''} alt={''} className={'w-[22px] max-h-[22px]'}/>
                     <span className={'text-lg font-medium text-black'}>Свой бассейн</span>

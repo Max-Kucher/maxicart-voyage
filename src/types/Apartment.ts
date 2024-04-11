@@ -20,6 +20,8 @@ export default interface Apartment {
             name: string;
         };
     };
+    title?: string,
+    description?: string,
     m2: number|null,
     photos: Photo[];
     amenities: {
