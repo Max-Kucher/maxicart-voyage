@@ -16,7 +16,7 @@ const menuConfig = {
         },
         {
             title: "workStages",
-            href: "/work-stages",
+            href: "/#homegage-our-work",
             showInFooter: true,
         },
         // {
