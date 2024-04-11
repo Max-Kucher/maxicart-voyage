@@ -4,7 +4,8 @@ import {DownloadIcon, MapPinIcon, Maximize2Icon, Share2Icon, SnowflakeIcon} from
 import BedIcon from '../icons/bed';
 import BathIcon from '../icons/bath';
 import {Button} from '../ui/button';
-import { useTranslations } from 'next-intl';
+import {useTranslations} from 'next-intl';
+import {Link} from "@/navigation";
 
 interface ApartmentDetailsProps {
     name: string
@@ -17,8 +18,9 @@ interface ApartmentDetailsProps {
     location: string
     nights: number
     currency: string,
-    lat?: number|null,
-    lng?: number|null,
+    lat?: number | null,
+    lng?: number | null,
+    document?: string
 }
 
 const ApartmentDetails: FC<ApartmentDetailsProps> = ({
@@ -34,18 +36,31 @@ const ApartmentDetails: FC<ApartmentDetailsProps> = ({
                                                          currency,
                                                          lng,
                                                          lat,
+                                                         document
                                                      }) => {
     const t = useTranslations('apartmentsDetails')
     return (
-        <div className={'w-full bg-white rounded-lg px-[30px] py-[60px]'}>
+        <div className={'w-full bg-white rounded-lg xl:px-[30px] xl:py-[60px] py-[30px] px-[20px]'}>
             <div className={'flex justify-between'}>
-                <h1 className={'text-2xl text-black font-semibold'}>{name}</h1>
-                <div className={'flex flex-col'}>
-                    <b className={'text-2xl text-primary font-extrabold'}>{t('price', {price, currency})}</b>
-                    <span className={'text-lg text-foreground-secondary'}>{t('nights', {count: nights})}</span>
+                <div className={'flex md:justify-between md:w-full flex-col md:flex-row gap-[20px] md:gap-[0px]'}>
+                    <h1 className={'text-lg md:text-2xl text-black font-semibold'}>{name}</h1>
+                    <div className={'flex flex-col'}>
+                        <b className={'text-lg md:text-2xl text-primary font-extrabold'}>{t('price', {price, currency})}</b>
+                        <span className={'text-sm md:text-lg text-foreground-secondary'}>{t('nights', {count: nights})}</span>
+                    </div>
+                </div>
+                <div className={'md:hidden flex flex-col gap-[10px]'}>
+                    {document && <Link href={document} target={'_blank'}>
+                        <Button size={'icon'} variant={'ghost'} className={'w-[44px] h-[44px] md:w-[57px] md:h-[57px]'}>
+                            <DownloadIcon className={'w-[30px] h-[30px] md:h-[38px] md:w-[38px] text-primary'}/>
+                        </Button>
+                    </Link>}
+                    <Button size={'icon'} variant={'ghost'} className={'w-[44px] h-[44px] md:w-[57px] md:h-[57px]'}>
+                        <Share2Icon className={'w-[30px] h-[30px] md:h-[38px] md:w-[38px] text-primary'}/>
+                    </Button>
                 </div>
             </div>
-            <div className={'mt-[3px]'}>
+            <div className={'mt-[20px] md:mt-[3px]'}>
                 <div className={'flex items-center gap-[15px]'}>
                     <UsersIcon className={'text-primary w-[27px] h-[27px]'}/>
                     <span className={'text-lg font-medium text-foreground'}>
@@ -62,37 +77,38 @@ const ApartmentDetails: FC<ApartmentDetailsProps> = ({
                     <div
                         className={'inline-flex items-center bg-background gap-[15px] py-[7px] px-[6px] rounded-[5px]'}>
                         <BedIcon className={'w-[39px] h-[26px]'}/>
-                        <span className={'text-[30px] font-semibold'}>{bedCount}</span>
+                        <span className={'text-lg font-medium md:text-[30px] md:font-semibold'}>{bedCount}</span>
                     </div>
                     <div
                         className={'inline-flex items-center bg-background gap-[15px] py-[7px] px-[6px] rounded-[5px]'}>
                         <BathIcon className={'w-[39px] h-[26px]'}/>
-                        <span className={'text-[30px] font-semibold'}>{bathCount}</span>
+                        <span className={'text-lg font-medium md:text-[30px] md:font-semibold'}>{bathCount}</span>
                     </div>
                     <div
                         className={'inline-flex items-center bg-background gap-[15px] py-[7px] px-[6px] rounded-[5px]'}>
                         <Maximize2Icon className={'h-[23px] w-[23px]'}/>
-                        <span className={'text-[30px] font-semibold'}>{roomSize} M2</span>
+                        <span className={'text-lg font-medium md:text-[30px] md:font-semibold'}>{roomSize} M2</span>
                     </div>
                 </div>
-                <div className={'flex gap-[5px]'}>
-                    <Button size={'icon'} variant={'ghost'} className={'w-[57px] h-[57px]'}>
-                        <DownloadIcon className={'h-[38px] w-[38px] text-primary'}/>
-                    </Button>
+                <div className={'hidden md:flex gap-[5px]'}>
+                    {document && <Link href={document} target={'_blank'}>
+                        <Button size={'icon'} variant={'ghost'} className={'w-[57px] h-[57px]'}>
+                            <DownloadIcon className={'h-[38px] w-[38px] text-primary'}/>
+                        </Button>
+                    </Link>}
                     <Button size={'icon'} variant={'ghost'} className={'w-[57px] h-[57px]'}>
                         <Share2Icon className={'h-[38px] w-[38px] text-primary'}/>
                     </Button>
                 </div>
             </div>
-            {description !== undefined && (
-                <div className={'mt-[50px] text-black text-lg font-medium'}
+            {description && (
+                <div className={'mt-[20px] md:mt-[50px] text-black text-sm md:text-lg font-medium'}
                      dangerouslySetInnerHTML={{__html: description}}/>
             )}
-            <div className={'flex flex-wrap mt-[50px] gap-[15px]'}>
-            <div
+            <div className={'flex flex-wrap mt-[20px] md:mt-[50px] gap-[15px]'}>
+                <div
                     className={'flex items-center gap-[15px] px-[20px] py-[15px] rounded-[10px] bg-background'}>
-                    <img src={''} alt={''} className={'w-[22px] max-h-[22px]'}/>
-                    <span className={'text-lg font-medium text-black'}>Свой бассейн</span>
+                    <span className={'text-sm md:text-lg font-medium text-black'}>Свой бассейн</span>
                 </div>
             </div>
         </div>

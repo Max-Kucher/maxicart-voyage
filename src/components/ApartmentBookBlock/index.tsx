@@ -1,27 +1,27 @@
 'use client'
 
 import React, {SyntheticEvent, useRef, useState} from 'react';
-import { Checkbox } from '../ui/checkbox';
-import { CheckIcon } from 'lucide-react';
+import {Checkbox} from '../ui/checkbox';
+import {CheckIcon} from 'lucide-react';
 import {Controller, SubmitHandler, useForm} from "react-hook-form";
 import Datepicker from "@/components/ui/datepicker";
 import CountPiker from "@/components/ui/countpiker";
 import {Button} from "@/components/ui/button";
 import {useTranslations} from "next-intl";
 import {add} from "date-fns";
-import { getCookie, setCookie } from 'cookies-next';
+import {getCookie, setCookie} from 'cookies-next';
 import SearchApartmentsFormData from "@/types/SearchApartmentsFormData";
 import {convertSearchApartmentsFormDataToApartmentsSearchParams} from "@/lib/utils";
 import useApartments from "@/composables/useApartments";
 import appConfig from "@/config/app";
-import { Link, useRouter } from "@/src/navigation";
+import {Link, useRouter} from "@/src/navigation";
 
 interface ApartmentBookBlockProps {
     apartmentId: number,
 }
 
-const ApartmentBookBlock = ({ apartmentId }: ApartmentBookBlockProps) => {
-    const { checkApartment } = useApartments();
+const ApartmentBookBlock = ({apartmentId}: ApartmentBookBlockProps) => {
+    const {checkApartment} = useApartments();
     const router = useRouter();
 
     const bookingUrl = `/rent/${apartmentId}/book`;
@@ -33,7 +33,7 @@ const ApartmentBookBlock = ({ apartmentId }: ApartmentBookBlockProps) => {
         savedSearch = JSON.parse(savedSearchCookie);
     }
 
-    const t = useTranslations('filterForm');
+    const t = useTranslations();
     const {control, handleSubmit, getValues} = useForm({
         defaultValues: {
             date: {
@@ -79,24 +79,24 @@ const ApartmentBookBlock = ({ apartmentId }: ApartmentBookBlockProps) => {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={'bg-white rounded-lg px-[30px] py-[60px] mt-[30px]'}>
-            <b className={'text-xl text-black font-semibold'}>Выберите даты заезда, выезда и количество гостей</b>
-            <div className={'flex gap-[20px] items-end mt-[30px]'}>
-                <div>
+            <div className={'text-base md:text-xl text-black font-semibold text-center lg:text-left'}>Выберите даты заезда, выезда и количество гостей</div>
+            <div className={'flex md:flex-wrap 2xl:flex-nowrap md:flex-row flex-col gap-[20px] md:items-end items-center mt-[30px]'}>
+                <div className={'flex flex-col w-full'}>
                        <span className={'mb-[10px] text-lg'}>
-                           {t('date')}
+                           {t('filterForm.date')}
                        </span>
                     <Controller
                         name={'date'}
                         control={control}
                         render={({field: {onChange, value}}) => (
-                            <Datepicker placeholder={t('dateRange')} date={value}
+                            <Datepicker placeholder={t('filterForm.dateRange')} date={value}
                                         setDate={(data) => onChange(data)}/>
                         )}
                     />
                 </div>
-                <div>
+                <div className={'flex flex-col w-full'}>
                        <span className={'mb-[10px] text-lg'}>
-                           {t('peopleCount')}
+                           {t('filterForm.peopleCount')}
                        </span>
                     <Controller
                         name={'general'}
@@ -106,51 +106,69 @@ const ApartmentBookBlock = ({ apartmentId }: ApartmentBookBlockProps) => {
                                 onSetValue={(id, num) => onChange({...value, [id]: num})}
                                 list={[
                                     {
-                                        label: t('adult', { count: value.adult }),
+                                        label: t('filterForm.adult', {count: value.adult}),
                                         id: 'adult'
                                     },
                                     {
-                                        label: t('child', { count: value.child }),
+                                        label: t('filterForm.child', {count: value.child}),
                                         id: 'child',
                                     },
                                     {
-                                        label: t('room', { count: value.room }),
+                                        label: t('filterForm.room', {count: value.room}),
                                         id: 'room'
                                     }
                                 ]}
                                 disabled={['room']}
                                 values={value}
-                                text={`${value.adult} ${t('human')} - ${value.child} ${t('child', { count: value.child })} - ${value.room} ${t('room', { count: value.room })}`}
+                                text={`${value.adult} ${t('filterForm.human')} - ${value.child} ${t('filterForm.child', {count: value.child})} - ${value.room} ${t('filterForm.room', {count: value.room})}`}
                             />
                         )}/>
                 </div>
-                <Button>Применить</Button>
-                <Button className={bookingDisabled ? 'pointer-events-none opacity-60' : ''} asChild={true} onClick={handleRoomBookingButtonClick}>
+                <Button>{t('apartment.additionalService.apply')}</Button>
+                <div className={'md:hidden block w-full xl:w-1/3 my-[40px] md:mt-0'}>
+                    <div className={'p-[23px] border border-foreground-secondary rounded-lg flex flex-col gap-[18px]'}>
+                        <div className={'flex items-center gap-[10px] md:gap-[30px]'}>
+                            <Checkbox/>
+                            <label className={'text-xs md:text-lg font-medium'}><span className={'text-primary'}>+1</span> <span>Кровать для ребенка</span></label>
+                        </div>
+                        <div className={'flex items-center gap-[10px] md:gap-[30px]'}>
+                            <Checkbox/>
+                            <label className={'text-xs md:text-lg font-medium'}><span className={'text-primary'}>+1</span> <span>{t('apartment.additionalService.taxi')}</span></label>
+                        </div>
+                        <div className={'flex items-center gap-[10px] md:gap-[30px]'}>
+                            <Checkbox/>
+                            <label className={'text-xs md:text-lg font-medium'}>{t('apartment.additionalService.taxi')}</label>
+                        </div>
+                        <div className={'text-xs md:text-lg font-medium'}>{t('apartment.additionalService.service')} <span className={'text-primary cursor-pointer'}>{t('apartment.additionalService.more')}</span></div>
+                    </div>
+                </div>
+                <Button className={bookingDisabled ? 'pointer-events-none opacity-60' : ''} asChild={true}
+                        onClick={handleRoomBookingButtonClick}>
                     <Link href={bookingUrl}>
-                        Забронировать
+                        {t('apartment.additionalService.book')}
                     </Link>
                 </Button>
             </div>
-            <div className={'flex mt-[60px] justify-between'}>
+            <div className={'flex mt-[60px] md:justify-between md:flex-row flex-col'}>
                 <div>
-                    <b className={'text-xl text-black font-semibold'}>Удобства и услуги</b>
-                    <div className={'grid grid-cols-2 gap-x-[100px] mt-[30px]'}>
+                    <b className={'text-base md:text-xl text-black font-semibold'}>Удобства и услуги</b>
+                    <div className={'grid md:grid-cols-2 grid-cols-1 gap-x-[100px] mt-[30px]'}>
                         <div>
-                            <b className={'text-xl text-black font-semibold'}>Ванная комната</b>
+                            <b className={'text-base md:text-xl text-black font-semibold'}>Ванная комната</b>
                             <ul className={'list-none list-inside mt-[14px]'}>
-                                <li className={'text-foreground text-lg flex gap-[15px]'}>
+                                <li className={'text-foreground text-sm md:text-lg flex gap-[15px]'}>
                                     <CheckIcon className={'text-primary'}/>
                                     <span>Ванная комната</span>
                                 </li>
-                                <li className={'text-foreground text-lg flex gap-[15px]'}>
+                                <li className={'text-foreground text-sm md:text-lg flex gap-[15px]'}>
                                     <CheckIcon className={'text-primary'}/>
                                     <span>Ванная комната</span>
                                 </li>
-                                <li className={'text-foreground text-lg flex gap-[15px]'}>
+                                <li className={'text-foreground text-sm md:text-lg flex gap-[15px]'}>
                                     <CheckIcon className={'text-primary'}/>
                                     <span>Ванная комната</span>
                                 </li>
-                                <li className={'text-foreground text-lg flex gap-[15px]'}>
+                                <li className={'text-foreground text-sm md:text-lg flex gap-[15px]'}>
                                     <CheckIcon className={'text-primary'}/>
                                     <span>Ванная комната</span>
                                 </li>
@@ -158,22 +176,22 @@ const ApartmentBookBlock = ({ apartmentId }: ApartmentBookBlockProps) => {
                         </div>
                     </div>
                 </div>
-                <div className={'w-1/3'}>
+                <div className={'md:block hidden w-full xl:w-1/3 mt-[40px] md:mt-0'}>
                     <div className={'p-[23px] border border-background rounded-lg flex flex-col gap-[18px]'}>
-                        <div className={'flex items-center gap-[30px]'}>
+                        <div className={'flex items-center gap-[10px] md:gap-[30px]'}>
                             <Checkbox/>
-                            <label className={'text-lg font-medium'}><span className={'text-primary'}>+1</span> <span>Кровать для ребенка</span></label>
+                            <label className={'text-xs md:text-lg font-medium'}><span className={'text-primary'}>+1</span> <span>Кровать для ребенка</span></label>
                         </div>
-                        <div className={'flex items-center gap-[30px]'}>
+                        <div className={'flex items-center gap-[10px] md:gap-[30px]'}>
                             <Checkbox/>
-                            <label className={'text-lg font-medium'}><span className={'text-primary'}>+1</span> <span>Кровать для взрослого</span></label>
+                            <label className={'text-xs md:text-lg font-medium'}><span className={'text-primary'}>+1</span> <span>Кровать для взрослого</span></label>
                         </div>
-                        <div className={'flex items-center gap-[30px]'}>
+                        <div className={'flex items-center gap-[10px] md:gap-[30px]'}>
                             <Checkbox/>
-                            <label className={'text-lg font-medium'}>Трансфер от/до аэропорта</label>
+                            <label className={'text-xs md:text-lg font-medium'}>Трансфер от/до аэропорта</label>
                         </div>
                         <div className={'text-lg font-medium'}>
-                            Тур услуги <span className={'text-primary cursor-pointer'}>подробнее...</span>
+                            {t('apartment.additionalService.service')} <span className={'text-primary cursor-pointer'}>{t('apartment.additionalService.more')} </span>
                         </div>
                     </div>
                 </div>

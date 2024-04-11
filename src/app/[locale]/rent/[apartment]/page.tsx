@@ -12,18 +12,18 @@ export default async function Page({params} : {
 
     const apartmentDataSearch = await searchApartmentById(parseInt(params.apartment));
     const apartmentData = apartmentDataSearch.body;
-
+    console.log(apartmentData.document)
     return (
         <div className={'container'}>
             <div className={'mt-[20px] md:mt-[40px] 2xl:mt-[70px] md:mb-[30px] mb-[20px]'}>
                 <PageNavigation nameSpace={apartmentData.title ?? apartmentData.smoobu.name}/>
             </div>
 
-            <div className={'flex gap-[20px]'}>
-                <div className={'w-1/2'}>
+            <div className={'flex gap-[20px] xl:flex-row flex-col'}>
+                <div className={'xl:w-1/2'}>
                     <ApartmentPhotos images={apartmentData.photos.map(photo => photo.photo)}/>
                 </div>
-                <div className={'w-1/2'}>
+                <div className={'xl:w-1/2'}>
                     <ApartmentDetails
                         nights={apartmentData.nights ?? 1}
                         roomSize={apartmentData.m2 ?? 0}
@@ -35,6 +35,7 @@ export default async function Page({params} : {
                         name={apartmentData.title ?? apartmentData.smoobu.name}
                         location={apartmentData.address}
                         description={apartmentData.description}
+                        document={apartmentData.document ?? ''}
                     />
                 </div>
             </div>
