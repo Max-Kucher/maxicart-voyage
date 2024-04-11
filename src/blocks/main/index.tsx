@@ -27,7 +27,7 @@ async function CardsList() {
             location={apartment.address}
             roomSize={apartment.m2}
             bedCount={apartment.smoobu.rooms.bedrooms}
-            nights={2} // под вопросом как быть
+            nights={apartment.nights ?? 1}
         />))
     ;
 }

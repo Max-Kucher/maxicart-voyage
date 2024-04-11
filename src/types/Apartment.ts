@@ -38,4 +38,5 @@ export default interface Apartment {
         price: number;
     };
     address: string; // Full address string from backend
+    nights?: number;
 };
