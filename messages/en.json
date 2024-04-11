@@ -79,9 +79,9 @@
     "submit": "Leave a request"
   },
   "apartmentCard": {
-    "maxPeople": "Max {maxPeople} people",
+    "maxPeople": "Max {maxPeople, plural, one {# person} other {# persons}}",
     "price": "From {price} {currency}",
-    "nights": "for {nights} nights",
+    "nights": "for {count, plural, one {# night} other {# nights}}",
     "book": "Book now"
   },
   "addApartmentForm": {
@@ -90,6 +90,7 @@
     "description": "Contact us for details and we will gladly assist you with your tenant search.",
     "send": "Send",
     "name": "Name",
+    "lastname": "Lastname",
     "message": "Leave a comment",
     "agreement": "I agree to the Privacy Policy"
   },

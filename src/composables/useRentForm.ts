@@ -1,7 +1,7 @@
 import appConfig from "@/config/app";
 import RentOutFormData from "@/types/RentOutFormData";
 
-async function submitForm(formData: RentOutFormData): Promise<{ ok: true, body: {}, headers: {} }>
+async function submitForm(formData: RentOutFormData): Promise<{ ok: boolean, body: {}, headers: {} }>
 {
     const url = new URL('/api/applications/', appConfig.backendBase);
     const body = new FormData();
