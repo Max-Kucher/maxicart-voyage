@@ -1,5 +1,5 @@
 import ApartmentCard from "@/components/ApartmentCard";
-import FindApartment from "@/components/FindApartamentForm";
+// import FindApartment from "@/components/FindApartamentForm";
 import AddApartmentForm from "@/src/blocks/addApartmentForm";
 import PageNavigation from "@/components/PageNavigation";
 import useApartments from "@/composables/useApartments";
@@ -7,6 +7,8 @@ import Apartment from "@/types/Apartment";
 import React from "react";
 import { cookies } from 'next/headers'
 import ApartmentsSearchParams from "@/types/ApartmentsSearchParams";
+import {NoSSRFindApartamentForm} from "@/components/FindApartamentForm/NoSSRFindApartamentForm";
+
 
 async function CardsList() {
     const cookieStore = cookies();
@@ -51,7 +53,7 @@ export default function RentIndex() {
                     <PageNavigation />
                 </div>
                 <div className={'mt-[30px]'}>
-                    <FindApartment/>
+                    <NoSSRFindApartamentForm />
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-[20px] md:mt-[80px] mt-[40px]">
                     <CardsList/>

@@ -7,19 +7,32 @@ import CountPiker from "@/components/ui/countpiker";
 import {Button} from "@/components/ui/button";
 import {useTranslations} from "next-intl";
 import {add} from "date-fns";
+import { getCookie } from 'cookies-next';
+import SearchApartmentsFormData from "@/types/SearchApartmentsFormData";
 
 const ApartmentBookBlock = () => {
+    let savedSearch: SearchApartmentsFormData | null = null;
+    const savedSearchCookie: any = getCookie('apartmentFormSearch');
+
+    if (savedSearchCookie !== undefined) {
+        savedSearch = JSON.parse(savedSearchCookie);
+    }
+
     const t = useTranslations('filterForm');
     const {control, handleSubmit} = useForm({
         defaultValues: {
             date: {
-                from: add(new Date(), {days: 1}),
-                to: add(new Date(), {days: 2}),
+                from: add(new Date(savedSearch?.date?.from ?? new Date()), {
+                    days: savedSearch?.date !== undefined ? 0 : 1,
+                }),
+                to: add(new Date(savedSearch?.date?.to ?? new Date()), {
+                    days: savedSearch?.date !== undefined ? 0 : 2,
+                }),
             },
             general: {
-                room: 0,
-                adult: 0,
-                child: 0
+                room: savedSearch?.general?.room ?? 1,
+                adult: savedSearch?.general?.adult ?? 1,
+                child: savedSearch?.general?.child ?? 0,
             },
         },
     })
@@ -53,20 +66,20 @@ const ApartmentBookBlock = () => {
                                 onSetValue={(id, num) => onChange({...value, [id]: num})}
                                 list={[
                                     {
-                                        label: t('adult'),
+                                        label: t('adult', { count: value.adult }),
                                         id: 'adult'
                                     },
                                     {
-                                        label: t('child'),
+                                        label: t('child', { count: value.child }),
                                         id: 'child',
                                     },
                                     {
-                                        label: t('room'),
+                                        label: t('room', { count: value.room }),
                                         id: 'room'
                                     }
                                 ]}
                                 values={value}
-                                text={`${value.adult} ${t('human')} - ${value.child} ${t('child')} - ${value.room} ${t('room')}`}
+                                text={`${value.adult} ${t('human')} - ${value.child} ${t('child', { count: value.child })} - ${value.room} ${t('room', { count: value.room })}`}
                             />
                         )}/>
                 </div>

@@ -79,7 +79,7 @@ const ApartmentCard: FC<ApartmentCardProps> = ({image, link, currency, bedCount,
                         <b className={'text-base md:text-2xl font-semibold'}>{t('price', {price, currency})}</b>
                         <span className={'text-sm md:text-lg font-medium text-foreground-secondary'}>{t('nights', {nights})}</span>
                     </div>
-                    <Link href={`/${link}`}>
+                    <Link href={link}>
                         <Button className={cn('!min-w-[200px]')}>{t('book')}</Button>
                     </Link>
                 </div>

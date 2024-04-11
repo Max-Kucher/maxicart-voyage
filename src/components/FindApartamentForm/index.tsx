@@ -25,25 +25,36 @@ const FindApartment: FC<FindApartmentProps> = ({ behavior }) => {
     const router = useRouter();
     const pathname = usePathname();
 
+    let savedSearch: SearchApartmentsFormData | null = null;
+    const savedSearchCookie: any = getCookie('apartmentFormSearch');
+
+    if (savedSearchCookie !== undefined) {
+        savedSearch = JSON.parse(savedSearchCookie);
+    }
+
     const t = useTranslations('filterForm');
 
     const defaultValues: SearchApartmentsFormData = useMemo(() => ({
         date: {
-            from: add(new Date(), { days: 1 }),
-            to: add(new Date(), { days: 2 }),
+            from: add(new Date(savedSearch?.date?.from ?? new Date()), {
+                days: savedSearch?.date !== undefined ? 0 : 1,
+            }),
+            to: add(new Date(savedSearch?.date?.to ?? new Date()), {
+                days: savedSearch?.date !== undefined ? 0 : 2,
+            }),
         },
         general: {
-            room: 1,
-            adult: 1,
-            child: 0,
+            room: savedSearch?.general?.room ?? 1,
+            adult: savedSearch?.general?.adult ?? 1,
+            child: savedSearch?.general?.child ?? 0,
         },
         price: {
-            from: 0,
-            to: 0,
+            from: savedSearch?.price?.from ?? 0,
+            to: savedSearch?.price?.from ?? 0,
         },
-    }), []);
+    }), [savedSearch]);
 
-    const {formState, control, handleSubmit, setValue} = useForm({
+    const {control, handleSubmit, setValue} = useForm({
         defaultValues,
     });
 
@@ -77,31 +88,6 @@ const FindApartment: FC<FindApartmentProps> = ({ behavior }) => {
     };
 
     useEffect(() => {
-        let savedSearch: any = getCookie(savedSearchKey);
-
-        if (savedSearch === null || savedSearch === undefined) {
-            return;
-        }
-
-        savedSearch = JSON.parse(savedSearch);
-
-        if (typeof savedSearch !== 'object' || savedSearch === null) {
-            return;
-        }
-
-        if (savedSearch.date !== undefined) {
-            setValue('date.from', new Date(savedSearch.date.from))
-            setValue('date.to', new Date(savedSearch.date.to))
-        }
-
-        if (savedSearch.general !== undefined) {
-            setValue('general', savedSearch.general);
-        }
-
-        if (savedSearch.price !== undefined) {
-            setValue('price', savedSearch.price);
-        }
-
         if (window.location.search.length) {
             const search = JSON.parse('{"' + decodeURI(window.location.search.substring(1)).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}');
 
