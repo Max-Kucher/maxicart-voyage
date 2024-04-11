@@ -40,7 +40,7 @@ const CountPiker: FC<CountPikerProps> = ({className, text, onSetValue, values, l
                                         className={'text-lg items-center flex justify-between gap-[20vw] md:gap-[130px]'}>
                                 <span>{label}</span>
                                 <div className={'flex items-center justify-center'}>
-                                    <Minus onClick={() => onSetValue(id, value - 1)} className={`${value === 0 ? 'text-gray-400' : 'text-primary cursor-pointer'}`}/>
+                                    <Minus onClick={() => onSetValue(id, value === 0 ? 0 : value - 1)} className={`${value === 0 ? 'text-gray-400' : 'text-primary cursor-pointer'}`}/>
                                     <input className={'w-10 text-center [appearance:textfield]'} type="number" min={0} value={values[id]} onChange={(e) => onSetValue(id, +e.target.value)}/>
                                     <Plus onClick={() => onSetValue(id, value + 1)}
                                           className={'text-primary cursor-pointer'}/>

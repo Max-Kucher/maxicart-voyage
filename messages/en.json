@@ -27,7 +27,8 @@
     "human": "Adults",
     "room": "Rooms",
     "find": "Find",
-    "dateRange": "Chec-in date Check-out date"
+    "dateRange": "Chec-in date Check-out date",
+    "searching": "Searching..."
   },
   "service": {
     "title": "Our  services",
