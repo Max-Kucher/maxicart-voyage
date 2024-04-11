@@ -10,9 +10,11 @@ import React from "react";
 import {useSearchParams} from "next/navigation";
 import {useRouter} from "@/navigation";
 import AddApartmentForm from "@/src/components/AddApartmentForm";
+import { useTranslations } from "next-intl";
 
 
 export default function Header() {
+    const t = useTranslations();
     const router = useRouter()
     const searchParams = useSearchParams()
     const isRentOut = searchParams.get('rentOut');
@@ -41,7 +43,7 @@ export default function Header() {
                 <DialogContent className={'xl:pt-[80px] xl:pb-[70px] xl:px-[150px] md:max-w-[800px] max-w-[90vw] rounded-xl'}>
                     <DialogHeader>
                         <b className={'text-center text-xl text-foreground'}>
-                            Оставьте заявку и наши специалисты свяжутся с вами в близлежащее время
+                            {t('popupForm.title')}
                         </b>
                     </DialogHeader>
                     <AddApartmentForm/>
@@ -59,9 +61,9 @@ export default function Header() {
                         <img className={'max-h-[124px] max-w-[124px] mx-auto'} src={'/images/success.svg'} alt={''}/>
                     </DialogHeader>
                    <div className={'text-center mt-[51px]'}>
-                       <DialogTitle className={'font-semibold text-xl text-black'}>БЛАГОДАРИМ ЗА ЗАЯВКУ!</DialogTitle>
+                       <DialogTitle className={'font-semibold text-xl text-black'}>{t('successPupup.title')}</DialogTitle>
                        <DialogDescription className={'mt-[31px] font-medium text-lg'}>
-                           Наши специалисты свяжутся с вами в близлежащее время
+                           {t('successPupup.description')}
                        </DialogDescription>
                    </div>
                 </DialogContent>

@@ -104,5 +104,12 @@
   },
   "location": {
     "displayTitle": "CONTROL TOWER - Office Building - Motor City - Dubai"
+  },
+  "popupForm": {
+    "title": "Оставьте заявку и наши специалисты свяжутся с вами в близлежащее время"
+  },
+  "successPupup": {
+    "title": "БЛАГОДАРИМ ЗА ЗАЯВКУ!",
+    "description": "Наши специалисты свяжутся с вами в близлежащее время"
   }
 }
