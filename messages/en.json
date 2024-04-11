@@ -110,5 +110,10 @@
   "successPupup": {
     "title": "THANK YOU FOR YOUR APPLICATION!",
     "description": "Our specialists will contact you shortly"
+  },
+  "navigationNameSpace": {
+    "home": "Home",
+    "rent": "Rent",
+    "book": "Book"
   }
 }

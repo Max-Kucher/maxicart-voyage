@@ -15,8 +15,8 @@ export default async function Page({params} : {
 
     return (
         <div className={'container'}>
-            <div className={'mt-[20px] md:mt-[40px] 2xl:mt-[70px]'}>
-                <PageNavigation />
+            <div className={'mt-[20px] md:mt-[40px] 2xl:mt-[70px] md:mb-[30px] mb-[20px]'}>
+                <PageNavigation nameSpace={apartmentData.title ?? apartmentData.smoobu.name}/>
             </div>
 
             <div className={'flex gap-[20px]'}>

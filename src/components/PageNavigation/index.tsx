@@ -1,19 +1,43 @@
 'use client';
-import React from 'react';
-import {usePathname} from "@/navigation";
+import React, {FC} from 'react';
+import {Link, usePathname} from "@/navigation";
+import {useTranslations} from 'next-intl';
 
-const PageNavigation = () => {
-    const pathname = usePathname()
-    const x = {
-        rent: 'Снять',
+
+interface PageNavigationProps {
+    nameSpace?: string
+}
+
+const PageNavigation: FC<PageNavigationProps> = ({nameSpace}) => {
+    const t = useTranslations('navigationNameSpace');
+    const paths = usePathname()
+    const pathNames = paths.split('/').filter(path => path)
+    const lastPath = {
+        home: t('home'),
+        rent: t('rent'),
+        book: t('book'),
     }
     return (
         <div>
-            {pathname.split('/')?.map((p, i) => (
-                <span key={i}>{p ? x?.[p as keyof typeof x] : 'Home' }/</span>
-            ))}
+            <Link href={'/'}>
+                <span className={'capitalize text-lg text-foreground-secondary'}>{lastPath.home}/</span>
+            </Link>
+            {
+                pathNames.map((link, index) => {
+                    let href = `/${pathNames.slice(0, index + 1).join('/')}`
+                    const text = lastPath[link as keyof typeof lastPath] ?? nameSpace ?? link
+
+                    return (
+                        pathNames.length === index + 1 ?
+                            <span className={'capitalize text-lg text-foreground-secondary'}>{text}{pathNames.length !== index + 1 && '/'}</span> :
+                            <Link href={href} key={index}>
+                                <span className={'capitalize text-lg text-foreground-secondary'}>{text}{pathNames.length !== index + 1 && '/'}</span>
+                            </Link>
+                    )
+                })
+            }
         </div>
-    );
+    )
 };
 
 export default PageNavigation;

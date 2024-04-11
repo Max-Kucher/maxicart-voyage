@@ -52,7 +52,7 @@ export default function RentIndex() {
         <main>
             <div className="container">
                 <div className={'mt-[20px] md:mt-[40px] 2xl:mt-[70px]'}>
-                    <PageNavigation />
+                    <PageNavigation  />
                 </div>
                 <div className={'mt-[30px]'}>
                     <NoSSRFindApartamentForm />
