@@ -62,9 +62,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             <PhoneInput
                 country={'ru'}
                 specialLabel={''}
-                dropdownClass={'bg-white left-[-25px] !rounded-lg border border-input !shadow-none'}
+                dropdownClass={'bg-white xl:left-[-25px] left-[-10px] !rounded-lg border border-input !shadow-none'}
                 buttonClass={'!bg-transparent h-auto !border-none [&>.selected-flag>.flag]:scale-[1.5] [&>.selected-flag]:hover:!bg-transparent hover:!bg-transparent'}
-                containerClass={cn('md:px-[30px] md:py-[15px] border border-input rounded-lg inline-block !w-auto', inputVariants({variant}))}
+                containerClass={cn('md:px-[30px] md:py-[15px] py-[7px] px-[8px] border border-input rounded-lg inline-block !w-auto', inputVariants({variant}))}
                 inputClass={'!bg-transparent !w-full !border-none !ml-2 placeholder:!text-black md:!text-lg !text-black font-semibold'}
                 value={props.value as string}
                 onChange={(phone, __, event) => props?.onChange?.(phone as any)}

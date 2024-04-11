@@ -25,7 +25,7 @@ const AddApartmentForm = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className={'flex flex-col w-full gap-[15px] md:mt-[40px] xl:mt-0'}>
+        <form onSubmit={handleSubmit(onSubmit)} className={'flex flex-col w-full gap-[10px] md:gap-[15px] md:mt-[40px] xl:mt-0'}>
             <Controller
                 render={({field}) => (
                     <Input
@@ -74,7 +74,7 @@ const AddApartmentForm = () => {
                 name={'message'}
                 control={control}
             />
-            <div className={'font-semibold text-foreground-secondary text-base w-10/12 mt-[5px]'}>
+            <div className={'font-semibold text-foreground-secondary md:text-base text-[10px] w-10/12 mt-[5px]'}>
                 {t('agreement')}
             </div>
             <div className={'flex justify-center'}>

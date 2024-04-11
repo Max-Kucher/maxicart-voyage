@@ -5,14 +5,16 @@ import LanguageSwitcher from "@/components/layout/languageSwitcher";
 import CurrencySwitcher from "@/components/layout/currencySwitcher";
 import PhoneLink from "@/components/layout/header/phoneLink";
 import MobileMenu from "@/components/layout/header/mobileMenu";
-import {Dialog, DialogContent, DialogHeader} from "@/components/ui/dialog";
+import {Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle} from "@/components/ui/dialog";
 import React from "react";
 import {useSearchParams} from "next/navigation";
 import {useRouter} from "@/navigation";
 import AddApartmentForm from "@/src/components/AddApartmentForm";
+import { useTranslations } from "next-intl";
 
 
 export default function Header() {
+    const t = useTranslations();
     const router = useRouter()
     const searchParams = useSearchParams()
     const isRentOut = searchParams.get('rentOut');
@@ -38,13 +40,32 @@ export default function Header() {
                     }
                 }}
                 open={!!isRentOut}>
-                <DialogContent className={'xl:pt-[80px] xl:pb-[70px] xl:px-[150px] md:max-w-[800px] max-w-10/12'}>
+                <DialogContent className={'xl:pt-[80px] xl:pb-[70px] xl:px-[150px] md:max-w-[800px] max-w-[90vw] rounded-xl'}>
                     <DialogHeader>
                         <b className={'text-center text-xl text-foreground'}>
-                            Оставьте заявку и наши специалисты свяжутся с вами в близлежащее время
+                            {t('popupForm.title')}
                         </b>
                     </DialogHeader>
                     <AddApartmentForm/>
+                </DialogContent>
+            </Dialog>
+            <Dialog
+                onOpenChange={(open) => {
+                    if (!open) {
+                        router.replace('/')
+                    }
+                }}
+                open={!!isSuccess}>
+                <DialogContent className={'md:max-w-[400px] max-w-[90vw] md:pt-[120px] md:px-[45px] md:pb-[90px] py-[40px] rounded-xl'}>
+                    <DialogHeader>
+                        <img className={'max-h-[124px] max-w-[124px] mx-auto'} src={'/images/success.svg'} alt={''}/>
+                    </DialogHeader>
+                   <div className={'text-center mt-[51px]'}>
+                       <DialogTitle className={'font-semibold text-xl text-black'}>{t('successPupup.title')}</DialogTitle>
+                       <DialogDescription className={'mt-[31px] font-medium text-lg'}>
+                           {t('successPupup.description')}
+                       </DialogDescription>
+                   </div>
                 </DialogContent>
             </Dialog>
         </div>

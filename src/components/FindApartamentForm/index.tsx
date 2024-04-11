@@ -116,9 +116,9 @@ const FindApartment: FC<FindApartmentProps> = ({ behavior }) => {
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={'2xl:w-[1350px] md:w-[600px] mx-auto'}>
             <div
-                className={'bg-white md:py-[30px] md:px-[95px] 2xl:py-[30px] 2xl:px-[40px] flex 2xl:justify-between 2xl:flex-row flex-col rounded-lg gap-[20px]'}>
+                className={'bg-white p-[20px] md:py-[30px] md:px-[95px] 2xl:py-[30px] 2xl:px-[40px] flex 2xl:justify-between 2xl:flex-row flex-col rounded-lg md:gap-[20px] gap-[15px]'}>
                 <div>
-                       <span className={'mb-[10px] text-lg'}>
+                       <span className={'mb-[10px] md:text-lg text-xs'}>
                            {t('date')}
                        </span>
                     <Controller
@@ -135,7 +135,7 @@ const FindApartment: FC<FindApartmentProps> = ({ behavior }) => {
                     />
                 </div>
                 <div>
-                       <span className={'mb-[10px] text-lg'}>
+                       <span className={'mb-[10px] md:text-lg text-xs'}>
                            {t('peopleCount')}
                        </span>
                     <Controller
@@ -165,7 +165,7 @@ const FindApartment: FC<FindApartmentProps> = ({ behavior }) => {
                 </div>
                 <div className={'flex items-center gap-[10px]'}>
                     <div>
-                           <span className={'mb-[10px] text-lg'}>
+                           <span className={'mb-[10px] md:text-lg text-xs'}>
                                {t('priceFrom')}
                            </span>
                         <Controller
@@ -178,7 +178,7 @@ const FindApartment: FC<FindApartmentProps> = ({ behavior }) => {
                     </div>
                     <div className={'w-[20px] h-[4px] bg-primary rounded-[5px] mt-[6%]'}/>
                     <div>
-                            <span className={'mb-[10px] text-lg'}>
+                            <span className={'mb-[10px] md:text-lg text-xs'}>
                                 {t('priceTo')}
                             </span>
                       <Controller
