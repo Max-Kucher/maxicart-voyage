@@ -29,8 +29,8 @@ const PageNavigation: FC<PageNavigationProps> = ({nameSpace}) => {
 
                     return (
                         pathNames.length === index + 1 ?
-                            <span className={'capitalize text-lg text-foreground-secondary'}>{text}{pathNames.length !== index + 1 && '/'}</span> :
-                            <Link href={href} key={index}>
+                            <span key={`page-navigation-${index}`} className={'capitalize text-lg text-foreground-secondary'}>{text}{pathNames.length !== index + 1 && '/'}</span> :
+                            <Link href={href} key={`page-navigation-${index}`}>
                                 <span className={'capitalize text-lg text-foreground-secondary'}>{text}{pathNames.length !== index + 1 && '/'}</span>
                             </Link>
                     )
