@@ -1,4 +1,5 @@
 'use client'
+
 import React from 'react';
 import ApartmentPhotos from "@/components/ApartmentPhotos";
 import ApartmentDetails from '@/src/components/ApartmentDetails';
@@ -7,7 +8,7 @@ import useApartments from "@/composables/useApartments";
 import ApartmentsSearchParams from "@/types/ApartmentsSearchParams";
 
 const Page = () => {
-    const { searchApartments } = useApartments();
+    const { searchApartmentById } = useApartments();
 
     return (
         <div className={'container'}>

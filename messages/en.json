@@ -25,7 +25,7 @@
     "adult": "{count, plural, zero {Adult} one {Adult} other {Adults}}",
     "child": "{count, plural, zero {Children} one {Child} other {Children}}",
     "human": "Adults",
-    "room": "Rooms",
+    "room": "{count, plural, zero {Rooms} one {Room} other {Rooms}}",
     "find": "Find",
     "dateRange": "Chec-in date Check-out date",
     "searching": "Searching..."

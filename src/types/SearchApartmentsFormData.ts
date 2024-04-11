@@ -5,9 +5,9 @@ export default interface SearchApartmentsFormData {
         to: Date;
     };
     general: {
-        room: number;
-        adult: number;
-        child: number;
+        room?: number;
+        adult?: number;
+        child?: number;
     };
     price: {
         from?: number;

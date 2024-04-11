@@ -1,7 +1,7 @@
 import appConfig from "@/config/app";
 import RentOutFormData from "@/types/RentOutFormData";
 
-async function submitForm(formData: RentOutFormData)
+async function submitForm(formData: RentOutFormData): Promise<{ ok: true, body: {}, headers: {} }>
 {
     const url = new URL('/api/applications/', appConfig.backendBase);
     const body = new FormData();
@@ -21,7 +21,7 @@ async function submitForm(formData: RentOutFormData)
     return {
         ok: response.ok,
         body: await response.json(),
-        headers: response.headers
+        headers: response.headers,
     };
 }
 

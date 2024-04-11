@@ -1,6 +1,7 @@
 import appConfig from "@/config/app";
 import ApartmentsSearchResult from "@/types/ApartmentsSearchResult";
 import ApartmentsSearchParams from "@/types/ApartmentsSearchParams";
+import Apartment from "@/types/Apartment";
 
 async function fetchApartments(params?: ApartmentsSearchParams)
 {
@@ -39,6 +40,26 @@ export default function useApartments() {
         return apartmentsSearch;
     };
 
-    return { searchApartments };
+    const searchApartmentById = async (apartmentId: number): Promise<{ ok: true, body: Apartment, headers: {} }> => {
+        const url = new URL(`/api/smoobu/apartments/${apartmentId}`, appConfig.backendBase);
+
+        const response = await fetch(url.toString());
+
+        if (!response.ok) {
+            console.log(response);
+            throw new Error('Failed to submit form');
+        }
+
+        return {
+            ok: response.ok,
+            body: await response.json(),
+            headers: response.headers
+        };
+    }
+
+    return {
+        searchApartments,
+        searchApartmentById,
+    };
 }
 
