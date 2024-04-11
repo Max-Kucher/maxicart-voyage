@@ -7,7 +7,6 @@ import Apartment from "@/types/Apartment";
 import React from "react";
 import { cookies } from 'next/headers'
 import ApartmentsSearchParams from "@/types/ApartmentsSearchParams";
-import {convertSearchApartmentsFormDataToApartmentsSearchParams} from "@/lib/utils";
 
 async function CardsList() {
     const cookieStore = cookies();
@@ -23,8 +22,6 @@ async function CardsList() {
     } else {
         searchParams = JSON.parse(savedSearch.value);
     }
-
-    // console.log(searchParams);
 
     const { searchApartments } = useApartments();
     const apartments = await searchApartments(searchParams);
