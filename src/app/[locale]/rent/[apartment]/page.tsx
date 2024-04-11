@@ -25,7 +25,7 @@ export default async function Page({params} : {
                 </div>
                 <div className={'w-1/2'}>
                     <ApartmentDetails
-                        nights={2}
+                        nights={apartmentData.nights ?? 1}
                         roomSize={apartmentData.m2 ?? 0}
                         maxPeople={apartmentData.smoobu.rooms.maxOccupancy}
                         bedCount={apartmentData.smoobu.rooms.bedrooms}

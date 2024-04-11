@@ -77,7 +77,7 @@ const ApartmentCard: FC<ApartmentCardProps> = ({image, link, currency, bedCount,
                 <div className={'flex justify-between items-center mt-[25px] md:mt-[30px]'}>
                     <div className={'flex flex-col'}>
                         <b className={'text-base md:text-2xl font-semibold'}>{t('price', {price, currency})}</b>
-                        <span className={'text-sm md:text-lg font-medium text-foreground-secondary'}>{t('nights', {nights})}</span>
+                        <span className={'text-sm md:text-lg font-medium text-foreground-secondary'}>{t('nights', {count: nights})}</span>
                     </div>
                     <Link href={link}>
                         <Button className={cn('!min-w-[200px]')}>{t('book')}</Button>

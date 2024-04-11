@@ -14,19 +14,20 @@ import useApartments from "@/composables/useApartments";
 import ApartmentsSearchParams from "@/types/ApartmentsSearchParams";
 import {convertSearchApartmentsFormDataToApartmentsSearchParams} from "@/lib/utils";
 import { getCookie, setCookie } from 'cookies-next';
+import appConfig from "@/config/app";
 
 interface FindApartmentProps {
     behavior?: string; // Defines the behavior for the component. Supports "default"|redirect" options
 }
 
-const savedSearchKey = 'apartmentFormSearch';
+const savedSearchKey = appConfig.cookieKeys.apartmentFormSearch;
 
 const FindApartment: FC<FindApartmentProps> = ({ behavior }) => {
     const router = useRouter();
     const pathname = usePathname();
 
     let savedSearch: SearchApartmentsFormData | null = null;
-    const savedSearchCookie: any = getCookie('apartmentFormSearch');
+    const savedSearchCookie: any = getCookie(appConfig.cookieKeys.apartmentFormSearch);
 
     if (savedSearchCookie !== undefined) {
         savedSearch = JSON.parse(savedSearchCookie);
@@ -54,7 +55,7 @@ const FindApartment: FC<FindApartmentProps> = ({ behavior }) => {
         },
     }), [savedSearch]);
 
-    const {control, handleSubmit, setValue} = useForm({
+    const {control, handleSubmit} = useForm({
         defaultValues,
     });
 

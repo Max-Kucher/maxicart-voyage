@@ -9,7 +9,7 @@ export default interface SearchApartmentsFormData {
         adult?: number;
         child?: number;
     };
-    price: {
+    price?: {
         from?: number;
         to?: number;
     };

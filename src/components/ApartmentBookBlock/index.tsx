@@ -1,31 +1,40 @@
 'use client'
 
-import React from 'react';
+import React, {SyntheticEvent, useRef, useState} from 'react';
 import { Checkbox } from '../ui/checkbox';
 import { CheckIcon } from 'lucide-react';
-import {Controller, useForm} from "react-hook-form";
+import {Controller, SubmitHandler, useForm} from "react-hook-form";
 import Datepicker from "@/components/ui/datepicker";
 import CountPiker from "@/components/ui/countpiker";
 import {Button} from "@/components/ui/button";
 import {useTranslations} from "next-intl";
 import {add} from "date-fns";
-import { getCookie } from 'cookies-next';
+import { getCookie, setCookie } from 'cookies-next';
 import SearchApartmentsFormData from "@/types/SearchApartmentsFormData";
+import {convertSearchApartmentsFormDataToApartmentsSearchParams} from "@/lib/utils";
+import useApartments from "@/composables/useApartments";
+import appConfig from "@/config/app";
+import { Link, useRouter } from "@/src/navigation";
 
 interface ApartmentBookBlockProps {
     apartmentId: number,
 }
 
 const ApartmentBookBlock = ({ apartmentId }: ApartmentBookBlockProps) => {
+    const { checkApartment } = useApartments();
+    const router = useRouter();
+
+    const bookingUrl = `/rent/${apartmentId}/book`;
+
     let savedSearch: SearchApartmentsFormData | null = null;
-    const savedSearchCookie: any = getCookie('apartmentFormSearch');
+    const savedSearchCookie: any = getCookie(appConfig.cookieKeys.apartmentFormSearch);
 
     if (savedSearchCookie !== undefined) {
         savedSearch = JSON.parse(savedSearchCookie);
     }
 
     const t = useTranslations('filterForm');
-    const {control, handleSubmit} = useForm({
+    const {control, handleSubmit, getValues} = useForm({
         defaultValues: {
             date: {
                 from: add(new Date(savedSearch?.date?.from ?? new Date()), {
@@ -43,8 +52,33 @@ const ApartmentBookBlock = ({ apartmentId }: ApartmentBookBlockProps) => {
         },
     })
 
+    const [bookingDisabled, setBoockingDisabled] = useState(false);
+    const onSubmit: SubmitHandler<SearchApartmentsFormData> = async (data: SearchApartmentsFormData) => {
+        const checkResult = await checkApartment(apartmentId, convertSearchApartmentsFormDataToApartmentsSearchParams(data))
+
+        if (checkResult.status >= 400) {
+            setBoockingDisabled(true);
+            return;
+        }
+
+        setBoockingDisabled(false);
+
+        // ToDo: Change prices and other stuff
+        console.log(checkResult);
+    };
+
+    const handleRoomBookingButtonClick = (e: SyntheticEvent) => {
+        e.preventDefault();
+        const values = getValues();
+
+        setCookie(appConfig.cookieKeys.checkoutData, JSON.stringify(values));
+        setCookie(`${appConfig.cookieKeys.checkoutData}-backend`, convertSearchApartmentsFormDataToApartmentsSearchParams(values));
+
+        router.push(bookingUrl);
+    };
+
     return (
-        <div className={'bg-white rounded-lg px-[30px] py-[60px] mt-[30px]'}>
+        <form onSubmit={handleSubmit(onSubmit)} className={'bg-white rounded-lg px-[30px] py-[60px] mt-[30px]'}>
             <b className={'text-xl text-black font-semibold'}>Выберите даты заезда, выезда и количество гостей</b>
             <div className={'flex gap-[20px] items-end mt-[30px]'}>
                 <div>
@@ -84,13 +118,18 @@ const ApartmentBookBlock = ({ apartmentId }: ApartmentBookBlockProps) => {
                                         id: 'room'
                                     }
                                 ]}
+                                disabled={['room']}
                                 values={value}
                                 text={`${value.adult} ${t('human')} - ${value.child} ${t('child', { count: value.child })} - ${value.room} ${t('room', { count: value.room })}`}
                             />
                         )}/>
                 </div>
                 <Button>Применить</Button>
-                <Button>Забронировать</Button>
+                <Button className={bookingDisabled ? 'pointer-events-none opacity-60' : ''} asChild={true} onClick={handleRoomBookingButtonClick}>
+                    <Link href={bookingUrl}>
+                        Забронировать
+                    </Link>
+                </Button>
             </div>
             <div className={'flex mt-[60px] justify-between'}>
                 <div>
@@ -139,7 +178,7 @@ const ApartmentBookBlock = ({ apartmentId }: ApartmentBookBlockProps) => {
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
     );
 };
 

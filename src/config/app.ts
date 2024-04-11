@@ -24,6 +24,10 @@ const appConfig = {
         },
     },
     backendBase: 'http://80.89.230.106:8100',
+    cookieKeys: {
+        apartmentFormSearch: 'apartmentFormSearch',
+        checkoutData: 'apartmentCheckoutData',
+    }
 };
 
 export default appConfig;

@@ -19,6 +19,7 @@ async function fetchApartments(params?: ApartmentsSearchParams)
         Object.entries(params).forEach(([key, value]) => url.searchParams.append(key, String(value)));
     }
 
+    // console.log(url.toString());
     const response = await fetch(url.toString());
     if (!response.ok) {
         throw new Error('Failed to fetch Apartments');
@@ -50,8 +51,8 @@ export default function useApartments() {
         });
 
         if (!response.ok) {
-            console.log(response);
-            throw new Error('Failed to submit form');
+            console.log(url.toString(), response);
+            throw new Error('Failed to find apartment');
         }
 
         return {
@@ -61,9 +62,38 @@ export default function useApartments() {
         };
     }
 
+    const checkApartment = async (apartmentId: number, apartmentSearch: ApartmentsSearchParams) => {
+        const url = new URL(`/api/smoobu/apartments/check/${apartmentId}`, appConfig.backendBase);
+
+        if (apartmentSearch?.arrival_date) {
+            url.searchParams.append('arrival_date', apartmentSearch?.arrival_date);
+        }
+
+        if (apartmentSearch?.departure_date) {
+            url.searchParams.append('departure_date', apartmentSearch?.departure_date);
+        }
+
+        // if (apartmentSearch?.guests) {
+        //     url.searchParams.append('guests', apartmentSearch?.guests);
+        // }
+
+        const response = await fetch(url.toString(), {
+            cache: "no-store",
+        });
+
+        return {
+            ok: response.ok,
+            status: response.status,
+            body: await response.json(),
+            // text: await response.text(),
+            headers: response.headers
+        };
+    }
+
     return {
         searchApartments,
         searchApartmentById,
+        checkApartment,
     };
 }
 
