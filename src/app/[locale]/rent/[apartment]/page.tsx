@@ -1,42 +1,45 @@
-'use client'
-
 import React from 'react';
 import ApartmentPhotos from "@/components/ApartmentPhotos";
-import ApartmentDetails from '@/src/components/ApartmentDetails';
-import ApartmentBookBlock from "@/components/ApartmentBookBlock";
 import useApartments from "@/composables/useApartments";
-import ApartmentsSearchParams from "@/types/ApartmentsSearchParams";
+import { NoSSRApartmentBookBlock } from "@/components/ApartmentBookBlock/NoSSRApartmentBookBlock";
+import ApartmentDetails from "@/components/ApartmentDetails";
+import PageNavigation from "@/components/PageNavigation";
 
-const Page = () => {
+export default async function Page({params} : {
+    params: { locale: string; apartment: string };
+}) {
     const { searchApartmentById } = useApartments();
+
+    const apartmentDataSearch = await searchApartmentById(parseInt(params.apartment));
+    const apartmentData = apartmentDataSearch.body;
 
     return (
         <div className={'container'}>
+            <div className={'mt-[20px] md:mt-[40px] 2xl:mt-[70px]'}>
+                <PageNavigation />
+            </div>
+
             <div className={'flex gap-[20px]'}>
                 <div className={'w-1/2'}>
-                    <ApartmentPhotos images={['', '', '', '']}/>
+                    <ApartmentPhotos images={apartmentData.photos.map(photo => photo.photo)}/>
                 </div>
                 <div className={'w-1/2'}>
                     <ApartmentDetails
                         nights={2}
-                        roomSize={233}
-                        maxPeople={3}
-                        bedCount={2}
-                        bathCount={2}
-                        currency={'USD'}
-                        name={'Azizi Shaista JA studio 409'}
-                        location={`Dubai Elite 6 Sports Residence`}
-                        price={322}
-                        description={`
-                            Вы можете получить Genius-скидку в Expo Village Serviced Apartments! Чтобы сэкономить на этом жилье, просто <br/><br/>
-                            Expo Village Serviced Apartments — это дом для отпуска в городе Дубай, расположенный на расстоянии 1,7 км и 13 км соответственно от таких достопримечательностей 
-                        `}
+                        roomSize={apartmentData.m2 ?? 0}
+                        maxPeople={apartmentData.smoobu.rooms.maxOccupancy}
+                        bedCount={apartmentData.smoobu.rooms.bedrooms}
+                        bathCount={apartmentData.smoobu.rooms.bathrooms}
+                        price={apartmentData.smoobu.price.minimal}
+                        currency={apartmentData.smoobu.currency}
+                        name={apartmentData.title ?? apartmentData.smoobu.name}
+                        location={apartmentData.address}
+                        description={apartmentData.description}
                     />
                 </div>
             </div>
-            <ApartmentBookBlock/>
+            <NoSSRApartmentBookBlock
+                apartmentId={apartmentData.id} key={`apartment-details-card-${params.apartment}`}/>
         </div>
     );
 };
-
-export default Page;

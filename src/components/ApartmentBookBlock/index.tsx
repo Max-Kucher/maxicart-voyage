@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react';
 import { Checkbox } from '../ui/checkbox';
 import { CheckIcon } from 'lucide-react';
@@ -10,7 +12,11 @@ import {add} from "date-fns";
 import { getCookie } from 'cookies-next';
 import SearchApartmentsFormData from "@/types/SearchApartmentsFormData";
 
-const ApartmentBookBlock = () => {
+interface ApartmentBookBlockProps {
+    apartmentId: number,
+}
+
+const ApartmentBookBlock = ({ apartmentId }: ApartmentBookBlockProps) => {
     let savedSearch: SearchApartmentsFormData | null = null;
     const savedSearchCookie: any = getCookie('apartmentFormSearch');
 

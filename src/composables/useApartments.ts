@@ -43,7 +43,11 @@ export default function useApartments() {
     const searchApartmentById = async (apartmentId: number): Promise<{ ok: true, body: Apartment, headers: {} }> => {
         const url = new URL(`/api/smoobu/apartments/${apartmentId}`, appConfig.backendBase);
 
-        const response = await fetch(url.toString());
+        const response = await fetch(url.toString(), {
+            next: {
+                tags: ['apartments', `apartments-${apartmentId}`],
+            }
+        });
 
         if (!response.ok) {
             console.log(response);
