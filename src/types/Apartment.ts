@@ -2,7 +2,8 @@ import Location from "@/types/Location";
 import RoomsData from "@/types/RoomsData";
 import Photo from "@/types/Photo";
 
-export default interface Apartment {
+export default interface Apartment
+{
     id: number;
     smoobu: {
         id: number;

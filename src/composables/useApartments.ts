@@ -85,7 +85,6 @@ export default function useApartments() {
             ok: response.ok,
             status: response.status,
             body: await response.json(),
-            // text: await response.text(),
             headers: response.headers
         };
     }
