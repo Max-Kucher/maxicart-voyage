@@ -29,9 +29,9 @@ const ApartmentCard: FC<ApartmentCardProps> = ({image, link, currency, bedCount,
         <div className={'2xl:w-full bg-white rounded-lg'}>
             <div className={'p-[8px]'}>
                 {image === null ? (
-                    <img className={'rounded-xl xl:h-[370px] w-full object-cover h-[316px]'} src={`/images/no-photo.png`} alt={"No image"} width={507} height={370} />
+                    <Image className={'rounded-xl xl:h-[370px] w-full object-cover h-[316px]'} src={`/images/no-photo.png`} alt={"No image"} width={507} height={370} />
                     ) : (
-                    <img className={'rounded-xl xl:h-[370px] w-full object-cover h-[316px]'} alt={name} src={image} />
+                    <Image className={'rounded-xl xl:h-[370px] w-full object-cover h-[316px]'} width={507} height={0} alt={name} src={image} />
                 )}
             </div>
             <div className={'px-[15px] py-[20px] md:p-[30px] md:pt-[22px]'}>

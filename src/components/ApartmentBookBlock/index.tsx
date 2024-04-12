@@ -16,6 +16,14 @@ import appConfig from "@/config/app";
 import {Link, useRouter} from "@/src/navigation";
 import Apartment from "@/types/Apartment";
 import {ApartmentContext} from "@/components/ApratmentProvider";
+import {MapContainer, Marker, Popup, TileLayer} from 'react-leaflet'
+
+import markerIconX2 from "leaflet/dist/images/marker-icon-2x.png";
+import markerIcon from "leaflet/dist/images/marker-icon.png";
+import markerShadow from "leaflet/dist/images/marker-shadow.png";
+
+import 'leaflet/dist/leaflet.css';
+import {LatLngExpression} from "leaflet";
 
 interface ApartmentBookBlockProps {
     apartmentData: Apartment,
@@ -78,6 +86,22 @@ const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
 
         router.push(bookingUrl);
     };
+
+    // const showMap = apartmentData.smoobu.location.latitude !== null && apartmentData.smoobu.location.longitude !== null;
+    const showMap = true;
+    const latLngPositions: LatLngExpression = [apartmentData?.smoobu?.location?.latitude ?? 50, apartmentData?.smoobu?.location?.longitude ?? 50];
+
+    React.useEffect(() => {
+        const L = require("leaflet");
+
+        delete L.Icon.Default.prototype._getIconUrl;
+
+        L.Icon.Default.mergeOptions({
+            iconRetinaUrl: markerIconX2.src,
+            iconUrl: markerIcon.src,
+            shadowUrl: markerShadow.src
+        });
+    }, []);
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={'bg-white rounded-lg px-[30px] py-[60px] mt-[30px]'}>
@@ -181,8 +205,8 @@ const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
                     {/*</div>*/}
                 </div>
                 <div className={'md:block hidden w-full xl:w-1/3 mt-[40px] md:mt-0'}>
-                    <div className={'p-[23px] border border-background rounded-lg flex flex-col gap-[18px]'}>
-                        {apartmentData.addons === undefined ? '' : apartmentData.addons.map(apartmentAddon => {
+                    {apartmentData.addons === undefined ? '' : <div className={'p-[23px] border border-background rounded-lg flex flex-col gap-[18px]'}>
+                        {apartmentData.addons.map(apartmentAddon => {
                             const key = `apartment-bool-block-addon-${apartmentAddon.id}-${apartmentId}`;
                             return (
                             <div key={key}
@@ -213,7 +237,19 @@ const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
                         {/*<div className={'text-lg font-medium'}>*/}
                         {/*    {t('apartment.additionalService.service')} <span className={'text-primary cursor-pointer'}>{t('apartment.additionalService.more')}</span>*/}
                         {/*</div>*/}
-                    </div>
+                    </div>}
+
+                    {showMap ? (
+                        <MapContainer className={`h-[246px] mt-[30px] rounded-[10px]`} center={latLngPositions} zoom={13} scrollWheelZoom={false}>
+                            <TileLayer
+                                attribution='&copy; OpenStreetMap contributors'
+                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                            />
+                            <Marker position={latLngPositions}>
+                                <Popup>{ apartmentData.address }</Popup>
+                            </Marker>
+                        </MapContainer>
+                    ) : ''}
                 </div>
             </div>
         </form>

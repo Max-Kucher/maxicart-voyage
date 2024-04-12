@@ -26,8 +26,6 @@ interface ApartmentDetailsProps {
     document?: string;
     amenities?: Amenity[];
     addons?: ApartmentAddon[];
-    lat?: number | null;
-    lng?: number | null;
 }
 
 const ApartmentDetails: FC<ApartmentDetailsProps> = ({
@@ -44,8 +42,6 @@ const ApartmentDetails: FC<ApartmentDetailsProps> = ({
                                                          document,
                                                          amenities,
                                                          addons,
-                                                         lng,
-                                                         lat,
                                                      }) => {
     const apartmentContext: any = useContext(ApartmentContext)
     const t = useTranslations('apartmentsDetails')
