@@ -1,6 +1,7 @@
-import React, {FC} from 'react';
+'use client';
+import React, {FC, useContext} from 'react';
 import UsersIcon from '../icons/users';
-import {DownloadIcon, MapPinIcon, Maximize2Icon, Share2Icon, SnowflakeIcon} from 'lucide-react';
+import {DownloadIcon, MapPinIcon, Maximize2Icon} from 'lucide-react';
 import BedIcon from '../icons/bed';
 import BathIcon from '../icons/bath';
 import {Button} from '../ui/button';
@@ -9,6 +10,7 @@ import {Link} from "@/navigation";
 import Amenity from "@/types/Amenity";
 import ApartmentAddon from "@/types/ApartmentAddon";
 import Image from "next/image";
+import {ApartmentContext} from "@/components/ApratmentProvider";
 
 interface ApartmentDetailsProps {
     name: string;
@@ -45,6 +47,7 @@ const ApartmentDetails: FC<ApartmentDetailsProps> = ({
                                                          lng,
                                                          lat,
                                                      }) => {
+    const apartmentContext: any = useContext(ApartmentContext)
     const t = useTranslations('apartmentsDetails')
     return (
         <div className={'w-full bg-white rounded-lg xl:px-[30px] xl:py-[60px] py-[30px] px-[20px]'}>
@@ -52,8 +55,8 @@ const ApartmentDetails: FC<ApartmentDetailsProps> = ({
                 <div className={'flex md:justify-between md:w-full flex-col md:flex-row gap-[20px] md:gap-[0px]'}>
                     <h1 className={'text-lg md:text-2xl text-black font-semibold'}>{name}</h1>
                     <div className={'flex flex-col'}>
-                        <b className={'text-lg md:text-2xl text-primary font-extrabold'}>{t('price', {price, currency})}</b>
-                        <span className={'text-sm md:text-lg text-foreground-secondary'}>{t('nights', {count: nights})}</span>
+                        <b className={'text-lg md:text-2xl text-primary font-extrabold'}>{t('price', {price: apartmentContext.apartmentPrice ?? price, currency})}</b>
+                        <span className={'text-sm md:text-lg text-foreground-secondary'}>{t('nights', {count:  apartmentContext.apartmentNights ?? nights})}</span>
                     </div>
                 </div>
                 <div className={'md:hidden flex flex-col gap-[10px]'}>
