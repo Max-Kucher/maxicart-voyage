@@ -13,4 +13,5 @@ export default interface SearchApartmentsFormData {
         from?: number;
         to?: number;
     };
+    addons?: number[];
 };

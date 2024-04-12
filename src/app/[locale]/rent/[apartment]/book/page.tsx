@@ -25,24 +25,28 @@ export default async function RentIndex({ searchParams, params: { apartment: apa
         bookData: string
     }
 }) {
-    const cookieStore = cookies();
     const { searchApartmentById, checkApartment } = useApartments();
     const { body: apartmentData } = await searchApartmentById(apartmentId);
-    const selectedData: SearchApartmentsFormData = JSON.parse(atob(searchParams.bookData))
-    const checkResult = await checkApartment(apartmentId, convertSearchApartmentsFormDataToApartmentsSearchParams(selectedData))
+    const selectedData: SearchApartmentsFormData = JSON.parse(searchParams?.bookData?.length ? atob(searchParams.bookData) : '{}')
+
+    if (selectedData.date === undefined) {
+        const today = new Date();
+        selectedData.date = {
+            from: new Date(today.setDate(today.getDate() + 1)),
+            to: new Date(today.setDate(today.getDate() + 2)),
+        };
+    }
+
+    if (selectedData.general === undefined) {
+        selectedData.general = {
+            adult: 1,
+        };
+    }
+
+    const apartmentSearch = convertSearchApartmentsFormDataToApartmentsSearchParams(selectedData);
+    const checkResult = await checkApartment(apartmentId, apartmentSearch)
+
     const t = await getTranslations();
-
-    const savedCheckoutData = {
-        frontEndData: cookieStore.get(appConfig.cookieKeys.checkoutData),
-        backEndData: cookieStore.get(`${appConfig.cookieKeys.checkoutData}-backend`),
-    };
-
-    if (savedCheckoutData?.frontEndData !== undefined) {
-        savedCheckoutData.frontEndData = JSON.parse(savedCheckoutData.frontEndData.value);
-    }
-    if (savedCheckoutData?.backEndData !== undefined) {
-        savedCheckoutData.backEndData = JSON.parse(savedCheckoutData.backEndData.value);
-    }
 
     const { createPayment } = usePayments();
     let paymentData: CreatePaymentRequestResult = {};
@@ -52,7 +56,7 @@ export default async function RentIndex({ searchParams, params: { apartment: apa
             apartment_id: parseInt(apartmentId.toString()),
             arrival_date: apartmentSearch.arrival_date?.toString() ?? '',
             departure_date: apartmentSearch.departure_date?.toString() ?? '',
-            addons: [],
+            addons: selectedData?.addons ?? [],
         });
     }
 
@@ -70,7 +74,7 @@ export default async function RentIndex({ searchParams, params: { apartment: apa
                                 <div className={'flex items-center gap-[15px]'}>
                                     <UsersIcon className={'text-primary w-[27px] h-[27px]'}/>
                                     <span className={'text-lg font-medium text-foreground'}>
-                                        {t('apartmentCard.maxPeople', {maxPeople: 2})}
+                                        {t('apartmentCard.maxPeople', { maxPeople: apartmentData.smoobu.rooms.maxOccupancy })}
                                     </span>
                                 </div>
                             </div>
@@ -98,8 +102,10 @@ export default async function RentIndex({ searchParams, params: { apartment: apa
                                 </div>
                             </div>
                         </div>
-                        <b className={'block text-xl font-semibold'}>Длительность проживания:</b>
-                        <b className={'block text-xl font-semibold text-primary'}>2 ночи</b>
+                        <b className={'block text-xl font-semibold mt-[48px]'}>Длительность проживания:</b>
+                        <b className={'block text-xl font-semibold text-primary'}>{t('apartmentsDetails.nights', {
+                            count: Math.floor((new Date(selectedData.date.to).getTime() - new Date(selectedData.date.from).getTime()) / (1000 * 60 * 60 * 24)),
+                        })}</b>
                         <div className={'p-[20px] border border-[#D6D6D6] rounded-xl mt-[30px] flex justify-between'}>
                             <div>
                                 <b className={'block text-xl font-semibold'}>Дата заезда:</b>

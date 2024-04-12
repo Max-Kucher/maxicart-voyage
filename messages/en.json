@@ -95,7 +95,7 @@
     "agreement": "I agree to the Privacy Policy"
   },
   "apartmentsDetails": {
-    "maxPeople": "Max {maxPeople} people",
+    "maxPeople": "Max {maxPeople, plural, one {# person} other {# persons}}",
     "price": "From {price} {currency}",
     "nights": "for {count, plural, one {one night} other {# nights}}"
   },

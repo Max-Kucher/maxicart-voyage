@@ -13,4 +13,6 @@ export default interface ApartmentsSearchParams
     guests?: number;
     sort_by?: string;
     sort_order?: string;
+    adults?: number;
+    child?: number;
 }
