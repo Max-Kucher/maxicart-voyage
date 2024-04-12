@@ -150,7 +150,8 @@
           "cash": "Cash upon arrival",
           "card": "Credit card (now)"
         }
-      }
+      },
+      "button": "Pay {total} {currency}"
     },
     "details": {
       "blockTitle": "Details of your booking"

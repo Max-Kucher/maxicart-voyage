@@ -29,6 +29,13 @@ const appConfig = {
         checkoutData: 'apartmentCheckoutData',
     },
     defaultPhoneNumberCountry: 'ae',
+    stripe: {
+        publishableKey: 'pk_test_51P3kGj093JOWy8mAZV1mRUcZQKDqjbRaZBL6Uutbm6ZNlkatf9nZDHitfgwbOw6JyxqOQq7JjgbrgrFojOF7RuYt001pxlIbwU',
+        appearance: {
+            theme: 'flat'
+        },
+    },
+    defaultCurrency: 'USD',
 };
 
 export default appConfig;
