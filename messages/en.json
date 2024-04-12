@@ -130,5 +130,30 @@
     "service": {
       "title": "AMENITIES AND SERVICES"
     }
+  },
+  "checkout": {
+    "form": {
+      "specifyYourData": "Specify your data",
+      "specifyYourDataDescription": "Please use only Latin characters",
+      "emailFieldDescription": "A confirmation of your booking will be sent to this address",
+      "phoneFieldDescription": "It is necessary to verify the validity of your booking",
+      "guest": {
+        "subSectionTitle": "Who is the main guest?",
+        "variants": {
+          "another": "Another person"
+        }
+      },
+      "payment": {
+        "sectionTitle": "Payment details",
+        "subSectionTitle": "Payment method",
+        "variants": {
+          "cash": "Cash upon arrival",
+          "card": "Credit card (now)"
+        }
+      }
+    },
+    "details": {
+      "blockTitle": "Details of your booking"
+    }
   }
 }

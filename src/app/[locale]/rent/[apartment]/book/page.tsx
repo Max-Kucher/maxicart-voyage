@@ -12,6 +12,7 @@ import { cookies } from "next/headers";
 import appConfig from "@/config/app";
 import ApartmentsSearchResult from "@/types/ApartmentsSearchResult";
 import {convertDateToSearch} from "@/lib/utils";
+import ApartmentsSearchParams from "@/types/ApartmentsSearchParams";
 
 interface RentPageProps {
     apartment: number,
@@ -21,7 +22,7 @@ export default async function RentIndex({ params: { apartment: apartmentId } }: 
     params: RentPageProps
 }) {
     const cookieStore = cookies();
-    const { searchApartmentById } = useApartments();
+    const { searchApartmentById, checkApartment } = useApartments();
     const { body: apartmentData } = await searchApartmentById(apartmentId);
 
     const t = await getTranslations();
@@ -38,19 +39,29 @@ export default async function RentIndex({ params: { apartment: apartmentId } }: 
         savedCheckoutData.backEndData = JSON.parse(savedCheckoutData.backEndData.value);
     }
 
-    const { createPayment } = usePayments();
     const today = new Date().getDate();
-
-    const paymentData = await createPayment({
-        apartment_id: parseInt(apartmentId.toString()),
+    const apartmentSearch: ApartmentsSearchParams = {
         // @ts-ignore
         arrival_date: savedCheckoutData?.backEndData?.arrival_date ?? convertDateToSearch(new Date(today + 1)),
         // @ts-ignore
         departure_date: savedCheckoutData?.backEndData?.departure_date ?? convertDateToSearch(new Date(today + 3)),
-        addons: [],
-    });
+    };
 
-    console.log(paymentData);
+    const checkResult = await checkApartment(apartmentId, apartmentSearch);
+
+    const { createPayment } = usePayments();
+    let paymentData: {} = {};
+
+    if (checkResult.ok) {
+        paymentData = await createPayment({
+            apartment_id: parseInt(apartmentId.toString()),
+            arrival_date: apartmentSearch.arrival_date?.toString() ?? '',
+            departure_date: apartmentSearch.arrival_date?.toString() ?? '',
+            addons: [],
+        });
+
+        console.log(paymentData);
+    }
 
     return (<main>
             <div className="container">
@@ -59,9 +70,9 @@ export default async function RentIndex({ params: { apartment: apartmentId } }: 
                 </div>
                 <div className={'grid grid-cols-1 md:grid-cols-3 gap-[20px]'}>
                     <div className={'bg-white rounded-xl py-[60px] px-[30px] col-span-1'}>
-                        <b className={'text-xl font-semibold'}>Детали вашего бронирования</b>
+                        <b className={'text-xl font-semibold'}>{t("checkout.details.blockTitle")}</b>
                         <div className={'p-[20px] border border-[#D6D6D6] rounded-xl mt-[30px]'}>
-                            <b className={'text-xl'}>Azizi Shaista JA studio 409</b>
+                            <b className={'text-xl'}>{apartmentData.title ?? apartmentData.smoobu.name}</b>
                             <div className={'mt-[20px]'}>
                                 <div className={'flex items-center gap-[15px]'}>
                                     <UsersIcon className={'text-primary w-[27px] h-[27px]'}/>
@@ -95,7 +106,12 @@ export default async function RentIndex({ params: { apartment: apartmentId } }: 
                             </div>
                         </div>
                     </div>
-                    <CheckoutForm apartmentData={apartmentData} />
+                    <CheckoutForm availabilityData={{
+                            isAvailable: checkResult.ok,
+                            errorMessage: checkResult?.body?.message ?? ''
+                        }}
+                        apartmentData={apartmentData}
+                    />
                 </div>
             </div>
         </main>

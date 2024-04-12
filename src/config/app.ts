@@ -27,7 +27,8 @@ const appConfig = {
     cookieKeys: {
         apartmentFormSearch: 'apartmentFormSearch',
         checkoutData: 'apartmentCheckoutData',
-    }
+    },
+    defaultPhoneNumberCountry: 'ae',
 };
 
 export default appConfig;

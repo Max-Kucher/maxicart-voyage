@@ -1,4 +1,5 @@
 'use client'
+
 import * as React from "react"
 
 import {cn} from "@/lib/utils"
@@ -6,6 +7,7 @@ import {useEffect, useRef} from "react"
 import PhoneInput from "react-phone-input-2";
 import {cva, VariantProps} from "class-variance-authority";
 import 'react-phone-input-2/lib/style.css'
+import appConfig from "@/config/app";
 
 const inputVariants = cva(
     'md:text-lg',
@@ -61,7 +63,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
         return (
             <PhoneInput
-                country={'ru'}
+                country={appConfig.defaultPhoneNumberCountry}
                 specialLabel={''}
                 dropdownClass={'bg-white xl:left-[-25px] left-[-10px] !rounded-lg border border-input !shadow-none'}
                 buttonClass={'!bg-transparent h-auto !border-none [&>.selected-flag>.flag]:scale-[1.5] [&>.selected-flag]:hover:!bg-transparent hover:!bg-transparent'}

@@ -1,4 +1,5 @@
 {
+  "me": "Я",
   "menu": {
     "services": "Услуги",
     "rent": "Снять",
@@ -130,6 +131,31 @@
     },
     "service": {
       "title": "Удобства и услуги"
+    }
+  },
+  "checkout": {
+    "form": {
+      "specifyYourData": "Укажите свои данные",
+      "specifyYourDataDescription": "Пожалуйста, используйте только латинские символы",
+      "emailFieldDescription": "На этот адрес будет отправлено подтверждение бронирования",
+      "phoneFieldDescription": "Необходимо чтобы удостовериться в действительности вашего бронирования",
+      "guest": {
+        "subSectionTitle": "Кто основной гость?",
+        "variants": {
+          "another": "Другой человек"
+        }
+      },
+      "payment": {
+        "sectionTitle": "Детали оплаты",
+        "subSectionTitle": "Способ оплаты",
+        "variants": {
+          "cash": "Наличными по приезду",
+          "card": "Кредитная карта (сейчас)"
+        }
+      }
+    },
+    "details": {
+      "blockTitle": "Детали вашего бронирования"
     }
   }
 }
