@@ -10,22 +10,26 @@ import CheckoutForm from "@/components/checkout/CheckoutForm";
 import usePayments from "@/composables/usePayments";
 import { cookies } from "next/headers";
 import appConfig from "@/config/app";
-import ApartmentsSearchResult from "@/types/ApartmentsSearchResult";
-import {convertDateToSearch} from "@/lib/utils";
-import ApartmentsSearchParams from "@/types/ApartmentsSearchParams";
+import {convertSearchApartmentsFormDataToApartmentsSearchParams} from "@/lib/utils";
+import SearchApartmentsFormData from "@/types/SearchApartmentsFormData";
+import {format} from "date-fns";
 import CreatePaymentRequestResult from "@/types/CreatePaymentRequestResult";
 
 interface RentPageProps {
     apartment: number,
 }
 
-export default async function RentIndex({ params: { apartment: apartmentId } }: {
-    params: RentPageProps
+export default async function RentIndex({ searchParams, params: { apartment: apartmentId } }: {
+    params: RentPageProps,
+    searchParams: {
+        bookData: string
+    }
 }) {
     const cookieStore = cookies();
     const { searchApartmentById, checkApartment } = useApartments();
     const { body: apartmentData } = await searchApartmentById(apartmentId);
-
+    const selectedData: SearchApartmentsFormData = JSON.parse(atob(searchParams.bookData))
+    const checkResult = await checkApartment(apartmentId, convertSearchApartmentsFormDataToApartmentsSearchParams(selectedData))
     const t = await getTranslations();
 
     const savedCheckoutData = {
@@ -39,16 +43,6 @@ export default async function RentIndex({ params: { apartment: apartmentId } }: 
     if (savedCheckoutData?.backEndData !== undefined) {
         savedCheckoutData.backEndData = JSON.parse(savedCheckoutData.backEndData.value);
     }
-
-    const today = new Date().getDate();
-    const apartmentSearch: ApartmentsSearchParams = {
-        // @ts-ignore
-        arrival_date: savedCheckoutData?.backEndData?.arrival_date ?? convertDateToSearch(new Date(today + 1)),
-        // @ts-ignore
-        departure_date: savedCheckoutData?.backEndData?.departure_date ?? convertDateToSearch(new Date(today + 3)),
-    };
-
-    const checkResult = await checkApartment(apartmentId, apartmentSearch);
 
     const { createPayment } = usePayments();
     let paymentData: CreatePaymentRequestResult = {};
@@ -102,6 +96,19 @@ export default async function RentIndex({ params: { apartment: apartmentId } }: 
                                         <span className={'text-lg font-semibold'}>{ apartmentData.m2 } M2</span>
                                     </div>)}
                                 </div>
+                            </div>
+                        </div>
+                        <b className={'block text-xl font-semibold'}>Длительность проживания:</b>
+                        <b className={'block text-xl font-semibold text-primary'}>2 ночи</b>
+                        <div className={'p-[20px] border border-[#D6D6D6] rounded-xl mt-[30px] flex justify-between'}>
+                            <div>
+                                <b className={'block text-xl font-semibold'}>Дата заезда:</b>
+                                <span className={'text-lg'}>{format(selectedData.date.from, 'EE, dd MMMM yyyy')}</span>
+                            </div>
+                            <div className={'bg-foreground h-full w-[1px]'}/>
+                            <div>
+                                <b className={'block text-xl font-semibold'}>Дата отъезда:</b>
+                                <span className={'text-lg'}>{format(selectedData.date.to, 'EE, dd MMMM yyyy')}</span>
                             </div>
                         </div>
                     </div>

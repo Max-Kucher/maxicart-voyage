@@ -19,11 +19,11 @@ export const convertSearchApartmentsFormDataToApartmentsSearchParams = (data: Se
   };
 
   if (data.date.from) {
-    searchParams.arrival_date = convertDateToSearch(data.date.from);
+    searchParams.arrival_date = convertDateToSearch(new Date(data.date.from));
   }
 
   if (data.date.to) {
-    searchParams.departure_date = convertDateToSearch(data.date.to);
+    searchParams.departure_date = convertDateToSearch(new Date(data.date.to));
   }
 
   if (data?.price?.from) {
