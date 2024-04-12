@@ -13,6 +13,7 @@ import appConfig from "@/config/app";
 import ApartmentsSearchResult from "@/types/ApartmentsSearchResult";
 import {convertDateToSearch} from "@/lib/utils";
 import ApartmentsSearchParams from "@/types/ApartmentsSearchParams";
+import CreatePaymentRequestResult from "@/types/CreatePaymentRequestResult";
 
 interface RentPageProps {
     apartment: number,
@@ -50,17 +51,15 @@ export default async function RentIndex({ params: { apartment: apartmentId } }: 
     const checkResult = await checkApartment(apartmentId, apartmentSearch);
 
     const { createPayment } = usePayments();
-    let paymentData: {} = {};
+    let paymentData: CreatePaymentRequestResult = {};
 
     if (checkResult.ok) {
-        // paymentData = await createPayment({
-        //     apartment_id: parseInt(apartmentId.toString()),
-        //     arrival_date: apartmentSearch.arrival_date?.toString() ?? '',
-        //     departure_date: apartmentSearch.departure_date?.toString() ?? '',
-        //     addons: [],
-        // });
-        //
-        // console.log(paymentData);
+        paymentData = await createPayment({
+            apartment_id: parseInt(apartmentId.toString()),
+            arrival_date: apartmentSearch.arrival_date?.toString() ?? '',
+            departure_date: apartmentSearch.departure_date?.toString() ?? '',
+            addons: [],
+        });
     }
 
     return (<main>
@@ -111,6 +110,8 @@ export default async function RentIndex({ params: { apartment: apartmentId } }: 
                             errorMessage: checkResult?.body?.message ?? ''
                         }}
                         apartmentData={apartmentData}
+                        stripeClientSecret={paymentData.body?.client_secret}
+                        price={checkResult?.body?.smoobu?.price ?? 0}
                     />
                 </div>
             </div>
