@@ -1,8 +1,7 @@
 'use client'
 
-import React, {SyntheticEvent, useRef, useState} from 'react';
+import React, {SyntheticEvent, useContext, useLayoutEffect, useState} from 'react';
 import {Checkbox} from '../ui/checkbox';
-import {CheckIcon} from 'lucide-react';
 import {Controller, SubmitHandler, useForm} from "react-hook-form";
 import Datepicker from "@/components/ui/datepicker";
 import CountPiker from "@/components/ui/countpiker";
@@ -16,6 +15,7 @@ import useApartments from "@/composables/useApartments";
 import appConfig from "@/config/app";
 import {Link, useRouter} from "@/src/navigation";
 import Apartment from "@/types/Apartment";
+import {ApartmentContext} from "@/components/ApratmentProvider";
 
 interface ApartmentBookBlockProps {
     apartmentData: Apartment,
@@ -25,18 +25,11 @@ const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
     const apartmentId = apartmentData.id;
     const {checkApartment} = useApartments();
     const router = useRouter();
-
+    const apartmentContext: any = useContext(ApartmentContext)
     const bookingUrl = `/rent/${apartmentId}/book`;
-
-    let savedSearch: SearchApartmentsFormData | null = null;
-    const savedSearchCookie: any = getCookie(appConfig.cookieKeys.apartmentFormSearch);
-
-    if (savedSearchCookie !== undefined) {
-        savedSearch = JSON.parse(savedSearchCookie);
-    }
-
     const t = useTranslations();
-    const {control, handleSubmit, getValues} = useForm({
+    const [savedSearch, setSavedSearch] = useState<any>(null);
+    const {control, handleSubmit, getValues, setValue} = useForm({
         defaultValues: {
             date: {
                 from: add(new Date(savedSearch?.date?.from ?? new Date()), {
@@ -47,12 +40,20 @@ const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
                 }),
             },
             general: {
-                room: savedSearch?.general?.room ?? 1,
-                adult: savedSearch?.general?.adult ?? 1,
+                room: 1,
+                adult: 1,
                 child: savedSearch?.general?.child ?? 0,
             },
+            addons: []
         },
     })
+
+    useLayoutEffect(() => {
+        const savedSearchCookie: any = getCookie(appConfig.cookieKeys.apartmentFormSearch);
+        const savedSearch = JSON.parse(savedSearchCookie ?? '{}')
+
+        setSavedSearch(savedSearch)
+    }, [])
 
     const [bookingDisabled, setBookingDisabled] = useState(false);
     const onSubmit: SubmitHandler<SearchApartmentsFormData> = async (data: SearchApartmentsFormData) => {
@@ -64,9 +65,8 @@ const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
         }
 
         setBookingDisabled(false);
-
-        // ToDo: Change prices and other stuff
-        console.log(checkResult);
+        apartmentContext.setApartmentPrice(checkResult.body.smoobu.price)
+        apartmentContext.setApartmentNights(checkResult.body.nights)
     };
 
     const handleRoomBookingButtonClick = (e: SyntheticEvent) => {
@@ -184,11 +184,23 @@ const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
                     <div className={'p-[23px] border border-background rounded-lg flex flex-col gap-[18px]'}>
                         {apartmentData.addons === undefined ? '' : apartmentData.addons.map(apartmentAddon => {
                             const key = `apartment-bool-block-addon-${apartmentAddon.id}-${apartmentId}`;
-
                             return (
                             <div key={key}
                                  className={'flex items-center gap-[10px] md:gap-[30px]'}>
-                                <Checkbox id={key} />
+                                <Controller
+                                    name={'addons'}
+                                    control={control}
+                                    render={({field: {onChange, value }}) => {
+                                        const isChecked = (value as number[]).includes(apartmentAddon.id);
+                                        const setValue = isChecked ? (value as number[]).filter((i: number) => i !== apartmentAddon.id) : [...value, apartmentAddon.id];
+
+                                        return (
+                                            <>
+                                                <Checkbox id={key} checked={isChecked} onClick={() => onChange(setValue)}/>
+                                            </>
+                                        )
+                                    }}
+                                />
                                 <label htmlFor={key} className={'text-xs md:text-lg font-medium cursor-pointer'}>
                                     <span
                                         dangerouslySetInnerHTML={{__html: apartmentAddon.title.replace(/^(\+?\d+)/, '<span class="text-primary">$1</span>')}}></span>

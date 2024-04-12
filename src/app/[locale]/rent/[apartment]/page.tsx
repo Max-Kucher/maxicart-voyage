@@ -4,6 +4,7 @@ import useApartments from "@/composables/useApartments";
 import { NoSSRApartmentBookBlock } from "@/components/ApartmentBookBlock/NoSSRApartmentBookBlock";
 import ApartmentDetails from "@/components/ApartmentDetails";
 import PageNavigation from "@/components/PageNavigation";
+import ApartmentProvider from "@/components/ApratmentProvider";
 
 export default async function Page({params} : {
     params: { locale: string; apartment: string };
@@ -14,6 +15,7 @@ export default async function Page({params} : {
     const apartmentData = apartmentDataSearch.body;
 
     return (
+        <ApartmentProvider>
         <div className={'container'}>
             <div className={'mt-[20px] md:mt-[40px] 2xl:mt-[70px] md:mb-[30px] mb-[20px]'}>
                 <PageNavigation nameSpace={apartmentData.title ?? apartmentData.smoobu.name} />
@@ -44,5 +46,6 @@ export default async function Page({params} : {
             <NoSSRApartmentBookBlock
                 apartmentData={apartmentData} key={`apartment-details-card-${params.apartment}`}/>
         </div>
+        </ApartmentProvider>
     );
 };
