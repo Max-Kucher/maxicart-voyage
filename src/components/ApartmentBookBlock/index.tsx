@@ -138,6 +138,7 @@ const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
                                     <span dangerouslySetInnerHTML={
                                         {__html: apartmentAddon.title.replace(/^(\+?\d+)/, '<span class="text-primary">$1</span>')}
                                     }></span>
+                                    <span> (+{apartmentAddon.price} {apartmentData.smoobu.currency})</span>
                                 </label>
                             </div>);
                         })}
@@ -190,9 +191,12 @@ const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
                                 <Checkbox id={key} />
                                 <label htmlFor={key} className={'text-xs md:text-lg font-medium cursor-pointer'}>
                                     <span
-                                        dangerouslySetInnerHTML={{__html: apartmentAddon.title.replace(/^(\+?\d+)/, '<span class="text-primary">$1</span>')}}></span></label>
+                                        dangerouslySetInnerHTML={{__html: apartmentAddon.title.replace(/^(\+?\d+)/, '<span class="text-primary">$1</span>')}}></span>
+                                    <span> (+{apartmentAddon.price})</span>
+                                </label>
                             </div>
-                            )})}
+                            )
+                        })}
                         {/*<span className={'text-primary'}>+1</span>*/}
                         {/*<div className={'text-lg font-medium'}>*/}
                         {/*    {t('apartment.additionalService.service')} <span className={'text-primary cursor-pointer'}>{t('apartment.additionalService.more')}</span>*/}
