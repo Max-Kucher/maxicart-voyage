@@ -12,7 +12,7 @@ export default async function Page({params} : {
 
     const apartmentDataSearch = await searchApartmentById(parseInt(params.apartment));
     const apartmentData = apartmentDataSearch.body;
-    console.log(apartmentData.document)
+
     return (
         <div className={'container'}>
             <div className={'mt-[20px] md:mt-[40px] 2xl:mt-[70px] md:mb-[30px] mb-[20px]'}>
@@ -36,11 +36,13 @@ export default async function Page({params} : {
                         location={apartmentData.address}
                         description={apartmentData.description}
                         document={apartmentData.document ?? ''}
+                        amenities={apartmentData.amenities}
+                        addons={apartmentData.addons}
                     />
                 </div>
             </div>
             <NoSSRApartmentBookBlock
-                apartmentId={apartmentData.id} key={`apartment-details-card-${params.apartment}`}/>
+                apartmentData={apartmentData} key={`apartment-details-card-${params.apartment}`}/>
         </div>
     );
 };

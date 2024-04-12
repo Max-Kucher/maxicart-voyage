@@ -97,7 +97,7 @@
   "apartmentsDetails": {
     "maxPeople": "Max {maxPeople} people",
     "price": "From {price} {currency}",
-    "nights": "for {nights} nights"
+    "nights": "for {count, plural, one {one night} other {# nights}}"
   },
   "common": {
     "company": "Company"

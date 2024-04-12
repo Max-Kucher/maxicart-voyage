@@ -1,6 +1,9 @@
 import Location from "@/types/Location";
 import RoomsData from "@/types/RoomsData";
 import Photo from "@/types/Photo";
+import Amenity from "@/types/Amenity";
+import Equipments from "@/types/Equipments";
+import ApartmentAddon from "@/types/ApartmentAddon";
 
 export default interface Apartment
 {
@@ -25,21 +28,9 @@ export default interface Apartment
     description?: string,
     m2: number|null,
     photos: Photo[];
-    amenities: {
-        id: number;
-        title: string;
-        icon: string;
-    }[];
-    equipments: {
-        Bathroom: string[];
-        Kitchen: string[];
-        Bedroom: string[];
-    },
-    addons: {
-        id: number;
-        title: string;
-        price: number;
-    }[],
+    amenities: Amenity[];
+    equipments: Equipments,
+    addons: ApartmentAddon[],
     smoobu_price: {
         price: number;
     };

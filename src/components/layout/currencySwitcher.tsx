@@ -11,7 +11,7 @@ export default function CurrencySwitcher({ className, ...props }: CurrencySwitch
 
     return (
         <div className={`flex items-center ${className}`} {...props}>
-            <span className={"block font-semibold text-black mr-2 text-[20px]"}>USD</span>
+            <span className={"block font-semibold text-black mr-2 text-[20px] cursor-default"}>USD</span>
             <Image
                 src={"/images/flags/us.svg"}
                 width={44}

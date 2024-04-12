@@ -15,12 +15,14 @@ import {convertSearchApartmentsFormDataToApartmentsSearchParams} from "@/lib/uti
 import useApartments from "@/composables/useApartments";
 import appConfig from "@/config/app";
 import {Link, useRouter} from "@/src/navigation";
+import Apartment from "@/types/Apartment";
 
 interface ApartmentBookBlockProps {
-    apartmentId: number,
+    apartmentData: Apartment,
 }
 
-const ApartmentBookBlock = ({apartmentId}: ApartmentBookBlockProps) => {
+const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
+    const apartmentId = apartmentData.id;
     const {checkApartment} = useApartments();
     const router = useRouter();
 
@@ -52,16 +54,16 @@ const ApartmentBookBlock = ({apartmentId}: ApartmentBookBlockProps) => {
         },
     })
 
-    const [bookingDisabled, setBoockingDisabled] = useState(false);
+    const [bookingDisabled, setBookingDisabled] = useState(false);
     const onSubmit: SubmitHandler<SearchApartmentsFormData> = async (data: SearchApartmentsFormData) => {
         const checkResult = await checkApartment(apartmentId, convertSearchApartmentsFormDataToApartmentsSearchParams(data))
 
         if (checkResult.status >= 400) {
-            setBoockingDisabled(true);
+            setBookingDisabled(true);
             return;
         }
 
-        setBoockingDisabled(false);
+        setBookingDisabled(false);
 
         // ToDo: Change prices and other stuff
         console.log(checkResult);
@@ -127,19 +129,20 @@ const ApartmentBookBlock = ({apartmentId}: ApartmentBookBlockProps) => {
                 <Button>{t('apartment.additionalService.apply')}</Button>
                 <div className={'md:hidden block w-full xl:w-1/3 my-[40px] md:mt-0'}>
                     <div className={'p-[23px] border border-foreground-secondary rounded-lg flex flex-col gap-[18px]'}>
-                        <div className={'flex items-center gap-[10px] md:gap-[30px]'}>
-                            <Checkbox/>
-                            <label className={'text-xs md:text-lg font-medium'}><span className={'text-primary'}>+1</span> <span>Кровать для ребенка</span></label>
-                        </div>
-                        <div className={'flex items-center gap-[10px] md:gap-[30px]'}>
-                            <Checkbox/>
-                            <label className={'text-xs md:text-lg font-medium'}><span className={'text-primary'}>+1</span> <span>{t('apartment.additionalService.taxi')}</span></label>
-                        </div>
-                        <div className={'flex items-center gap-[10px] md:gap-[30px]'}>
-                            <Checkbox/>
-                            <label className={'text-xs md:text-lg font-medium'}>{t('apartment.additionalService.taxi')}</label>
-                        </div>
-                        <div className={'text-xs md:text-lg font-medium'}>{t('apartment.additionalService.service')} <span className={'text-primary cursor-pointer'}>{t('apartment.additionalService.more')}</span></div>
+                        {apartmentData.addons === undefined ? '' : apartmentData.addons.map(apartmentAddon => {
+                            const key = `apartment-bool-block-mobile-addon-${apartmentAddon.id}-${apartmentId}`;
+
+                            return (<div key={key} className={'flex items-center gap-[10px] md:gap-[30px]'}>
+                                <Checkbox id={key} />
+                                <label htmlFor={key} className={'text-xs md:text-lg font-medium'}>
+                                    <span dangerouslySetInnerHTML={
+                                        {__html: apartmentAddon.title.replace(/^(\+?\d+)/, '<span class="text-primary">$1</span>')}
+                                    }></span>
+                                </label>
+                            </div>);
+                        })}
+
+                        {/*<div className={'text-xs md:text-lg font-medium'}>{t('apartment.additionalService.service')} <span className={'text-primary cursor-pointer'}>{t('apartment.additionalService.more')}</span></div>*/}
                     </div>
                 </div>
                 <Button className={bookingDisabled ? 'pointer-events-none opacity-60' : ''} asChild={true}
@@ -151,48 +154,49 @@ const ApartmentBookBlock = ({apartmentId}: ApartmentBookBlockProps) => {
             </div>
             <div className={'flex mt-[60px] md:justify-between md:flex-row flex-col'}>
                 <div>
-                    <b className={'text-base md:text-xl text-black font-semibold'}>Удобства и услуги</b>
-                    <div className={'grid md:grid-cols-2 grid-cols-1 gap-x-[100px] mt-[30px]'}>
-                        <div>
-                            <b className={'text-base md:text-xl text-black font-semibold'}>Ванная комната</b>
-                            <ul className={'list-none list-inside mt-[14px]'}>
-                                <li className={'text-foreground text-sm md:text-lg flex gap-[15px]'}>
-                                    <CheckIcon className={'text-primary'}/>
-                                    <span>Ванная комната</span>
-                                </li>
-                                <li className={'text-foreground text-sm md:text-lg flex gap-[15px]'}>
-                                    <CheckIcon className={'text-primary'}/>
-                                    <span>Ванная комната</span>
-                                </li>
-                                <li className={'text-foreground text-sm md:text-lg flex gap-[15px]'}>
-                                    <CheckIcon className={'text-primary'}/>
-                                    <span>Ванная комната</span>
-                                </li>
-                                <li className={'text-foreground text-sm md:text-lg flex gap-[15px]'}>
-                                    <CheckIcon className={'text-primary'}/>
-                                    <span>Ванная комната</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                    {/*<b className={'text-base md:text-xl text-black font-semibold'}>Удобства и услуги</b>*/}
+                    {/*<div className={'grid md:grid-cols-2 grid-cols-1 gap-x-[100px] mt-[30px]'}>*/}
+                    {/*    <div>*/}
+                    {/*        <b className={'text-base md:text-xl text-black font-semibold'}>Ванная комната</b>*/}
+                    {/*        <ul className={'list-none list-inside mt-[14px]'}>*/}
+                    {/*            <li className={'text-foreground text-sm md:text-lg flex gap-[15px]'}>*/}
+                    {/*                <CheckIcon className={'text-primary'}/>*/}
+                    {/*                <span>Ванная комната</span>*/}
+                    {/*            </li>*/}
+                    {/*            <li className={'text-foreground text-sm md:text-lg flex gap-[15px]'}>*/}
+                    {/*                <CheckIcon className={'text-primary'}/>*/}
+                    {/*                <span>Ванная комната</span>*/}
+                    {/*            </li>*/}
+                    {/*            <li className={'text-foreground text-sm md:text-lg flex gap-[15px]'}>*/}
+                    {/*                <CheckIcon className={'text-primary'}/>*/}
+                    {/*                <span>Ванная комната</span>*/}
+                    {/*            </li>*/}
+                    {/*            <li className={'text-foreground text-sm md:text-lg flex gap-[15px]'}>*/}
+                    {/*                <CheckIcon className={'text-primary'}/>*/}
+                    {/*                <span>Ванная комната</span>*/}
+                    {/*            </li>*/}
+                    {/*        </ul>*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
                 </div>
                 <div className={'md:block hidden w-full xl:w-1/3 mt-[40px] md:mt-0'}>
                     <div className={'p-[23px] border border-background rounded-lg flex flex-col gap-[18px]'}>
-                        <div className={'flex items-center gap-[10px] md:gap-[30px]'}>
-                            <Checkbox/>
-                            <label className={'text-xs md:text-lg font-medium'}><span className={'text-primary'}>+1</span> <span>Кровать для ребенка</span></label>
-                        </div>
-                        <div className={'flex items-center gap-[10px] md:gap-[30px]'}>
-                            <Checkbox/>
-                            <label className={'text-xs md:text-lg font-medium'}><span className={'text-primary'}>+1</span> <span>Кровать для взрослого</span></label>
-                        </div>
-                        <div className={'flex items-center gap-[10px] md:gap-[30px]'}>
-                            <Checkbox/>
-                            <label className={'text-xs md:text-lg font-medium'}>Трансфер от/до аэропорта</label>
-                        </div>
-                        <div className={'text-lg font-medium'}>
-                            {t('apartment.additionalService.service')} <span className={'text-primary cursor-pointer'}>{t('apartment.additionalService.more')} </span>
-                        </div>
+                        {apartmentData.addons === undefined ? '' : apartmentData.addons.map(apartmentAddon => {
+                            const key = `apartment-bool-block-addon-${apartmentAddon.id}-${apartmentId}`;
+
+                            return (
+                            <div key={key}
+                                 className={'flex items-center gap-[10px] md:gap-[30px]'}>
+                                <Checkbox id={key} />
+                                <label htmlFor={key} className={'text-xs md:text-lg font-medium cursor-pointer'}>
+                                    <span
+                                        dangerouslySetInnerHTML={{__html: apartmentAddon.title.replace(/^(\+?\d+)/, '<span class="text-primary">$1</span>')}}></span></label>
+                            </div>
+                            )})}
+                        {/*<span className={'text-primary'}>+1</span>*/}
+                        {/*<div className={'text-lg font-medium'}>*/}
+                        {/*    {t('apartment.additionalService.service')} <span className={'text-primary cursor-pointer'}>{t('apartment.additionalService.more')}</span>*/}
+                        {/*</div>*/}
                     </div>
                 </div>
             </div>
