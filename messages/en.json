@@ -116,5 +116,19 @@
     "home": "Home",
     "rent": "Rent",
     "book": "Book"
+  },
+  "apartment": {
+    "additionalService": {
+      "bedsForAdults": "Adult bed",
+      "bedsForChildren": "Bed for a child",
+      "taxi": "Airport transfer",
+      "service": "Tour services more",
+      "more": "details…",
+      "apply": "Apply",
+      "book": "Book now"
+    },
+    "service": {
+      "title": "AMENITIES AND SERVICES"
+    }
   }
 }

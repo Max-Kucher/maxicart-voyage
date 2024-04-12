@@ -43,6 +43,7 @@ export default interface Apartment
     smoobu_price: {
         price: number;
     };
+    document: string;
     address: string; // Full address string from backend
     nights?: number;
 };

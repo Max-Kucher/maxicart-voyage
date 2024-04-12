@@ -20,7 +20,7 @@ const PageNavigation: FC<PageNavigationProps> = ({nameSpace}) => {
     return (
         <div>
             <Link href={'/'}>
-                <span className={'capitalize text-lg text-foreground-secondary'}>{lastPath.home}/</span>
+                <span className={'capitalize text-sm md:text-lg text-foreground-secondary'}>{lastPath.home}/</span>
             </Link>
             {
                 pathNames.map((link, index) => {
@@ -29,9 +29,9 @@ const PageNavigation: FC<PageNavigationProps> = ({nameSpace}) => {
 
                     return (
                         pathNames.length === index + 1 ?
-                            <span key={`page-navigation-${index}`} className={'capitalize text-lg text-foreground-secondary'}>{text}{pathNames.length !== index + 1 && '/'}</span> :
+                            <span key={`page-navigation-${index}`} className={'capitalize text-sm md:text-lg text-foreground-secondary'}>{text}{pathNames.length !== index + 1 && '/'}</span> :
                             <Link href={href} key={`page-navigation-${index}`}>
-                                <span className={'capitalize text-lg text-foreground-secondary'}>{text}{pathNames.length !== index + 1 && '/'}</span>
+                                <span className={'capitalize text-sm md:text-lg text-foreground-secondary'}>{text}{pathNames.length !== index + 1 && '/'}</span>
                             </Link>
                     )
                 })
