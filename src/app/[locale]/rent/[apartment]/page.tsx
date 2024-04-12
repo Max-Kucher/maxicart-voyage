@@ -30,7 +30,7 @@ export default async function Page({params} : {
                         maxPeople={apartmentData.smoobu.rooms.maxOccupancy}
                         bedCount={apartmentData.smoobu.rooms.bedrooms}
                         bathCount={apartmentData.smoobu.rooms.bathrooms}
-                        price={apartmentData.smoobu.price.minimal}
+                        price={apartmentData?.smoobu_price?.price ?? apartmentData.smoobu.price.minimal}
                         currency={apartmentData.smoobu.currency}
                         name={apartmentData.title ?? apartmentData.smoobu.name}
                         location={apartmentData.address}

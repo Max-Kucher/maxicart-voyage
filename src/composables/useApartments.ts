@@ -19,7 +19,6 @@ async function fetchApartments(params?: ApartmentsSearchParams)
         Object.entries(params).forEach(([key, value]) => url.searchParams.append(key, String(value)));
     }
 
-    // console.log(url.toString());
     const response = await fetch(url.toString());
     if (!response.ok) {
         throw new Error('Failed to fetch Apartments');
@@ -51,7 +50,6 @@ export default function useApartments() {
         });
 
         if (!response.ok) {
-            console.log(url.toString(), response);
             throw new Error('Failed to find apartment');
         }
 

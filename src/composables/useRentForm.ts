@@ -14,7 +14,6 @@ async function submitForm(formData: RentOutFormData): Promise<{ ok: boolean, bod
     });
 
     if (!response.ok) {
-        console.log(response);
         throw new Error('Failed to submit form');
     }
 
@@ -30,7 +29,6 @@ export default function useRentForm() {
         try {
             return await submitForm(formData);
         } catch (error: any) {
-            console.log(error);
             return new Promise((): { ok: boolean, error: any } => {
                 return {
                     ok: false,
