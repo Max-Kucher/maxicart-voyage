@@ -34,9 +34,11 @@ const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
     const {checkApartment} = useApartments();
     const router = useRouter();
     const apartmentContext: any = useContext(ApartmentContext)
-    const bookingUrl = `/rent/${apartmentId}/book`;
     const t = useTranslations();
     const [savedSearch, setSavedSearch] = useState<any>(null);
+    const [appliedData, setAppliedData] = useState<string>('');
+    const bookingUrl = `/rent/${apartmentId}/book?bookData=${appliedData}`;
+
     const {control, handleSubmit, getValues, setValue} = useForm({
         defaultValues: {
             date: {
@@ -66,6 +68,7 @@ const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
     const [bookingDisabled, setBookingDisabled] = useState(false);
     const onSubmit: SubmitHandler<SearchApartmentsFormData> = async (data: SearchApartmentsFormData) => {
         const checkResult = await checkApartment(apartmentId, convertSearchApartmentsFormDataToApartmentsSearchParams(data))
+        setAppliedData(btoa(JSON.stringify(data)));
 
         if (checkResult.status >= 400) {
             setBookingDisabled(true);
@@ -80,7 +83,6 @@ const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
     const handleRoomBookingButtonClick = (e: SyntheticEvent) => {
         e.preventDefault();
         const values = getValues();
-
         setCookie(appConfig.cookieKeys.checkoutData, JSON.stringify(values));
         setCookie(`${appConfig.cookieKeys.checkoutData}-backend`, convertSearchApartmentsFormDataToApartmentsSearchParams(values));
 
