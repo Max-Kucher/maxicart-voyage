@@ -87,8 +87,7 @@ const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
         router.push(bookingUrl + btoa(JSON.stringify(values)));
     };
 
-    // const showMap = apartmentData.smoobu.location.latitude !== null && apartmentData.smoobu.location.longitude !== null;
-    const showMap = true;
+    const showMap = apartmentData.smoobu.location.latitude !== null && apartmentData.smoobu.location.longitude !== null;
     const latLngPositions: LatLngExpression = [apartmentData?.smoobu?.location?.latitude ?? 50, apartmentData?.smoobu?.location?.longitude ?? 50];
 
     React.useEffect(() => {
