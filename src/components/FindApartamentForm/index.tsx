@@ -1,6 +1,6 @@
 'use client'
 
-import React, {FC, useMemo, useEffect, useState} from 'react';
+import React, {FC, useMemo, useState} from 'react';
 import Datepicker from "@/components/ui/datepicker";
 import {Button} from "@/components/ui/button";
 import CountPiker from "@/components/ui/countpiker";
@@ -9,23 +9,15 @@ import {Controller, useForm, SubmitHandler} from 'react-hook-form';
 import {add} from 'date-fns';
 import {useTranslations} from "next-intl";
 import SearchApartmentsFormData from "@/types/SearchApartmentsFormData";
-import {useRouter, usePathname} from "@/navigation";
-import useApartments from "@/composables/useApartments";
-import ApartmentsSearchParams from "@/types/ApartmentsSearchParams";
-import {convertSearchApartmentsFormDataToApartmentsSearchParams} from "@/lib/utils";
-import {getCookie, setCookie} from 'cookies-next';
-import appConfig from "@/config/app";
+import {useRouter} from "@/navigation";
 import {useSearchParams} from "next/navigation";
 
 interface FindApartmentProps {
     behavior?: string; // Defines the behavior for the component. Supports "default"|redirect" options
 }
 
-const savedSearchKey = appConfig.cookieKeys.apartmentFormSearch;
-
 const FindApartment: FC<FindApartmentProps> = ({behavior}) => {
     const router = useRouter();
-    const pathname = usePathname();
     const params = useSearchParams();
 
     const savedSearch: SearchApartmentsFormData = JSON.parse(atob(new URLSearchParams(params.toString()).get('formData') || '') || '{}');
