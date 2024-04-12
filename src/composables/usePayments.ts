@@ -13,7 +13,7 @@ export default function usePayments() {
             body: JSON.stringify(paymentData),
         });
 
-        console.log(url, JSON.stringify(paymentData));
+        // console.log(url.toString(), JSON.stringify(paymentData));
 
         return {
             ok: response?.ok ?? false,
