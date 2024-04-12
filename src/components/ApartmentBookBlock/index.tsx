@@ -105,6 +105,18 @@ const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
         });
     }, []);
 
+    const Map = () => (
+        <MapContainer className={`h-[246px] mt-[30px] rounded-[10px]`} center={latLngPositions} zoom={13} scrollWheelZoom={false}>
+            <TileLayer
+                attribution='&copy; OpenStreetMap contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            <Marker position={latLngPositions}>
+                <Popup>{ apartmentData.address }</Popup>
+            </Marker>
+        </MapContainer>
+    )
+
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={'bg-white rounded-lg px-[30px] py-[60px] mt-[30px]'}>
             <div className={'text-base md:text-xl text-black font-semibold text-center lg:text-left'}>Выберите даты заезда, выезда и количество гостей</div>
@@ -153,13 +165,13 @@ const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
                         )}/>
                 </div>
                 <Button>{t('apartment.additionalService.apply')}</Button>
-                <div className={'md:hidden block w-full xl:w-1/3 my-[40px] md:mt-0'}>
+                {apartmentData.addons && <div className={'md:hidden block w-full xl:w-1/3 my-[40px] md:mt-0'}>
                     <div className={'p-[23px] border border-foreground-secondary rounded-lg flex flex-col gap-[18px]'}>
-                        {apartmentData.addons === undefined ? '' : apartmentData.addons.map(apartmentAddon => {
+                        {apartmentData.addons.map(apartmentAddon => {
                             const key = `apartment-bool-block-mobile-addon-${apartmentAddon.id}-${apartmentId}`;
 
                             return (<div key={key} className={'flex items-center gap-[10px] md:gap-[30px]'}>
-                                <Checkbox id={key} />
+                                <Checkbox id={key}/>
                                 <label htmlFor={key} className={'text-xs md:text-lg font-medium'}>
                                     <span dangerouslySetInnerHTML={
                                         {__html: apartmentAddon.title.replace(/^(\+?\d+)/, '<span class="text-primary">$1</span>')}
@@ -171,13 +183,16 @@ const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
 
                         {/*<div className={'text-xs md:text-lg font-medium'}>{t('apartment.additionalService.service')} <span className={'text-primary cursor-pointer'}>{t('apartment.additionalService.more')}</span></div>*/}
                     </div>
-                </div>
+                </div>}
                 <Button className={bookingDisabled ? 'pointer-events-none opacity-60' : ''} asChild={true}
                         onClick={handleRoomBookingButtonClick}>
                     <Link href={bookingUrl}>
                         {t('apartment.additionalService.book')}
                     </Link>
                 </Button>
+                <div className={'md:hidden block w-full h-[250px] z-0'}>
+                    <Map/>
+                </div>
             </div>
             <div className={'flex mt-[60px] md:justify-between md:flex-row flex-col'}>
                 <div>
@@ -207,7 +222,7 @@ const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
                     {/*</div>*/}
                 </div>
                 <div className={'md:block hidden w-full xl:w-1/3 mt-[40px] md:mt-0'}>
-                    {apartmentData.addons === undefined ? '' : <div className={'p-[23px] border border-background rounded-lg flex flex-col gap-[18px]'}>
+                    {!apartmentData.addons ? '' : <div className={'p-[23px] border border-background rounded-lg flex flex-col gap-[18px]'}>
                         {apartmentData.addons.map(apartmentAddon => {
                             const key = `apartment-bool-block-addon-${apartmentAddon.id}-${apartmentId}`;
                             return (
@@ -242,15 +257,7 @@ const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
                     </div>}
 
                     {showMap ? (
-                        <MapContainer className={`h-[246px] mt-[30px] rounded-[10px]`} center={latLngPositions} zoom={13} scrollWheelZoom={false}>
-                            <TileLayer
-                                attribution='&copy; OpenStreetMap contributors'
-                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                            />
-                            <Marker position={latLngPositions}>
-                                <Popup>{ apartmentData.address }</Popup>
-                            </Marker>
-                        </MapContainer>
+                        <Map/>
                     ) : ''}
                 </div>
             </div>

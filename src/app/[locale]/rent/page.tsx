@@ -1,35 +1,29 @@
 import ApartmentCard from "@/components/ApartmentCard";
-// import FindApartment from "@/components/FindApartamentForm";
 import AddApartmentForm from "@/src/blocks/addApartmentForm";
 import PageNavigation from "@/components/PageNavigation";
 import useApartments from "@/composables/useApartments";
 import Apartment from "@/types/Apartment";
 import React from "react";
-import { cookies } from 'next/headers'
 import ApartmentsSearchParams from "@/types/ApartmentsSearchParams";
 import {NoSSRFindApartamentForm} from "@/components/FindApartamentForm/NoSSRFindApartamentForm";
-import appConfig from "@/config/app";
+import { convertSearchApartmentsFormDataToApartmentsSearchParams } from "@/src/lib/utils";
 
 
-async function CardsList() {
-    const cookieStore = cookies();
-    const savedSearch = cookieStore.get(`${appConfig.cookieKeys.apartmentFormSearch}-backend`);
-    let searchParams: ApartmentsSearchParams = {};
+async function CardsList({formData}: {formData: string}) {
+    let data: ApartmentsSearchParams = {
+        items_per_page: 15,
+        sort_by: 'id',
+        sort_order: 'asc',
+    };
 
-    if (savedSearch === null || savedSearch === undefined) {
-        searchParams = {
-            items_per_page: 15,
-            sort_by: 'id',
-            sort_order: 'asc',
-        };
-    } else {
-        searchParams = JSON.parse(savedSearch.value);
+    if(formData) {
+        data = convertSearchApartmentsFormDataToApartmentsSearchParams(JSON.parse(atob(formData)));
     }
 
-    const { searchApartments } = useApartments();
-    const apartments = await searchApartments(searchParams);
 
-    console.log(apartments.data.length);
+    const { searchApartments } = useApartments();
+    const apartments = await searchApartments(data);
+
 
     return apartments.data.map((apartment: Apartment) => (<ApartmentCard
         key={`index-apartment-${apartment.id}`}
@@ -47,7 +41,7 @@ async function CardsList() {
     />));
 }
 
-export default function RentIndex() {
+export default function RentIndex({searchParams}: {searchParams: {formData: string}}) {
     return (
         <main>
             <div className="container">
@@ -58,7 +52,7 @@ export default function RentIndex() {
                     <NoSSRFindApartamentForm />
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-[20px] md:mt-[80px] mt-[40px]">
-                    <CardsList/>
+                    <CardsList formData={searchParams.formData}/>
                 </div>
                 <AddApartmentForm/>
             </div>
