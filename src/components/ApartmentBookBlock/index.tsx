@@ -83,10 +83,8 @@ const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
     const handleRoomBookingButtonClick = (e: SyntheticEvent) => {
         e.preventDefault();
         const values = getValues();
-        setCookie(appConfig.cookieKeys.checkoutData, JSON.stringify(values));
-        setCookie(`${appConfig.cookieKeys.checkoutData}-backend`, convertSearchApartmentsFormDataToApartmentsSearchParams(values));
 
-        router.push(bookingUrl);
+        router.push(bookingUrl + btoa(JSON.stringify(values)));
     };
 
     // const showMap = apartmentData.smoobu.location.latitude !== null && apartmentData.smoobu.location.longitude !== null;

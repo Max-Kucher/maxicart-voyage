@@ -81,7 +81,7 @@
     "submit": "Оставить заявку"
   },
   "apartmentCard": {
-    "maxPeople": "До {maxPeople} людей",
+    "maxPeople": "До {maxPeople, plural, one {# человека} other {# людей}}",
     "price": "От {price} {currency}",
     "nights": "за {count, plural, zero {# ночей} one {# ночь} few {# ночи} other {# ночей}}",
     "book": "Забронировать"

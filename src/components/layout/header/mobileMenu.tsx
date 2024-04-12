@@ -49,7 +49,7 @@ export default function MobileMenu() {
             <MenuIcon width={60} height={32} className={"w-[48px] h-[27px] sm:h-auto sm:w-auto transition duration-300 ease-out fill-foreground hover:fill-primary"} />
         </button>
 
-        <div className={"flex z-10 flex-col md:justify-center pt-[100px] md:pt-0 bg-white fixed shadow-xl w-[100vw] top-0 right-0 h-dvh xl:max-w-[562px] md:max-w-[399px] " + (isOpen ? 'block' : 'hidden')}>
+        <div className={"flex z-10 flex-col md:justify-center pt-[100px] md:pt-0 bg-white fixed shadow-xl w-[100vw] top-0 right-0 bottom-0 min-h-dvh xl:max-w-[562px] md:max-w-[399px] " + (isOpen ? 'block' : 'hidden')}>
             <button onClick={menuOpenerHandler} className={"absolute p-5 m-5 top-0 right-0"} >
                 <CrossIcon className={"transition duration-150 ease-out fill-[#808080] hover:fill-primary"} width={30} height={30} />
             </button>
@@ -75,7 +75,7 @@ export default function MobileMenu() {
 
             <Logo width={logoWidth} height={logoHeight} className={"xl:mt-[100px] mt-[50px] md:pl-20 mx-auto md:mx-0"} />
 
-            <div className={"flex md:hidden items-center justify-center gap-[27px] mt-[60px]"}>
+            <div className={"flex md:hidden items-center justify-center gap-[27px] mt-[60px] mb-[30px]"}>
                 <LanguageSwitcher />
 
                 <CurrencySwitcher />

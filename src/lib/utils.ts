@@ -38,7 +38,15 @@ export const convertSearchApartmentsFormDataToApartmentsSearchParams = (data: Se
   //     searchParams.rooms = data.general.room;
   // }
 
-  if (data.general.adult || data.general.child) {
+  if (data?.general?.adult) {
+    searchParams.adults = data.general.adult;
+  }
+
+  if (data?.general?.child) {
+    searchParams.child = data.general.child;
+  }
+
+  if (data?.general?.adult || data?.general?.child) {
     searchParams.guests = (data?.general?.adult ?? 0) + (data?.general?.child ?? 0);
   }
 
