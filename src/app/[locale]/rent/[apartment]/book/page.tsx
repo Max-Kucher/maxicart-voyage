@@ -53,14 +53,14 @@ export default async function RentIndex({ params: { apartment: apartmentId } }: 
     let paymentData: {} = {};
 
     if (checkResult.ok) {
-        paymentData = await createPayment({
-            apartment_id: parseInt(apartmentId.toString()),
-            arrival_date: apartmentSearch.arrival_date?.toString() ?? '',
-            departure_date: apartmentSearch.arrival_date?.toString() ?? '',
-            addons: [],
-        });
-
-        console.log(paymentData);
+        // paymentData = await createPayment({
+        //     apartment_id: parseInt(apartmentId.toString()),
+        //     arrival_date: apartmentSearch.arrival_date?.toString() ?? '',
+        //     departure_date: apartmentSearch.departure_date?.toString() ?? '',
+        //     addons: [],
+        // });
+        //
+        // console.log(paymentData);
     }
 
     return (<main>

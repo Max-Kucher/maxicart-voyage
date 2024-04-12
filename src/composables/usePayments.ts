@@ -13,12 +13,10 @@ export default function usePayments() {
             body: JSON.stringify(paymentData),
         });
 
-        // console.log(url.toString(), JSON.stringify(paymentData));
-
         return {
             ok: response?.ok ?? false,
             status: response?.status ?? 400,
-            // body: await response.json() ?? {},
+            body: await response.json() ?? {},
             headers: response?.headers ?? {},
         };
     };
