@@ -9,12 +9,13 @@ import {Controller, useForm, SubmitHandler} from 'react-hook-form';
 import {add} from 'date-fns';
 import {useTranslations} from "next-intl";
 import SearchApartmentsFormData from "@/types/SearchApartmentsFormData";
-import { useRouter, usePathname } from "@/navigation";
+import {useRouter, usePathname} from "@/navigation";
 import useApartments from "@/composables/useApartments";
 import ApartmentsSearchParams from "@/types/ApartmentsSearchParams";
 import {convertSearchApartmentsFormDataToApartmentsSearchParams} from "@/lib/utils";
-import { getCookie, setCookie } from 'cookies-next';
+import {getCookie, setCookie} from 'cookies-next';
 import appConfig from "@/config/app";
+import {useSearchParams} from "next/navigation";
 
 interface FindApartmentProps {
     behavior?: string; // Defines the behavior for the component. Supports "default"|redirect" options
@@ -22,17 +23,12 @@ interface FindApartmentProps {
 
 const savedSearchKey = appConfig.cookieKeys.apartmentFormSearch;
 
-const FindApartment: FC<FindApartmentProps> = ({ behavior }) => {
+const FindApartment: FC<FindApartmentProps> = ({behavior}) => {
     const router = useRouter();
     const pathname = usePathname();
+    const params = useSearchParams();
 
-    let savedSearch: SearchApartmentsFormData | null = null;
-    const savedSearchCookie: any = getCookie(appConfig.cookieKeys.apartmentFormSearch);
-
-    if (savedSearchCookie !== undefined) {
-        savedSearch = JSON.parse(savedSearchCookie);
-    }
-
+    const savedSearch: SearchApartmentsFormData = JSON.parse(atob(new URLSearchParams(params.toString()).get('formData') || '') || '{}');
     const t = useTranslations('filterForm');
 
     const defaultValues: SearchApartmentsFormData = useMemo(() => ({
@@ -62,41 +58,8 @@ const FindApartment: FC<FindApartmentProps> = ({ behavior }) => {
     const [formLoading, setFormLoading] = useState(false);
 
     const onSubmit: SubmitHandler<SearchApartmentsFormData> = async (data: SearchApartmentsFormData) => {
-        const today = new Date();
-        setCookie(savedSearchKey, JSON.stringify(data), {
-            path: '/',
-            expires: new Date(today.setDate(today.getDate() + 3)),
-        });
-        setCookie(savedSearchKey + '-backend', convertSearchApartmentsFormDataToApartmentsSearchParams(data), {
-            path: '/',
-            expires: new Date(today.setDate(today.getDate() + 3)),
-        });
-
-        if (behavior === 'redirect') {
-            router.push('/rent?send-form=true', {
-                scroll: false
-            });
-        } else {
-            setFormLoading(true);
-
-            setTimeout(() => {
-                router.push(pathname, {
-                    scroll: false,
-                });
-                setFormLoading(false);
-            }, 1000);
-        }
+        router.replace(`/rent?formData=${btoa(JSON.stringify(data))}`,);
     };
-
-    useEffect(() => {
-        if (window.location.search.length) {
-            const search = JSON.parse('{"' + decodeURI(window.location.search.substring(1)).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}');
-
-            if (search['send-form'] !== undefined) {
-                handleSubmit(onSubmit)()
-            }
-        }
-    });
 
     const btnClass = `inline-block transition-opacity duration-150 hover:opacity-90 ${formLoading ? 'opacity-40 pointer-events-none' : ''}`;
 
@@ -133,20 +96,20 @@ const FindApartment: FC<FindApartmentProps> = ({ behavior }) => {
                                 onSetValue={(id, num) => onChange({...value, [id]: num})}
                                 list={[
                                     {
-                                        label: t('adult', { count: value.adult }),
+                                        label: t('adult', {count: value.adult}),
                                         id: 'adult'
                                     },
                                     {
-                                        label: t('child', { count: value.child }),
+                                        label: t('child', {count: value.child}),
                                         id: 'child',
                                     },
                                     {
-                                        label: t('room', { count: value.room }),
+                                        label: t('room', {count: value.room}),
                                         id: 'room'
                                     }
                                 ]}
                                 values={value}
-                                text={`${value.adult} ${t('human')} - ${value.child} ${t('child', { count: value.child })} - ${value.room} ${t('room', { count: value.room })}`}
+                                text={`${value.adult} ${t('human')} - ${value.child} ${t('child', {count: value.child})} - ${value.room} ${t('room', {count: value.room})}`}
                             />
                         )}/>
                 </div>
@@ -157,7 +120,9 @@ const FindApartment: FC<FindApartmentProps> = ({ behavior }) => {
                            </span>
                         <Controller
                             render={({field: {value, onChange, ...field}}) =>
-                                <Input type={"number"} value={value} onChange={(event) => onChange(parseFloat(event.target.value.replace(/[^0-9\b]/g, '')))} className={"[appearance:textfield]"} rightText={'USD'} {...field} />
+                                <Input type={"number"} value={value}
+                                       onChange={(event) => onChange(parseFloat(event.target.value.replace(/[^0-9\b]/g, '')))}
+                                       className={"[appearance:textfield]"} rightText={'USD'} {...field} />
                             }
                             name={'price.from'}
                             control={control}
@@ -168,13 +133,15 @@ const FindApartment: FC<FindApartmentProps> = ({ behavior }) => {
                             <span className={'mb-[10px] md:text-lg text-xs'}>
                                 {t('priceTo')}
                             </span>
-                      <Controller
-                        render={({field: {value, onChange, ...field}}) =>
-                          <Input type={"number"} value={value} onChange={(event) => onChange(parseFloat(event.target.value.replace(/[^0-9\b]/g, '')))} className={"[appearance:textfield]"} rightText={'USD'} {...field} />
-                        }
-                        name={'price.to'}
-                        control={control}
-                      />
+                        <Controller
+                            render={({field: {value, onChange, ...field}}) =>
+                                <Input type={"number"} value={value}
+                                       onChange={(event) => onChange(parseFloat(event.target.value.replace(/[^0-9\b]/g, '')))}
+                                       className={"[appearance:textfield]"} rightText={'USD'} {...field} />
+                            }
+                            name={'price.to'}
+                            control={control}
+                        />
                     </div>
                 </div>
                 <div className={'flex items-center justify-center 2xl:hidden'}>
