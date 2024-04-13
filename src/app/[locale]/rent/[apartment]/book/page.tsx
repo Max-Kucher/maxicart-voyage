@@ -25,7 +25,9 @@ export default async function RentIndex({ searchParams, params: { apartment: apa
 }) {
     const { searchApartmentById, checkApartment } = useApartments();
     const { body: apartmentData } = await searchApartmentById(apartmentId);
-    const selectedData: SearchApartmentsFormData = JSON.parse(searchParams?.bookData?.length ? atob(searchParams.bookData) : '{}')
+
+    const paramsString: string = searchParams?.bookData?.length ? atob(searchParams.bookData) : '{}';
+    const selectedData: SearchApartmentsFormData = JSON.parse(paramsString.trim())
 
     if (selectedData.date === undefined) {
         const today = new Date();

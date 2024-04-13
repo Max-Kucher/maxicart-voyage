@@ -1,3 +1,6 @@
+ARG BACKEND_BASE_URL_ARG
+ENV BACKEND_BASE_URL=$BACKEND_BASE_URL_ARG
+
 FROM node:20-alpine AS base
 
 # Install dependencies only when needed
@@ -39,6 +42,7 @@ FROM base AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
+
 # Uncomment the following line in case you want to disable telemetry during runtime.
 # ENV NEXT_TELEMETRY_DISABLED 1
 

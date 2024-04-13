@@ -24,6 +24,7 @@ import {LatLngExpression} from "leaflet";
 import {AppContext} from "@/components/AppContext";
 import {setCookie} from "cookies-next";
 import { add } from 'date-fns';
+import LoadingSpinner from "@/components/ui/loadingSpinner";
 
 interface ApartmentBookBlockProps {
     apartmentData: Apartment,
@@ -36,8 +37,10 @@ const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
     const apartmentContext: any = useContext(ApartmentContext)
     const appContext: any = useContext(AppContext)
     const t = useTranslations();
-    const [appliedData, setAppliedData] = useState<string>('');
-    const bookingUrl = `/rent/${apartmentId}/book?bookData=${appliedData}`;
+
+    const [bookPageMoving, setBookPageMoving] = useState(false);
+
+    const bookingUrl = `/rent/${apartmentId}/book?bookData=`;
     const formData = appContext?.apartmentFormData
     const {control, handleSubmit, getValues, setValue, watch} = useForm({
         defaultValues: {
@@ -65,10 +68,13 @@ const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
         appContext?.setApartmentFormData({general, date})
     }, [general, date, appContext]);
 
+    const [formLoading, setFormLoading] = useState(false);
     const [bookingDisabled, setBookingDisabled] = useState(false);
     const onSubmit: SubmitHandler<SearchApartmentsFormData> = async (data: SearchApartmentsFormData) => {
+        setFormLoading(true);
         const checkResult = await checkApartment(apartmentId, convertSearchApartmentsFormDataToApartmentsSearchParams(data))
-        setAppliedData(btoa(JSON.stringify(data)));
+
+        setFormLoading(false);
 
         if (checkResult.status >= 400) {
             setBookingDisabled(true);
@@ -80,11 +86,19 @@ const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
         apartmentContext.setApartmentNights(checkResult.body.nights)
     };
 
-    const handleRoomBookingButtonClick = (e: SyntheticEvent) => {
+    const handleRoomBookingButtonClick = async (e: SyntheticEvent) => {
         e.preventDefault();
-        const values = getValues();
+        if (formLoading || bookingDisabled) {
+            return;
+        }
 
-        router.push(bookingUrl + btoa(JSON.stringify(values)));
+        setBookPageMoving(true);
+        const values = getValues();
+        const checkoutUrl = bookingUrl + btoa(JSON.stringify(values));
+
+        await new Promise(() => router.push(checkoutUrl))
+        setBookPageMoving(false);
+
     };
 
     const showMap = apartmentData.smoobu.location.latitude !== null && apartmentData.smoobu.location.longitude !== null;
@@ -161,7 +175,9 @@ const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
                             />
                         )}/>
                 </div>
-                <Button>{t('apartment.additionalService.apply')}</Button>
+                <Button disabled={formLoading}>
+                    {formLoading ? (<LoadingSpinner className={`w-8 h-8`} />) : t('apartment.additionalService.apply')}
+                </Button>
                 {apartmentData.addons && <div className={'md:hidden block w-full xl:w-1/3 my-[40px] md:mt-0'}>
                     <div className={'p-[23px] border border-foreground-secondary rounded-lg flex flex-col gap-[18px]'}>
                         {apartmentData.addons.map(apartmentAddon => {
@@ -181,10 +197,12 @@ const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
                         {/*<div className={'text-xs md:text-lg font-medium'}>{t('apartment.additionalService.service')} <span className={'text-primary cursor-pointer'}>{t('apartment.additionalService.more')}</span></div>*/}
                     </div>
                 </div>}
-                <Button className={bookingDisabled ? 'pointer-events-none opacity-60' : ''} asChild={true}
-                        onClick={handleRoomBookingButtonClick}>
-                    <Link href={bookingUrl}>
-                        {t('apartment.additionalService.book')}
+                <Button asChild={true}
+                        onClick={handleRoomBookingButtonClick}
+                        className={bookingDisabled || formLoading || bookPageMoving ? 'pointer-events-none opacity-60' : ''}
+                >
+                    <Link href={bookingUrl} prefetch={false}>
+                        {formLoading || bookPageMoving ? (<LoadingSpinner className={`w-8 h-8`} />) : t('apartment.additionalService.book')}
                     </Link>
                 </Button>
                 <div className={'md:hidden block w-full h-[250px] z-0'}>
