@@ -13,6 +13,7 @@ import { PaymentElement } from '@stripe/react-stripe-js';
 import useOrders from "@/composables/useOrders";
 import {Button} from "@/components/ui/button";
 import CheckoutFormData from "@/types/checkout/CheckoutFormData";
+import {useRouter} from "@/navigation";
 
 const stripePromise = loadStripe(appConfig.stripe.publishableKey);
 
@@ -31,6 +32,7 @@ export default function Form({ apartmentData, availabilityData, stripeClientSecr
         clientSecret: stripeClientSecret ?? '',
         appearance: appConfig.stripe.appearance,
     };
+    const router = useRouter();
 
     const t = useTranslations();
     const {control, handleSubmit, setValue, getValues} = useForm({
@@ -103,6 +105,7 @@ export default function Form({ apartmentData, availabilityData, stripeClientSecr
                     // site first to authorize the payment, then redirected to the `return_url`.
                 }
             } else {
+                router.push('/?success=true');
                 /**
                  * Successfully created order: cash payment
                  */
@@ -120,12 +123,12 @@ export default function Form({ apartmentData, availabilityData, stripeClientSecr
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className={'bg-white rounded-xl px-[80px] py-[60px] col-span-2'}>
+        <form onSubmit={handleSubmit(onSubmit)} className={'bg-white rounded-xl p-[20px] xl:px-[80px] xl:py-[60px] col-span-2'}>
             <div className={'flex flex-col gap-[15px]'}>
-                <b className={'text-xl font-semibold'}>{t("checkout.form.specifyYourData")}</b>
-                <div className={'text-lg'}>{t("checkout.form.specifyYourDataDescription")}</div>
+                <b className={'text-lg xl:text-xl font-semibold'}>{t("checkout.form.specifyYourData")}</b>
+                <div className={'text-sm xl:text-lg'}>{t("checkout.form.specifyYourDataDescription")}</div>
             </div>
-            <div className={'grid grid-cols-2 mt-[60px] gap-x-[30px] gap-y-[20px]'}>
+            <div className={'grid grid-cols-1 xl:grid-cols-2 mt-[30px] xl:mt-[60px] gap-x-[30px] gap-y-[20px]'}>
                 <div className={'flex flex-col'}>
                     <Controller
                         render={({field}) => (
@@ -170,7 +173,7 @@ export default function Form({ apartmentData, availabilityData, stripeClientSecr
                         name={'email'}
                         control={control}
                     />
-                    <span>{t("checkout.form.emailFieldDescription")}</span>
+                    <span className={'text-sm xl:text-lg'}>{t("checkout.form.emailFieldDescription")}</span>
                 </div>
                 <div className={'flex flex-col gap-[15px]'}>
                     <Controller
@@ -187,51 +190,51 @@ export default function Form({ apartmentData, availabilityData, stripeClientSecr
                         name={'phone'}
                         control={control}
                     />
-                    <span>{t("checkout.form.phoneFieldDescription")}</span>
+                    <span className={'text-sm xl:text-lg'}>{t("checkout.form.phoneFieldDescription")}</span>
                 </div>
             </div>
-            <div className={'mt-[60px] pb-[60px] border-b border-b-foreground-secondary'}>
+            <div className={'mt-[30px] xl:mt-[60px] pb-[30px] xl:pb-[60px] border-b border-b-foreground-secondary'}>
                 <b className={'text-xl'}>{t("checkout.form.guest.subSectionTitle")}</b>
-                <RadioGroup defaultValue={getValues('guest')} className={'flex mt-[20px] gap-[50px]'}
+                <RadioGroup defaultValue={getValues('guest')} className={'flex mt-[20px] gap-[50px] flex-wrap xl:flex-nowrap'}
                             onValueChange={(newVal) => handleRadioChange(newVal, 'guest')}
                             disabled={isDisabled}
                 >
                     <div className={'flex gap-[10px] items-center'}>
                         <RadioGroupItem value="me" id="r1"/>
-                        <label className={'text-lg text-foreground font-medium'} htmlFor="r1">{t("me")}</label>
+                        <label className={'text-sm xl:text-lg text-foreground font-medium'} htmlFor="r1">{t("me")}</label>
                     </div>
                     <div className={'flex gap-[10px] items-center'}>
                         <RadioGroupItem value="another" id="r2"/>
-                        <label className={'text-lg text-foreground font-medium'}
+                        <label className={'text-sm xl:text-lg text-foreground font-medium'}
                                htmlFor="r2">{t("checkout.form.guest.variants.another")}</label>
                     </div>
                 </RadioGroup>
             </div>
-            <div className={'py-[60px]'}>
-                <b className={'text-[30px] text-foreground font-extrabold uppercase block'}>
+            <div className={'py-[30px] xl:py-[60px]'}>
+                <b className={'text-[25px] xl:text-[30px] text-foreground font-extrabold uppercase block'}>
                     {t("checkout.form.payment.sectionTitle")}
                 </b>
-                <b className={'text-xl block mt-[30px]'}>{t("checkout.form.payment.subSectionTitle")}</b>
+                <b className={'text-lg xl:text-xl block mt-[20px] xl:mt-[30px]'}>{t("checkout.form.payment.subSectionTitle")}</b>
                 <RadioGroup defaultValue={getValues('payment')}
-                            className={'flex mt-[20px] gap-[50px]'}
+                            className={'flex mt-[20px] gap-[20px] xl:gap-[50px] flex-wrap xl:flex-nowrap'}
                             onValueChange={(newVal) => handleRadioChange(newVal, 'payment')}
                             disabled={isDisabled}
                 >
                     <div className={'flex gap-[10px] items-center'}>
                         <RadioGroupItem value="cash" id="p1"/>
-                        <label className={'text-lg text-foreground font-medium'}
+                        <label className={'text-sm xl:text-lg text-foreground font-medium'}
                                htmlFor="p1">{t("checkout.form.payment.variants.cash")}</label>
                     </div>
                     <div className={'flex gap-[10px] items-center'}>
                         <RadioGroupItem value="card" id="p2"/>
-                        <label className={'text-lg text-foreground font-medium'}
+                        <label className={'text-sm xl:text-lg  text-foreground font-medium'}
                                htmlFor="p2">{t("checkout.form.payment.variants.card")}</label>
                     </div>
                 </RadioGroup>
             </div>
 
             {stripeOptions.clientSecret.length && isStripePayment ? <PaymentElement/> : ''}
-            <div className={'flex justify-center mt-5'}>
+            <div className={'flex justify-center mt-0 xl:mt-5'}>
                 <Button disabled={!availabilityData.isAvailable}>
                     {isStripePayment
                         ? t('checkout.form.button', {total: price, currency: appConfig.defaultCurrency})

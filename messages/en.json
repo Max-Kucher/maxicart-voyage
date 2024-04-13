@@ -159,7 +159,11 @@
       "blockTitle": "Details of your booking",
       "arrivalDate": "Arrival date:",
       "departureDate": "Departure date:",
-      "stayLength": "Length of stay:"
+      "stayLength": "Length of stay:",
+      "description": "",
+      "price": "Price:",
+      "additionalServices": "Additional services:",
+      "nightsAndDays": "For {nights} nights / {days} days"
     }
   },
   "forms": {
