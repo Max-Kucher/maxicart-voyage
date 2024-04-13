@@ -2,10 +2,10 @@
 
 const menuConfig = {
     items: [
-        {
-            title: "services",
-            href: "/services",
-        },
+        // {
+        //     title: "services",
+        //     href: "/services",
+        // },
         {
             title: "rent",
             href: "/rent",

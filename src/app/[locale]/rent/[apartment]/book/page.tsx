@@ -6,12 +6,12 @@ import BedIcon from "@/components/icons/bed";
 import BathIcon from "@/components/icons/bath";
 import useApartments from "@/composables/useApartments";
 import {getTranslations} from "next-intl/server";
-import CheckoutForm from "@/components/checkout/CheckoutForm";
 import usePayments from "@/composables/usePayments";
 import {convertSearchApartmentsFormDataToApartmentsSearchParams} from "@/lib/utils";
 import SearchApartmentsFormData from "@/types/SearchApartmentsFormData";
 import {format} from "date-fns";
 import CreatePaymentRequestResult from "@/types/CreatePaymentRequestResult";
+import CheckoutForm from "@/components/checkout/CheckoutForm";
 
 interface RentPageProps {
     apartment: number,
@@ -23,9 +23,11 @@ export default async function RentIndex({searchParams, params: {apartment: apart
         bookData: string
     }
 }) {
-    const {searchApartmentById, checkApartment} = useApartments();
-    const {body: apartmentData} = await searchApartmentById(apartmentId);
-    const selectedData: SearchApartmentsFormData = JSON.parse(searchParams?.bookData?.length ? atob(searchParams.bookData) : '{}')
+    const { searchApartmentById, checkApartment } = useApartments();
+    const { body: apartmentData } = await searchApartmentById(apartmentId);
+
+    const paramsString: string = searchParams?.bookData?.length ? atob(searchParams.bookData) : '{}';
+    const selectedData: SearchApartmentsFormData = JSON.parse(paramsString.trim())
 
     if (!selectedData.date) {
         const today = new Date();

@@ -1,4 +1,5 @@
 
+export const isProd = process.env.NODE_ENV === 'production';
 
 const appConfig = {
     supportedLanguages: {
@@ -28,7 +29,7 @@ const appConfig = {
             },
         },
     },
-    backendBase: 'http://80.89.230.106:8100',
+    backendBase: process.env?.BACKEND_BASE_URL?.length ? process.env.BACKEND_BASE_URL : 'http://80.89.230.106:8100',
     cookieKeys: {
         apartmentFormSearch: 'apartmentFormSearch',
         checkoutData: 'apartmentCheckoutData',

@@ -2,10 +2,11 @@ import appConfig from "@/config/app";
 import ApartmentsSearchResult from "@/types/ApartmentsSearchResult";
 import ApartmentsSearchParams from "@/types/ApartmentsSearchParams";
 import Apartment from "@/types/Apartment";
+import {useLocale} from "next-intl";
 
-async function fetchApartments(params?: ApartmentsSearchParams)
+async function fetchApartments(locale: string, params?: ApartmentsSearchParams)
 {
-    const url = new URL('/api/smoobu/apartments/', appConfig.backendBase);
+    const url: URL = new URL('/api/smoobu/apartments/', appConfig.backendBase);
 
     if (params !== undefined) {
         if (params.min_price !== undefined) {
@@ -19,7 +20,12 @@ async function fetchApartments(params?: ApartmentsSearchParams)
         Object.entries(params).forEach(([key, value]) => url.searchParams.append(key, String(value)));
     }
 
-    const response = await fetch(url.toString());
+    const response = await fetch(url.toString(), {
+        headers: {
+            'Accept-Language': locale,
+        },
+    });
+
     if (!response.ok) {
         throw new Error('Failed to fetch Apartments');
     }
@@ -28,11 +34,13 @@ async function fetchApartments(params?: ApartmentsSearchParams)
 }
 
 export default function useApartments() {
+    const locale: string = useLocale();
+
     const searchApartments = async (params?: ApartmentsSearchParams): Promise<ApartmentsSearchResult> => {
         let apartmentsSearch: ApartmentsSearchResult = new ApartmentsSearchResult();
 
         try {
-            apartmentsSearch = await fetchApartments(params);
+            apartmentsSearch = await fetchApartments(locale, params);
         } catch (error) {
             console.log(error);
         }
@@ -44,6 +52,9 @@ export default function useApartments() {
         const url = new URL(`/api/smoobu/apartments/${apartmentId}`, appConfig.backendBase);
 
         const response = await fetch(url.toString(), {
+            headers: {
+                'Accept-Language': locale,
+            },
             next: {
                 tags: ['apartments', `apartments-${apartmentId}`],
             }
@@ -77,6 +88,9 @@ export default function useApartments() {
 
         const response = await fetch(url.toString(), {
             cache: "no-store",
+            headers: {
+                'Accept-Language': locale,
+            },
         });
 
         return {
