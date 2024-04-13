@@ -3,6 +3,7 @@ import {workStages} from "@/config/workStages";
 import WorkStepsCard from "@/components/WorkStepsCard";
 import {Button} from "@/components/ui/button";
 import {useTranslations} from "next-intl";
+import {Link} from "@/navigation";
 
 const WorkStages = () => {
     const t = useTranslations('workStages');
@@ -22,8 +23,10 @@ const WorkStages = () => {
                 }
             </div>
             <div className="flex md:justify-end md:mt-[60px] mt-[30px] justify-center">
-                <Button>
-                    {t('submit')}
+                <Button asChild={true}>
+                    <Link href={`#add-apartment-form`}>
+                        {t('submit')}
+                    </Link>
                 </Button>
             </div>
         </div>

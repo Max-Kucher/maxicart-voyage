@@ -17,10 +17,15 @@ const appConfig = {
             display: "location.displayTitle",
         },
         whatsapp: {
-            href: "",
+            href: "https://wa.me/971524260462",
         },
         instagram: {
-            href: "",
+            ru: {
+                href: "https://www.instagram.com/evaholidayhomes?utm_source=voyage_website",
+            },
+            en: {
+                href: "https://www.instagram.com/eva.holidayhomes?utm_source=voyage_website",
+            },
         },
     },
     backendBase: 'http://80.89.230.106:8100',
