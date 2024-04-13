@@ -1,18 +1,15 @@
 'use client'
 
-import React, {SyntheticEvent, useContext, useLayoutEffect, useState} from 'react';
+import React, {SyntheticEvent, useContext, useEffect, useLayoutEffect, useState} from 'react';
 import {Checkbox} from '../ui/checkbox';
-import {Controller, SubmitHandler, useForm} from "react-hook-form";
+import {Controller, SubmitHandler, useForm, useWatch} from "react-hook-form";
 import Datepicker from "@/components/ui/datepicker";
 import CountPiker from "@/components/ui/countpiker";
 import {Button} from "@/components/ui/button";
 import {useTranslations} from "next-intl";
-import {add} from "date-fns";
-import {getCookie, setCookie} from 'cookies-next';
 import SearchApartmentsFormData from "@/types/SearchApartmentsFormData";
 import {convertSearchApartmentsFormDataToApartmentsSearchParams} from "@/lib/utils";
 import useApartments from "@/composables/useApartments";
-import appConfig from "@/config/app";
 import {Link, useRouter} from "@/src/navigation";
 import Apartment from "@/types/Apartment";
 import {ApartmentContext} from "@/components/ApratmentProvider";
@@ -24,6 +21,9 @@ import markerShadow from "leaflet/dist/images/marker-shadow.png";
 
 import 'leaflet/dist/leaflet.css';
 import {LatLngExpression} from "leaflet";
+import {AppContext} from "@/components/AppContext";
+import {setCookie} from "cookies-next";
+import { add } from 'date-fns';
 
 interface ApartmentBookBlockProps {
     apartmentData: Apartment,
@@ -34,36 +34,36 @@ const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
     const {checkApartment} = useApartments();
     const router = useRouter();
     const apartmentContext: any = useContext(ApartmentContext)
+    const appContext: any = useContext(AppContext)
     const t = useTranslations();
-    const [savedSearch, setSavedSearch] = useState<any>(null);
     const [appliedData, setAppliedData] = useState<string>('');
     const bookingUrl = `/rent/${apartmentId}/book?bookData=${appliedData}`;
-
-    const {control, handleSubmit, getValues, setValue} = useForm({
+    const formData = appContext?.apartmentFormData
+    const {control, handleSubmit, getValues, setValue, watch} = useForm({
         defaultValues: {
             date: {
-                from: add(new Date(savedSearch?.date?.from ?? new Date()), {
-                    days: savedSearch?.date !== undefined ? 0 : 1,
+                from: add(new Date(formData?.date?.from ?? new Date()), {
+                    days: formData?.date !== undefined ? 0 : 1,
                 }),
-                to: add(new Date(savedSearch?.date?.to ?? new Date()), {
-                    days: savedSearch?.date !== undefined ? 0 : 2,
+                to: add(new Date(formData?.date?.to ?? new Date()), {
+                    days: formData?.date !== undefined ? 0 : 2,
                 }),
             },
             general: {
                 room: 1,
                 adult: 1,
-                child: savedSearch?.general?.child ?? 0,
+                child: formData?.general?.child ?? 0,
             },
             addons: []
         },
     })
 
-    useLayoutEffect(() => {
-        const savedSearchCookie: any = getCookie(appConfig.cookieKeys.apartmentFormSearch);
-        const savedSearch = JSON.parse(savedSearchCookie ?? '{}')
+    const [general, date]= useWatch({control, name: ['general', 'date']})
 
-        setSavedSearch(savedSearch)
-    }, [])
+    useEffect(() => {
+        setCookie('apartmentFormData', JSON.stringify({general, date}))
+        appContext?.setApartmentFormData({general, date})
+    }, [general, date]);
 
     const [bookingDisabled, setBookingDisabled] = useState(false);
     const onSubmit: SubmitHandler<SearchApartmentsFormData> = async (data: SearchApartmentsFormData) => {
