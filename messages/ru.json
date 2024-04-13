@@ -162,5 +162,15 @@
       "departureDate": "Дата отъезда:",
       "stayLength": "Длительность проживания:"
     }
-  }
+  },
+  "forms": {
+    "fields": {
+      "phone": "Номер телефона"
+    },
+    "validation": {
+      "required": "Поле {field} должно быть заполнено",
+      "maxLength": "Максимум {maxLength, plural, one {# символ} few {# символа} other {# символов}}"
+    }
+  },
+  "sendingInProgress": "Отправка..."
 }

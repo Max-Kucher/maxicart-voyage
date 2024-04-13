@@ -20,19 +20,27 @@ const textareaVariants = cva(
 
 export interface TextareaProps
     extends React.TextareaHTMLAttributes<HTMLTextAreaElement>, VariantProps<typeof textareaVariants> {
+
+    error?: boolean;
+    errorMessage?: string;
 }
 
 const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
-    ({className, variant, ...props}, ref) => {
+    ({className, variant, error, errorMessage, ...props}, ref) => {
         return (
-            <textarea
-                className={cn(
-                    "flex min-h-[166px] w-full rounded-lg border border-input bg-background py-[13px] px-[11px] md:px-[30px] md:py-[22px] text-sm md:text-lg font-semibold placeholder:text-black ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
-                    textareaVariants({variant}), className
+            <>
+                <textarea
+                    className={cn(
+                        "flex min-h-[166px] w-full rounded-lg border border-input bg-background py-[13px] px-[11px] md:px-[30px] md:py-[22px] text-sm md:text-lg font-semibold placeholder:text-black ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+                        textareaVariants({variant}), className, error ? 'shadow shadow-red-500' : ''
+                    )}
+                    ref={ref}
+                    {...props}
+                />
+                {error && (
+                    <div className={`text-red-500 mt-2`}>{errorMessage}</div>
                 )}
-                ref={ref}
-                {...props}
-            />
+            </>
         )
     }
 )

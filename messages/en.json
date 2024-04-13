@@ -160,5 +160,15 @@
       "departureDate": "Departure date:",
       "stayLength": "Length of stay:"
     }
-  }
+  },
+  "forms": {
+    "fields": {
+      "phone": "Phone number"
+    },
+    "validation": {
+      "required": "The field {field} must be filled in",
+      "maxLength": "Maximum {maxLength, plural, one {# character} other {# characters}}"
+    }
+  },
+  "sendingInProgress": "Sending..."
 }
