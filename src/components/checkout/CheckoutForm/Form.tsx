@@ -56,6 +56,7 @@ export default function Form({ apartmentData, availabilityData, stripeClientSecr
     const [errorMessage, setErrorMessage] = useState('');
 
     const { createOrder } = useOrders();
+
     const stripe = useStripe();
     const elements = useElements();
 
@@ -120,21 +121,6 @@ export default function Form({ apartmentData, availabilityData, stripeClientSecr
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={'bg-white rounded-xl px-[80px] py-[60px] col-span-2'}>
-            {isDisabled || errorMessage.length ? (<div
-                className="flex p-4 mb-8 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
-                role="alert"
-            >
-                <svg className="flex-shrink-0 inline w-4 h-4 me-3 mt-[2px]" aria-hidden="true"
-                     xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                    <path
-                        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-                </svg>
-                <div>
-                    <span className="font-medium">{availabilityData?.errorMessage ?? errorMessage}</span>
-                </div>
-            </div>) : ''}
-
-
             <div className={'flex flex-col gap-[15px]'}>
                 <b className={'text-xl font-semibold'}>{t("checkout.form.specifyYourData")}</b>
                 <div className={'text-lg'}>{t("checkout.form.specifyYourDataDescription")}</div>

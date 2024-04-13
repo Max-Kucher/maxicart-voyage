@@ -15,23 +15,23 @@ interface CheckoutFormProps {
         isAvailable: boolean,
         errorMessage: string,
     },
-    stripeClientSecret?: string,
+    stripeClientSecret: string,
     price: number
 }
 
 export default function CheckoutForm({ apartmentData, availabilityData, stripeClientSecret, price }: CheckoutFormProps) {
 
     const stripeOptions = {
-        clientSecret: stripeClientSecret ?? '',
+        clientSecret: stripeClientSecret,
         appearance: appConfig.stripe.appearance,
     };
 
     return (
         <>
             {/* @ts-ignore */}
-            {stripeOptions.clientSecret.length ? <Elements stripe={stripePromise} options={stripeOptions}>
+            <Elements stripe={stripePromise} options={stripeOptions}>
                 <Form price={price} stripeClientSecret={stripeClientSecret} availabilityData={availabilityData} apartmentData={apartmentData} />
-            </Elements> : <Form price={price} stripeClientSecret={stripeClientSecret} availabilityData={availabilityData} apartmentData={apartmentData} />}
+            </Elements>
         </>
     )
 }

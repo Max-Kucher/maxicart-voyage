@@ -8,8 +8,6 @@ import PhoneInput from "react-phone-input-2";
 import {cva, VariantProps} from "class-variance-authority";
 import 'react-phone-input-2/lib/style.css'
 import appConfig from "@/config/app";
-import {Simulate} from "react-dom/test-utils";
-import error = Simulate.error;
 
 const inputVariants = cva(
     'md:text-lg',

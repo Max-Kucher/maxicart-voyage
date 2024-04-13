@@ -1,4 +1,5 @@
 'use client';
+
 import Logo from "@/components/layout/logo";
 import DesktopMenu from "@/components/layout/header/desktopMenu";
 import LanguageSwitcher from "@/components/layout/languageSwitcher";
@@ -11,7 +12,7 @@ import {useSearchParams} from "next/navigation";
 import {useRouter} from "@/navigation";
 import AddApartmentForm from "@/src/components/AddApartmentForm";
 import { useTranslations } from "next-intl";
-
+import Image from "next/image";
 
 export default function Header() {
     const t = useTranslations();
@@ -58,7 +59,7 @@ export default function Header() {
                 open={!!isSuccess}>
                 <DialogContent className={'md:max-w-[400px] max-w-[90vw] md:pt-[120px] md:px-[45px] md:pb-[90px] py-[40px] rounded-xl'}>
                     <DialogHeader>
-                        <img className={'max-h-[124px] max-w-[124px] mx-auto'} src={'/images/success.svg'} alt={''}/>
+                        <Image className={'max-h-[124px] max-w-[124px] mx-auto'} src={'/images/success.svg'} width={124} height={124} alt={""} />
                     </DialogHeader>
                    <div className={'text-center mt-[51px]'}>
                        <DialogTitle className={'font-semibold text-xl text-black'}>{t('successPupup.title')}</DialogTitle>
