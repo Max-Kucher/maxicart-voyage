@@ -8,8 +8,6 @@ import useApartments from "@/composables/useApartments";
 import {getTranslations} from "next-intl/server";
 import CheckoutForm from "@/components/checkout/CheckoutForm";
 import usePayments from "@/composables/usePayments";
-import { cookies } from "next/headers";
-import appConfig from "@/config/app";
 import {convertSearchApartmentsFormDataToApartmentsSearchParams} from "@/lib/utils";
 import SearchApartmentsFormData from "@/types/SearchApartmentsFormData";
 import {format} from "date-fns";
