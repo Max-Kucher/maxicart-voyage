@@ -26,7 +26,7 @@ interface ApartmentCardProps {
 const ApartmentCard: FC<ApartmentCardProps> = ({image, link, currency, bedCount, bathCount, name, nights, price, location, roomSize, maxPeople}) => {
     const t = useTranslations('apartmentCard')
     return (
-        <div className={'2xl:w-full bg-white rounded-lg'}>
+        <div className={'2xl:w-full bg-white rounded-lg flex flex-col'}>
             <div className={'p-[8px]'}>
                 {image === null ? (
                     <Image className={'rounded-xl xl:h-[370px] w-full object-cover h-[316px]'} src={`/images/no-photo.png`} alt={"No image"} width={507} height={370} />
@@ -34,7 +34,7 @@ const ApartmentCard: FC<ApartmentCardProps> = ({image, link, currency, bedCount,
                     <Image className={'rounded-xl xl:h-[370px] w-full object-cover h-[316px]'} width={507} height={0} alt={name} src={image} />
                 )}
             </div>
-            <div className={'px-[15px] py-[20px] md:p-[30px] md:pt-[22px]'}>
+            <div className={'px-[15px] py-[20px] md:p-[30px] md:pt-[22px] flex-1 flex flex-col'}>
                 <b className={'text-base md:text-xl font-semibold'}>
                     {name}
                 </b>
@@ -48,11 +48,11 @@ const ApartmentCard: FC<ApartmentCardProps> = ({image, link, currency, bedCount,
                 </div>
                 {(bedCount !== 0 || bathCount !== 0 || roomSize !== null) && (
                     <div className={'flex flex-wrap gap-[15px] mt-[20px] text-foreground-secondary'}>
-                        <div
+                        {bedCount !== 0 && (<div
                             className={'inline-flex items-center bg-background gap-[15px] py-[7px] px-[6px] rounded-[5px]'}>
                             <BedIcon className={'w-[39px] h-[26px]'}/>
                             <span className={'text-base md:text-xl font-semibold'}>{bedCount}</span>
-                        </div>
+                        </div>)}
                         {bathCount !== 0 && (
                             <div
                                 className={'inline-flex items-center bg-background gap-[15px] py-[7px] px-[6px] rounded-[5px]'}>
@@ -70,9 +70,9 @@ const ApartmentCard: FC<ApartmentCardProps> = ({image, link, currency, bedCount,
                     </div>
                 )}
 
-                <div className={'flex items-center gap-[10px] md:gap-[15px] mt-[17px] md:mt-[27px] text-foreground-secondary'}>
+                <div className={'flex items-center gap-[10px] md:gap-[15px] mt-[17px] md:mt-[27px] mb-auto text-foreground-secondary'}>
                     <MapPinIcon className={'h-[26px] w-[21px]'}/>
-                    <span className={'text-sm md:text-lg font-medium'}>{location}</span>
+                    <span className={'text-sm md:text-lg font-medium flex-1'}>{location}</span>
                 </div>
                 <div className={'flex justify-between items-center mt-[25px] md:mt-[30px]'}>
                     <div className={'flex flex-col'}>
