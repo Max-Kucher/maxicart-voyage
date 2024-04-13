@@ -1,10 +1,11 @@
 import appConfig from "@/config/app";
-import CreatePaymentData from "@/types/CreatePaymentData";
-import CreatePaymentRequestResult from "@/types/CreatePaymentRequestResult";
+import { useLocale } from "next-intl";
 import CheckoutFormData from "@/types/checkout/CheckoutFormData";
 import CreateOrderResponseBody from "@/types/checkout/CreateOrderResponseBody";
 
 export default function useOrders() {
+    const locale: string = useLocale();
+
     const createOrder = async (checkoutFormData: CheckoutFormData & { stripeClientSecret?: string })
         : Promise<{ ok: boolean, status: number, body: CreateOrderResponseBody, headers: {} }> =>
     {
@@ -24,6 +25,7 @@ export default function useOrders() {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
+                "Accept-Language": locale,
             },
             body: JSON.stringify(requestBody),
         });

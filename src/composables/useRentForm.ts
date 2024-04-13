@@ -1,7 +1,8 @@
 import appConfig from "@/config/app";
 import RentOutFormData from "@/types/RentOutFormData";
+import { useLocale } from "next-intl";
 
-async function submitForm(formData: RentOutFormData): Promise<{ ok: boolean, body: {}, headers: {} }>
+async function submitForm(formData: RentOutFormData, locale: string): Promise<{ ok: boolean, body: {}, headers: {} }>
 {
     const url = new URL('/api/applications/', appConfig.backendBase);
     const body = new FormData();
@@ -11,6 +12,9 @@ async function submitForm(formData: RentOutFormData): Promise<{ ok: boolean, bod
     const response = await fetch(url.toString(), {
         method: 'POST',
         body,
+        headers: {
+            "Accept-Language": locale,
+        },
     });
 
     if (!response.ok) {
@@ -25,9 +29,11 @@ async function submitForm(formData: RentOutFormData): Promise<{ ok: boolean, bod
 }
 
 export default function useRentForm() {
+    const locale: string = useLocale();
+
     const submit = async (formData: RentOutFormData): Promise<{}> => {
         try {
-            return await submitForm(formData);
+            return await submitForm(formData, locale);
         } catch (error: any) {
             return new Promise((): { ok: boolean, error: any } => {
                 return {
