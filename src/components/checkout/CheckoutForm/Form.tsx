@@ -40,11 +40,15 @@ export default function Form({ apartmentData, availabilityData, stripeClientSecr
             email: '',
             phone: '',
             guest: 'me',
-            payment: 'card',
+            payment: stripeOptions.clientSecret.length ? 'card' : 'cash',
         },
     });
 
     const handleRadioChange = (value: string, radio: "guest" | "payment") => {
+        if (radio === "payment") {
+            setIsStripePayment(value === 'card');
+        }
+
         setValue(radio, value);
     };
     const isDisabled = !availabilityData.isAvailable;
@@ -55,8 +59,10 @@ export default function Form({ apartmentData, availabilityData, stripeClientSecr
     const stripe = useStripe();
     const elements = useElements();
 
+    const [isStripePayment, setIsStripePayment] = useState(true);
+
     const onSubmit: SubmitHandler<CheckoutFormData> = async (data: CheckoutFormData) => {
-        if (!stripe || !elements) {
+        if (stripeOptions.clientSecret.length && isStripePayment && (!stripe || !elements)) {
             // Stripe.js hasn't yet loaded.
             // Make sure to disable form submission until Stripe.js has loaded.
             return;
@@ -68,24 +74,37 @@ export default function Form({ apartmentData, availabilityData, stripeClientSecr
         })
 
         if (createOrderResponse.ok) {
-            const {error} = await stripe.confirmPayment({
-                //`Elements` instance that was used to create the Payment Element
-                elements,
-                confirmParams: {
-                    return_url: `${window.location.origin}?paymentResult`,
-                },
-            });
+            /**
+             * Successfully created order: card payment
+             */
+            if (stripeOptions.clientSecret.length
+                && isStripePayment
+                && stripe !== null
+                && elements !== null
+            ) {
+                const {error} = await stripe.confirmPayment({
+                    //`Elements` instance that was used to create the Payment Element
+                    elements,
+                    confirmParams: {
+                        return_url: `${window.location.origin}?paymentResult`,
+                    },
+                });
 
 
-            if (error) {
-                // This point will only be reached if there is an immediate error when
-                // confirming the payment. Show error to your customer (for example, payment
-                // details incomplete)
-                setErrorMessage(error?.message ?? '');
+                if (error) {
+                    // This point will only be reached if there is an immediate error when
+                    // confirming the payment. Show error to your customer (for example, payment
+                    // details incomplete)
+                    setErrorMessage(error?.message ?? '');
+                } else {
+                    // Your customer will be redirected to your `return_url`. For some payment
+                    // methods like iDEAL, your customer will be redirected to an intermediate
+                    // site first to authorize the payment, then redirected to the `return_url`.
+                }
             } else {
-                // Your customer will be redirected to your `return_url`. For some payment
-                // methods like iDEAL, your customer will be redirected to an intermediate
-                // site first to authorize the payment, then redirected to the `return_url`.
+                /**
+                 * Successfully created order: cash payment
+                 */
             }
         } else {
             // Error handling
@@ -225,10 +244,13 @@ export default function Form({ apartmentData, availabilityData, stripeClientSecr
                 </RadioGroup>
             </div>
 
-            {stripeOptions.clientSecret.length ? <PaymentElement/> : ''}
+            {stripeOptions.clientSecret.length && isStripePayment ? <PaymentElement/> : ''}
             <div className={'flex justify-center mt-5'}>
                 <Button disabled={!availabilityData.isAvailable}>
-                    {t('checkout.form.button', {total: price, currency: appConfig.defaultCurrency})}
+                    {isStripePayment
+                        ? t('checkout.form.button', {total: price, currency: appConfig.defaultCurrency})
+                        : t('checkout.form.submit')
+                    }
                 </Button>
             </div>
         </form>
