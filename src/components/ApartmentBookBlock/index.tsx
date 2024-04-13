@@ -63,7 +63,7 @@ const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
     useEffect(() => {
         setCookie('apartmentFormData', JSON.stringify({general, date}))
         appContext?.setApartmentFormData({general, date})
-    }, [general, date]);
+    }, [general, date, appContext]);
 
     const [bookingDisabled, setBookingDisabled] = useState(false);
     const onSubmit: SubmitHandler<SearchApartmentsFormData> = async (data: SearchApartmentsFormData) => {
