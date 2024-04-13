@@ -12,13 +12,13 @@ import { DateRange } from 'react-day-picker';
 import {useLocale} from "next-intl";
 
 interface DatepickerProps {
-    className?: string
+    className?: string;
     date: {
         from: Date
         to: Date
-    }
-    placeholder?: string
-    setDate: (date?: DateRange) => void
+    };
+    placeholder?: string;
+    setDate: (date?: DateRange) => void;
 }
 
 const Datepicker: FC<DatepickerProps> = ({className, placeholder, date, setDate}) => {

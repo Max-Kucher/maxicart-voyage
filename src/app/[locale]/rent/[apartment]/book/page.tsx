@@ -100,18 +100,18 @@ export default async function RentIndex({ searchParams, params: { apartment: apa
                                 </div>
                             </div>
                         </div>
-                        <b className={'block text-xl font-semibold mt-[48px]'}>Длительность проживания:</b>
+                        <b className={'block text-xl font-semibold mt-[48px]'}>{t('checkout.details.stayLength')}</b>
                         <b className={'block text-xl font-semibold text-primary'}>{t('apartmentsDetails.nights', {
                             count: Math.floor((new Date(selectedData.date.to).getTime() - new Date(selectedData.date.from).getTime()) / (1000 * 60 * 60 * 24)),
                         })}</b>
                         <div className={'p-[20px] border border-[#D6D6D6] rounded-xl mt-[30px] flex justify-between'}>
                             <div>
-                                <b className={'block text-xl font-semibold'}>Дата заезда:</b>
+                                <b className={'block text-xl font-semibold'}>{t('checkout.details.arrivalDate')}</b>
                                 <span className={'text-lg'}>{format(selectedData.date.from, 'EE, dd MMMM yyyy')}</span>
                             </div>
                             <div className={'bg-foreground h-full w-[1px]'}/>
                             <div>
-                                <b className={'block text-xl font-semibold'}>Дата отъезда:</b>
+                                <b className={'block text-xl font-semibold'}>{t('checkout.details.departureDate')}</b>
                                 <span className={'text-lg'}>{format(selectedData.date.to, 'EE, dd MMMM yyyy')}</span>
                             </div>
                         </div>

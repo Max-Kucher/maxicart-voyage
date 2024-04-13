@@ -1,8 +1,8 @@
 import Logo from "@/components/layout/logo";
 import LanguageSwitcher from "@/components/layout/languageSwitcher";
 import CurrencySwitcher from "@/components/layout/currencySwitcher";
-import {useTranslations} from 'next-intl';
-import {Link} from "@/navigation";
+import { useTranslations, useLocale } from 'next-intl';
+import { Link } from "@/navigation";
 import menuConfig from "@/config/menu";
 import appConfig from "@/config/app";
 import MailIcon from "@/components/icons/mail";
@@ -10,8 +10,10 @@ import PhoneIcon from "@/components/icons/phone";
 import { MapPinIcon, InstagramIcon } from "lucide-react";
 import WhatsappIcon from "@/components/icons/whatsapp";
 
-
 export default function Footer() {
+    // @ts-ignore
+    const locale: keyof typeof appConfig.contacts.instagram = useLocale();
+
     const t = useTranslations();
     const textBlockClass = `md:col-span-1 col-span-full xl:px-[20px] text-[20px] font-semibold`;
 
@@ -68,11 +70,11 @@ export default function Footer() {
                 </div>
 
                 <div className={`flex gap-[33px] xl:mt-[19px] md:mt-[16px] mt-[14px] px-1 justify-center md:justify-normal`}>
-                    <a href={appConfig.contacts.whatsapp.href}>
+                    <a href={appConfig.contacts.whatsapp.href} target={"_blank"}>
                         <WhatsappIcon className={`fill-primary w-[37.31px]`} />
                     </a>
 
-                    <a href={appConfig.contacts.instagram.href}>
+                    <a href={appConfig.contacts.instagram[locale].href} target={"_blank"}>
                         <InstagramIcon width={37} height={37} className={`text-primary text-[45px]`} />
                     </a>
                 </div>

@@ -151,10 +151,14 @@
           "card": "Credit card (now)"
         }
       },
-      "button": "Pay {total} {currency}"
+      "button": "Pay {total} {currency}",
+      "submit": "Submit"
     },
     "details": {
-      "blockTitle": "Details of your booking"
+      "blockTitle": "Details of your booking",
+      "arrivalDate": "Arrival date:",
+      "departureDate": "Departure date:",
+      "stayLength": "Length of stay:"
     }
   }
 }

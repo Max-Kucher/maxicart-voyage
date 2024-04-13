@@ -66,12 +66,11 @@ const FindApartment: FC<FindApartmentProps> = ({behavior}) => {
                     <Controller
                         name={'date'}
                         control={control}
-                        render={({field: {onChange, value, ...field}}) => (
+                        render={({field: {onChange, value}}) => (
                             <Datepicker
                                 placeholder={t('dateRange')}
                                 date={value}
                                 setDate={(data) => onChange(data)}
-                                {...field}
                             />
                         )}
                     />

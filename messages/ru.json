@@ -153,10 +153,14 @@
           "card": "Кредитная карта (сейчас)"
         }
       },
-      "button": "Оплатить {total} {currency}"
+      "button": "Оплатить {total} {currency}",
+      "submit": "Оформить"
     },
     "details": {
-      "blockTitle": "Детали вашего бронирования"
+      "blockTitle": "Детали вашего бронирования",
+      "arrivalDate": "Дата заезда:",
+      "departureDate": "Дата отъезда:",
+      "stayLength": "Длительность проживания:"
     }
   }
 }
