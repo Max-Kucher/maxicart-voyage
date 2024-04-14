@@ -171,7 +171,7 @@
       "phone": "Phone number"
     },
     "validation": {
-      "required": "The field {field} must be filled in",
+      "required": "The field <field>{field}</field> must be filled in",
       "maxLength": "Maximum {maxLength, plural, one {# character} other {# characters}}"
     }
   },

@@ -61,7 +61,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                 {rightText && <span ref={textRef}
                                     className={'md:text-lg absolute top-[50%] right-[28.5px] translate-y-[-50%]'}>{rightText}</span>}
                 {error && (
-                    <div className={`text-red-500 mt-2`}>{errorMessage}</div>
+                    <div className={`text-red-500 mt-2`}
+                         dangerouslySetInnerHTML={{__html: errorMessage ? errorMessage : ''}}></div>
+
                 )}
             </div>
         )
@@ -79,7 +81,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                     onChange={(phone, __, event) => props?.onChange?.(phone as any)}
                 />
                 {error && (
-                    <div className={`text-red-500 -mt-1`}>{errorMessage}</div>
+                    <div className={`text-red-500 -mt-2`} dangerouslySetInnerHTML={{ __html: errorMessage ? errorMessage : '' }}></div>
                 )}
             </>
         )

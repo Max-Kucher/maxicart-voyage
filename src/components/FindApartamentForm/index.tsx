@@ -50,7 +50,12 @@ const FindApartment: FC<FindApartmentProps> = ({behavior}) => {
     const [formLoading, setFormLoading] = useState(false);
 
     const onSubmit: SubmitHandler<SearchApartmentsFormData> = async (data: SearchApartmentsFormData) => {
-        router.replace(`/rent?formData=${btoa(JSON.stringify(data))}`,);
+        setFormLoading(true);
+        setTimeout(() => setFormLoading(false), 1000);
+
+        router.replace(`/rent?formData=${btoa(JSON.stringify(data))}`, {
+            scroll: false
+        });
     };
 
     const btnClass = `inline-block transition-opacity duration-150 hover:opacity-90 ${formLoading ? 'opacity-40 pointer-events-none' : ''}`;

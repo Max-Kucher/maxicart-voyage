@@ -35,7 +35,13 @@ export default function Form({ apartmentData, availabilityData, stripeClientSecr
     const router = useRouter();
 
     const t = useTranslations();
-    const {control, handleSubmit, setValue, getValues} = useForm({
+    const {control,
+        handleSubmit,
+        setValue,
+        getValues,
+        formState: { errors }
+    } = useForm({
+        mode: "onChange",
         defaultValues: {
             name: '',
             lastname: '',
@@ -54,9 +60,6 @@ export default function Form({ apartmentData, availabilityData, stripeClientSecr
         setValue(radio, value);
     };
     const isDisabled = !availabilityData.isAvailable;
-
-    const [errorMessage, setErrorMessage] = useState('');
-
     const { createOrder } = useOrders();
 
     const stripe = useStripe();
@@ -98,7 +101,6 @@ export default function Form({ apartmentData, availabilityData, stripeClientSecr
                     // This point will only be reached if there is an immediate error when
                     // confirming the payment. Show error to your customer (for example, payment
                     // details incomplete)
-                    setErrorMessage(error?.message ?? '');
                 } else {
                     // Your customer will be redirected to your `return_url`. For some payment
                     // methods like iDEAL, your customer will be redirected to an intermediate
@@ -131,64 +133,84 @@ export default function Form({ apartmentData, availabilityData, stripeClientSecr
             <div className={'grid grid-cols-1 xl:grid-cols-2 mt-[30px] xl:mt-[60px] gap-x-[30px] gap-y-[20px]'}>
                 <div className={'flex flex-col'}>
                     <Controller
+                        disabled={isDisabled}
+                        name={'name'}
+                        control={control}
+                        rules={{ required: true }}
                         render={({field}) => (
                             <Input
                                 type={`text`}
                                 variant={'lite'}
                                 placeholder={t('addApartmentForm.name')}
                                 {...field}
+                                error={!!errors.name}
+                                errorMessage={t.markup('forms.validation.required', {
+                                    field: () => `<b>${t('addApartmentForm.name').toLowerCase()}</b>`,
+                                })}
                             />
                         )}
-                        disabled={isDisabled}
-                        name={'name'}
-                        control={control}
                     />
                 </div>
                 <div className={'flex flex-col'}>
                     <Controller
+                        disabled={isDisabled}
+                        name={'lastname'}
+                        control={control}
+                        rules={{ required: true }}
                         render={({field}) => (
                             <Input
                                 type={`text`}
                                 variant={'lite'}
                                 placeholder={t('addApartmentForm.lastname')}
                                 {...field}
+                                error={!!errors.lastname}
+                                errorMessage={t.markup('forms.validation.required', {
+                                    field: () => `<b>${t('addApartmentForm.lastname').toLowerCase()}</b>`,
+                                })}
                             />
                         )}
-                        disabled={isDisabled}
-                        name={'lastname'}
-                        control={control}
                     />
                 </div>
                 <div className={'flex flex-col gap-[15px]'}>
                     <Controller
+                        disabled={isDisabled}
+                        name={'email'}
+                        control={control}
+                        rules={{ required: true }}
                         render={({field}) => (
                             <Input
                                 type={`email`}
                                 variant={'lite'}
                                 placeholder={'E-mail'}
                                 {...field}
+                                error={!!errors.email}
+                                errorMessage={t.markup('forms.validation.required', {
+                                    field: () => `<b>${'E-mail'.toLowerCase()}</b>`,
+                                })}
                             />
                         )}
-                        disabled={isDisabled}
-                        name={'email'}
-                        control={control}
                     />
                     <span className={'text-sm xl:text-lg'}>{t("checkout.form.emailFieldDescription")}</span>
                 </div>
                 <div className={'flex flex-col gap-[15px]'}>
                     <Controller
+                        disabled={isDisabled}
+                        name={'phone'}
+                        control={control}
+                        rules={{ required: true, minLength: 6 }}
                         render={({field}) => (
                             <Input
-                                type={`ua`}
+                                type={`tel`}
                                 variant={'lite'}
                                 inputType={'number'}
                                 value={field.value}
                                 onChange={(value: any) => field.onChange(value)}
+                                error={!!errors.email}
+                                errorMessage={t.markup('forms.validation.required', {
+                                    field: () => `<b>${t('forms.fields.phone').toLowerCase()}</b>`,
+                                })}
                             />
                         )}
-                        disabled={isDisabled}
-                        name={'phone'}
-                        control={control}
                     />
                     <span className={'text-sm xl:text-lg'}>{t("checkout.form.phoneFieldDescription")}</span>
                 </div>

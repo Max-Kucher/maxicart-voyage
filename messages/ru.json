@@ -172,7 +172,7 @@
       "phone": "Номер телефона"
     },
     "validation": {
-      "required": "Поле {field} должно быть заполнено",
+      "required": "Поле <field>{field}</field> должно быть заполнено",
       "maxLength": "Максимум {maxLength, plural, one {# символ} few {# символа} other {# символов}}"
     }
   },
