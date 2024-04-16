@@ -163,7 +163,7 @@
       "description": "",
       "price": "Price:",
       "additionalServices": "Additional services:",
-      "nightsAndDays": "For {nights} nights / {days} days"
+      "nightsAndDays": "For {nights, plural, one {# night} other {nights}} / {days, plural, one {# day} other {days}}"
     }
   },
   "forms": {
