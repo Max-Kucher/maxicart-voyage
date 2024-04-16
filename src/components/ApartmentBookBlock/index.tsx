@@ -178,7 +178,7 @@ const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
                 <Button disabled={formLoading}>
                     {formLoading ? (<LoadingSpinner className={`w-8 h-8`} />) : t('apartment.additionalService.apply')}
                 </Button>
-                {apartmentData.addons && <div className={'md:hidden block w-full xl:w-1/3 my-[40px] md:mt-0'}>
+                {!!apartmentData.addons.length && <div className={'md:hidden block w-full xl:w-1/3 my-[40px] md:mt-0'}>
                     <div className={'p-[23px] border border-foreground-secondary rounded-lg flex flex-col gap-[18px]'}>
                         {apartmentData.addons.map(apartmentAddon => {
                             const key = `apartment-bool-block-mobile-addon-${apartmentAddon.id}-${apartmentId}`;

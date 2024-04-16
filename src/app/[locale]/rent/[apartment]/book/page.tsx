@@ -12,6 +12,8 @@ import SearchApartmentsFormData from "@/types/SearchApartmentsFormData";
 import {format} from "date-fns";
 import CreatePaymentRequestResult from "@/types/CreatePaymentRequestResult";
 import CheckoutForm from "@/components/checkout/CheckoutForm";
+import {useLocale} from "next-intl";
+import {enUS, ru} from "date-fns/locale";
 
 interface RentPageProps {
     apartment: number,
@@ -23,6 +25,12 @@ export default async function RentIndex({searchParams, params: {apartment: apart
         bookData: string
     }
 }) {
+    const lng = useLocale()
+    const pikerLng = {
+        ru,
+        en: enUS
+    }[lng];
+
     const { searchApartmentById, checkApartment } = useApartments();
     const { body: apartmentData } = await searchApartmentById(apartmentId);
 
@@ -109,12 +117,12 @@ export default async function RentIndex({searchParams, params: {apartment: apart
                         <div className={'my-auto h-full flex items-center p-[10px] xl:p-[20px] border border-[#D6D6D6] rounded-xl xl:hidden justify-between'}>
                             <div>
                                 <b className={'block text-lg xl:text-xl font-semibold'}>{t('checkout.details.arrivalDate')}</b>
-                                <span className={'text-base xl:text-lg'}>{format(selectedData.date.from, 'EE, dd MMMM yyyy')}</span>
+                                <span className={'text-base xl:text-lg'}>{format(selectedData.date.from, 'EE, dd MMMM yyyy', {locale: pikerLng})}</span>
                             </div>
                             <div className={'bg-foreground h-[70%] w-[1px] my-auto mx-3'}/>
                             <div>
                                 <b className={'block text-lg xl:text-xl font-semibold'}>{t('checkout.details.departureDate')}</b>
-                                <span className={'text-base xl:text-lg'}>{format(selectedData.date.to, 'EE, dd MMMM yyyy')}</span>
+                                <span className={'text-base xl:text-lg'}>{format(selectedData.date.to, 'EE, dd MMMM yyyy', {locale: pikerLng})}</span>
                             </div>
                         </div>
                     </div>
@@ -125,12 +133,12 @@ export default async function RentIndex({searchParams, params: {apartment: apart
                     <div className={'hidden p-[20px] border border-[#D6D6D6] rounded-xl mt-[30px] xl:flex justify-between'}>
                         <div>
                             <b className={'block text-lg xl:text-xl font-semibold'}>{t('checkout.details.arrivalDate')}</b>
-                            <span className={'text-base xl:text-lg'}>{format(selectedData.date.from, 'EE, dd MMMM yyyy')}</span>
+                            <span className={'text-base xl:text-lg'}>{format(selectedData.date.from, 'EE, dd MMMM yyyy', {locale: pikerLng})}</span>
                         </div>
                         <div className={'bg-foreground h-full w-[1px]'}/>
                         <div>
                             <b className={'block text-lg xl:text-xl font-semibold'}>{t('checkout.details.departureDate')}</b>
-                            <span className={'text-base xl:text-lg'}>{format(selectedData.date.to, 'EE, dd MMMM yyyy')}</span>
+                            <span className={'text-base xl:text-lg'}>{format(selectedData.date.to, 'EE, dd MMMM yyyy', {locale: pikerLng})}</span>
                         </div>
                     </div>
                     {!!selectedData.addons?.length &&
