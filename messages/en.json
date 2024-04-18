@@ -12,11 +12,11 @@
     "us-flag": "USA flag"
   },
   "main": {
-    "title": "BOOK YOUR IDEAL VACATION HOME",
-    "subtitle": "EVA VOYAGE HOLIDAY HOMES",
-    "toRent": "RENT NOW",
-    "rent": "BOOK NOW",
-    "bestDeals": "The best"
+    "title": "Book your ideal vacation home",
+    "subtitle": "Eva voyage holiday homes",
+    "toRent": "Rent now",
+    "rent": "Book now",
+    "bestDeals": "The best offers"
   },
   "filterForm": {
     "date": "Date",

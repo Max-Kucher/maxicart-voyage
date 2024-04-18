@@ -61,9 +61,9 @@ const FindApartment: FC<FindApartmentProps> = ({behavior}) => {
     const btnClass = `inline-block transition-opacity duration-150 hover:opacity-90 ${formLoading ? 'opacity-40 pointer-events-none' : ''}`;
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className={'2xl:w-[1350px] md:w-[600px] mx-auto'}>
+        <form onSubmit={handleSubmit(onSubmit)} className={'w-100 2xl:max-w-[1350px] md:max-w-[600px] mx-auto'}>
             <div
-                className={'bg-white p-[20px] md:py-[30px] md:px-[95px] 2xl:py-[30px] 2xl:px-[40px] flex 2xl:justify-between 2xl:flex-row flex-col rounded-lg md:gap-[20px] gap-[15px]'}>
+                className={'bg-white p-[20px] md:py-[30px] md:px-[95px] 2xl:py-[28px] 2xl:px-[40px] flex 2xl:justify-between 2xl:flex-row flex-col rounded-lg md:gap-[20px] gap-[15px]'}>
                 <div>
                        <span className={'mb-[10px] md:text-lg text-xs'}>
                            {t('date')}

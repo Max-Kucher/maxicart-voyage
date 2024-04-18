@@ -59,8 +59,9 @@ export default function MobileMenu() {
                     {menuConfig.items.map((item, index) => (
                         <li key={`mobile-menu-${index}`}>
                             <Link
-                                className={`text-highlightedText ${linksClass}`}
+                                className={`text-highlightedText hover:text-primary ${linksClass}`}
                                 href={item.href}
+                                onClick={() => setOpen(false)}
                             >
                                 { t(item.title) }
                             </Link>
@@ -68,7 +69,7 @@ export default function MobileMenu() {
                     ))}
 
                     <li>
-                        <PhoneLink className={`text-primary ${linksClass}`} />
+                        <PhoneLink className={`text-primary hover:opacity-70 ${linksClass}`} />
                     </li>
                 </ul>
             </nav>
