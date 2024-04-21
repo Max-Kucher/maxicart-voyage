@@ -7,19 +7,20 @@ const config = {
 	],
   prefix: "",
   theme: {
-    // screens: {
-    //   'sm': '640px',
-    //   'md': '768px',
-    //   'lg': '1024px',
-    //   'xl': '1280px',
-    //   '2xl': '1280px',
-    // },
+    screens: {
+      'sm': '640px',
+      'md': '768px',
+      'lg': '1024px',
+      'xl': '1280px',
+      '2xl': '1400px',
+    },
     container: {
       center: true,
       padding: "2rem",
       screens: {
-        "md": "671px",
-        "xl": "1022px",
+        "md": "800px",
+        "lg": "1022px",
+        "xl": "1280px",
         "2xl": "1400px",
       },
     },

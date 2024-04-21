@@ -1,4 +1,3 @@
-// import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "@/app/globals.css";
 import Header from "@/components/layout/header/header";
@@ -7,6 +6,7 @@ import Footer from "@/components/layout/footer";
 // import FindApartmentProvider from "@/context/FindApartmentProvider";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
+
 
 export default function LocaleLayout({
      children,

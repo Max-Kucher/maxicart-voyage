@@ -1,6 +1,6 @@
 
-export const isProd: boolean = process.env.NODE_ENV === 'production';
-export const BackendBaseUrl: string = process.env?.NEXT_PUBLIC_BACKEND_BASE_URL?.length ? process.env.NEXT_PUBLIC_BACKEND_BASE_URL : 'http://80.89.230.106:81';
+export const isProd: boolean = process?.env.NODE_ENV === 'production';
+export const BackendBaseUrl: string = process?.env?.NEXT_PUBLIC_BACKEND_BASE_URL?.length ? process?.env?.NEXT_PUBLIC_BACKEND_BASE_URL : 'http://80.89.230.106:81';
 
 const appConfig = {
     supportedLanguages: {

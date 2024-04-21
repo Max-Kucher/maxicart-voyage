@@ -21,17 +21,17 @@ export default function Header() {
     const isRentOut = searchParams.get('rentOut');
     const isSuccess = searchParams.get('success');
 
-    return (<header className="2xl:py-[35px] md:pt-[66px] md:pb-[41px] pt-[31px] pb-[29px] bg-white">
-        <div className="container flex items-center 2xl:justify-between">
-            <Logo width={167} height={57} className={`maxicart-header-logo block mr-auto 2xl:mr-16`}/>
+    return (<header className="xl:py-[20px] 2xl:py-[30px] md:pt-[66px] md:pb-[41px] pt-[31px] pb-[29px] bg-white">
+        <div className="container flex items-center xl:justify-between">
+            <Logo width={167} height={57} className={`maxicart-header-logo block mr-auto xl:mr-4 2xl:mr-16`}/>
 
             <DesktopMenu/>
 
-            <LanguageSwitcher className={"mr-8 2xl:mr-0 hidden md:flex"}/>
+            <LanguageSwitcher className={"mr-8 xl:mr-0 hidden md:flex"}/>
 
             <CurrencySwitcher className={"hidden md:flex"}/>
 
-            <PhoneLink className={"text-primary text-[20px] font-semibold hidden 2xl:block"}/>
+            <PhoneLink className={"text-primary text-[20px] font-semibold hidden xl:block"}/>
 
             <MobileMenu/>
             <Dialog

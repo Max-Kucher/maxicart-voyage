@@ -26,7 +26,7 @@ interface ApartmentCardProps {
 const ApartmentCard: FC<ApartmentCardProps> = ({image, link, currency, bedCount, bathCount, name, nights, price, location, roomSize, maxPeople}) => {
     const t = useTranslations('apartmentCard')
     return (
-        <div className={'2xl:w-full bg-white rounded-lg flex flex-col'}>
+        <div className={'xl:w-full bg-white rounded-lg flex flex-col'}>
             <div className={'p-[8px]'}>
                 {image === null ? (
                     <Image className={'rounded-xl xl:h-[370px] w-full object-cover h-[316px]'} src={`/images/no-photo.png`} alt={"No image"} width={507} height={370} />
@@ -76,7 +76,7 @@ const ApartmentCard: FC<ApartmentCardProps> = ({image, link, currency, bedCount,
                 </div>
                 <div className={'flex justify-between items-center mt-[25px] md:mt-[30px]'}>
                     <div className={'flex flex-col'}>
-                        <b className={'text-base md:text-2xl font-semibold'}>{t('price', {price, currency})}</b>
+                        <b className={'text-base lg:text-xl 2xl:text-2xl font-semibold'}>{t('price', {price, currency})}</b>
                         <span className={'text-sm md:text-lg font-medium text-foreground-secondary'}>{t('nights', {count: nights})}</span>
                     </div>
                     <Link href={link}>
