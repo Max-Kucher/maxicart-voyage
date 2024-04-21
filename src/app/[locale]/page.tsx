@@ -9,9 +9,9 @@ export default function Home() {
     return (
         <main className="bg-white">
             <Main />
-            <OurWork id={`homegage-our-work`} />
+            <OurWork id={`homegage-our-services`} />
             <AddApartmentForm />
-            <WorkStages />
+            <WorkStages id={"homegage-work-stages"} />
         </main>
     )
 }

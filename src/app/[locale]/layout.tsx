@@ -28,7 +28,7 @@ export default function LocaleLayout({
                 {children}
             {/*</FindApartmentProvider>*/}
 
-            <Footer />
+            <Footer id={"app-footer"} />
 
         </NextIntlClientProvider>
         </body>

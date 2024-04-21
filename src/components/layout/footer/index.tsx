@@ -9,15 +9,20 @@ import MailIcon from "@/components/icons/mail";
 import PhoneIcon from "@/components/icons/phone";
 import { MapPinIcon, InstagramIcon } from "lucide-react";
 import WhatsappIcon from "@/components/icons/whatsapp";
+import {FC} from "react";
 
-export default function Footer() {
+interface FooterProps {
+    id: string;
+}
+
+const Footer: FC<FooterProps> = ({ id }) => {
     // @ts-ignore
     const locale: keyof typeof appConfig.contacts.instagram = useLocale();
 
     const t = useTranslations();
     const textBlockClass = `md:col-span-1 col-span-full xl:px-[20px] text-[20px] font-semibold`;
 
-    return (<footer className={"bg-background"}>
+    return (<footer id={id} className={"bg-background"}>
         <div className="container grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-[30px] md:pt-[64px] pt-[35px] pb-[51px]">
 
             <div className={`col-span-2 xl:col-span-1 order-1 xl:order-[0] flex items-baseline justify-between xl:block mt-[40px] md:mt-0`}>
@@ -82,3 +87,5 @@ export default function Footer() {
         </div>
     </footer>);
 }
+
+export default Footer;

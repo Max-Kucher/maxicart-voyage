@@ -1,14 +1,18 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {workStages} from "@/config/workStages";
 import WorkStepsCard from "@/components/WorkStepsCard";
 import {Button} from "@/components/ui/button";
 import {useTranslations} from "next-intl";
 import {Link} from "@/navigation";
 
-const WorkStages = () => {
+interface WorkStagesProps {
+    id: string;
+}
+
+const WorkStages: FC<WorkStagesProps> = ({ id }) => {
     const t = useTranslations('workStages');
     return (
-        <div className="container pb-[60px] pt-[90px] md:py-[100px]">
+        <div id={id} className="container pb-[60px] pt-[90px] md:py-[100px]">
             <div className={'grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-[30px] mx-auto'}>
                 <div className={'relative'}>
                     <h2 dangerouslySetInnerHTML={{__html: t('title')}}
