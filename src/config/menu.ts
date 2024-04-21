@@ -2,10 +2,10 @@
 
 const menuConfig = {
     items: [
-        // {
-        //     title: "services",
-        //     href: "/services",
-        // },
+        {
+            title: "services",
+            href: "/#work-stages",
+        },
         {
             title: "rent",
             href: "/rent",
@@ -19,11 +19,11 @@ const menuConfig = {
             href: "/#homegage-our-work",
             showInFooter: true,
         },
-        // {
-        //     title: "contacts",
-        //     href: "/contacts",
-        //     showInFooter: false,
-        // },
+        {
+            title: "contacts",
+            href: "/#add-apartment-form",
+            showInFooter: false,
+        },
     ]
 };
 

@@ -44,7 +44,7 @@ export default function MobileMenu() {
         setOpen(!isOpen);
     };
 
-    return (<div className={"relative 2xl:hidden"}>
+    return (<div className={"relative xl:hidden"}>
         <button className={"ml-10"} onClick={menuOpenerHandler}>
             <MenuIcon width={60} height={32} className={"w-[48px] h-[27px] sm:h-auto sm:w-auto transition duration-300 ease-out fill-foreground hover:fill-primary"} />
         </button>

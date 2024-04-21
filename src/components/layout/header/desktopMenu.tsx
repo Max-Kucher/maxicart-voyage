@@ -7,7 +7,7 @@ export default function DesktopMenu() {
     const t = useTranslations('menu');
 
     return (
-        <nav className={"hidden 2xl:block"}>
+        <nav className={"hidden xl:block"}>
             <ul className={`flex gap-x-9`}>
                 {menuConfig.items.map((item, index) => {
                     // if (item.showInHeader === false) {

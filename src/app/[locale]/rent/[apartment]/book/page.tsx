@@ -71,7 +71,7 @@ export default async function RentIndex({searchParams, params: {apartment: apart
 
     return (<main>
         <div className="container">
-            <div className={'mt-[20px] md:mt-[40px] 2xl:mt-[70px] md:mb-[30px] mb-[20px]'}>
+            <div className={'mt-[20px] md:mt-[40px] xl:mt-[70px] md:mb-[30px] mb-[20px]'}>
                 <PageNavigation nameSpace={apartmentData.title ?? apartmentData.smoobu.name}/>
             </div>
             <div className={'grid grid-cols-1 xl:grid-cols-3 gap-y-[20px] xl:gap-[20px]'}>
