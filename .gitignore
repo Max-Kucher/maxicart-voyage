@@ -3,6 +3,8 @@
 .vs
 .idea
 
+.env.local
+
 # dependencies
 /node_modules
 /.pnp
