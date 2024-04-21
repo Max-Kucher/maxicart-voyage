@@ -1,5 +1,6 @@
 
-export const isProd = process.env.NODE_ENV === 'production';
+export const isProd: boolean = process.env.NODE_ENV === 'production';
+export const BackendBaseUrl: string = process.env?.NEXT_PUBLIC_BACKEND_BASE_URL?.length ? process.env.NEXT_PUBLIC_BACKEND_BASE_URL : 'http://80.89.230.106:81';
 
 const appConfig = {
     supportedLanguages: {
@@ -29,14 +30,14 @@ const appConfig = {
             },
         },
     },
-    backendBase: process.env?.BACKEND_BASE_URL?.length ? process.env.BACKEND_BASE_URL : 'http://80.89.230.106:8100',
+    backendBase: BackendBaseUrl,
     cookieKeys: {
         apartmentFormSearch: 'apartmentFormSearch',
         checkoutData: 'apartmentCheckoutData',
     },
     defaultPhoneNumberCountry: 'ae',
     stripe: {
-        publishableKey: 'pk_test_51P3kGj093JOWy8mAZV1mRUcZQKDqjbRaZBL6Uutbm6ZNlkatf9nZDHitfgwbOw6JyxqOQq7JjgbrgrFojOF7RuYt001pxlIbwU',
+        publishableKey: 'pk_live_51NsL5sLL0iUcKfOZ5LnIRGO5tsljuH2aO2xNAMDFpp29vmH63x9Vr765JRDY88vKpu7pmAsg5hGDcobn3pLvGvVi00psy7pjLm',
         appearance: {
             theme: 'flat'
         },

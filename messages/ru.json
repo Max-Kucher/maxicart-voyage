@@ -164,7 +164,7 @@
       "description": "Может взиматься комиссия за операции в иностранной валюте.Так-же, день оплаты курс валюты может быть другим.",
       "price": "Цена:",
       "additionalServices": "Доп сервис:",
-      "nightsAndDays": "За {nights} ночи / {days} дня"
+      "nightsAndDays": "За {nights, plural, one {# ночь} few {# ночи} other {# ночей}} / {days, plural, one {# день} few {дня} other {# дней}}"
     }
   },
   "forms": {
@@ -172,7 +172,7 @@
       "phone": "Номер телефона"
     },
     "validation": {
-      "required": "Поле {field} должно быть заполнено",
+      "required": "Поле <field>{field}</field> должно быть заполнено",
       "maxLength": "Максимум {maxLength, plural, one {# символ} few {# символа} other {# символов}}"
     }
   },

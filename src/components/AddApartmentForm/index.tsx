@@ -13,7 +13,6 @@ const AddApartmentForm = () => {
     const t = useTranslations('addApartmentForm');
     const {control,
         handleSubmit,
-        watch,
         formState: { errors }
     } = useForm({
         mode: "onChange",
@@ -53,8 +52,8 @@ const AddApartmentForm = () => {
                         placeholder={t('name')}
                         {...field}
                         error={!!errors.name}
-                        errorMessage={tf('forms.validation.required', {
-                            field: t('name')
+                        errorMessage={tf.markup('forms.validation.required', {
+                            field: () => `<b>${t('name').toLowerCase()}</b>`,
                         })}
                     />
                 )}
@@ -71,8 +70,8 @@ const AddApartmentForm = () => {
                         placeholder={'E-mail'}
                         {...field}
                         error={!!errors.email}
-                        errorMessage={tf('forms.validation.required', {
-                            field: 'E-mail'
+                        errorMessage={tf.markup('forms.validation.required', {
+                            field: () => `<b>${'E-mail'.toLowerCase()}</b>`,
                         })}
                     />
                 )}
@@ -90,8 +89,8 @@ const AddApartmentForm = () => {
                         value={field.value}
                         onChange={(value: any) => field.onChange(value)}
                         error={!!errors.phone}
-                        errorMessage={tf('forms.validation.required', {
-                            field: tf('forms.fields.phone')
+                        errorMessage={tf.markup('forms.validation.required', {
+                            field: () => `<b>${tf('forms.fields.phone').toLowerCase()}</b>`,
                         })}
                     />
                 )}

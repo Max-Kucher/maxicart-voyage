@@ -21,7 +21,7 @@ export default function Header() {
     const isRentOut = searchParams.get('rentOut');
     const isSuccess = searchParams.get('success');
 
-    return (<header className="2xl:pt-[70px] 2xl:pb-[44px] md:pt-[66px] md:pb-[41px] pt-[31px] pb-[29px] bg-white">
+    return (<header className="2xl:py-[35px] md:pt-[66px] md:pb-[41px] pt-[31px] pb-[29px] bg-white">
         <div className="container flex items-center 2xl:justify-between">
             <Logo width={167} height={57} className={`maxicart-header-logo block mr-auto 2xl:mr-16`}/>
 
