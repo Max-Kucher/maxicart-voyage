@@ -33,8 +33,8 @@ const FindApartment: FC<FindApartmentProps> = ({behavior}) => {
             }),
         },
         general: {
-            room: savedSearch?.general?.room ?? 1,
-            adult: savedSearch?.general?.adult ?? 1,
+            room: savedSearch?.general?.room ?? 0,
+            adult: savedSearch?.general?.adult ?? 0,
             child: savedSearch?.general?.child ?? 0,
         },
         price: {
