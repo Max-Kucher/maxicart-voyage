@@ -9,7 +9,7 @@ import {NoSSRFindApartamentForm} from "@/components/FindApartamentForm/NoSSRFind
 import { convertSearchApartmentsFormDataToApartmentsSearchParams } from "@/src/lib/utils";
 
 
-async function CardsList({formData}: {formData: string}) {
+async function CardsList({ formData }: { formData: string }) {
     let data: ApartmentsSearchParams = {
         items_per_page: 15,
         sort_by: 'id',
@@ -19,7 +19,6 @@ async function CardsList({formData}: {formData: string}) {
     if(formData) {
         data = convertSearchApartmentsFormDataToApartmentsSearchParams(JSON.parse(atob(formData)));
     }
-
 
     const { searchApartments } = useApartments();
     const apartments = await searchApartments(data);
