@@ -2,7 +2,7 @@
 export default interface ApartmentsSearchParams
 {
     page?: number;
-    items_per_page?: number;
+    items_per_page?: number | null;
     total?: number;
     total_pages?: number;
     arrival_date?: string;

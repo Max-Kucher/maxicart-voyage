@@ -14,9 +14,7 @@ export const convertDateToSearch = (date: Date): string => {
 
 export const convertSearchApartmentsFormDataToApartmentsSearchParams = (data: SearchApartmentsFormData): ApartmentsSearchParams =>
 {
-  const searchParams: ApartmentsSearchParams = {
-    items_per_page: 15,
-  };
+  const searchParams: ApartmentsSearchParams = {};
 
   if (data.date.from) {
     searchParams.arrival_date = convertDateToSearch(new Date(data.date.from));

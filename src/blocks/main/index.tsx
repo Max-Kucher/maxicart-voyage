@@ -35,7 +35,7 @@ async function CardsList() {
 const Main = () => {
     const t = useTranslations('main');
     return (
-        <div className="bg-main bg-[length:100%_870px] md:bg-[length:100%_950px] xl:pt-[80px] md:pt-[60px] pt-[40px] pb-[80px] bg-fixed bg-no-repeat">
+        <div className="bg-main bg-[length:100%_870px] md:bg-[length:100%_950px] xl:pt-[80px] md:pt-[60px] pt-[40px] pb-[80px] bg-top bg-fixed bg-no-repeat">
             <div className="container">
                 <div className={'text-center'}>
                     <h2 className={'md:text-[30px] uppercase md:font-extrabold text-white text-lg font-medium'}>{t('subtitle')}</h2>

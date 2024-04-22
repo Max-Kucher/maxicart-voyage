@@ -1,4 +1,5 @@
 'use client';
+
 import React, {useState} from 'react';
 import {Controller, SubmitHandler, useForm} from "react-hook-form";
 import {Input} from "@/components/ui/input";
@@ -7,6 +8,7 @@ import {Button} from "@/components/ui/button";
 import useRentForm from "@/composables/useRentForm";
 import RentOutFormData from "@/types/RentOutFormData";
 import {useTranslations} from "next-intl";
+import appConfig from "@/config/app";
 
 const AddApartmentForm = () => {
     const tf = useTranslations();
@@ -112,9 +114,11 @@ const AddApartmentForm = () => {
                     />
                 )}
             />
-            <div className={'font-semibold text-foreground-secondary md:text-base text-[10px] w-10/12 mt-[5px]'}>
-                {t('agreement')}
-            </div>
+            <div className={'font-semibold text-foreground-secondary md:text-base text-[10px] w-10/12 mt-[5px]'}
+                dangerouslySetInnerHTML={{ __html: t.markup('agreement', {
+                        policy: () => `<a href="${appConfig.privacyAgreementUrl}" class="text-primary" target="_blank">${t('policy')}</a>`,
+                    }) }}
+            ></div>
             <div className={'flex justify-center'}>
                 <Button disabled={formLoading}>
                     {formLoading ? tf('sendingInProgress') : t('send')}

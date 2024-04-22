@@ -25,12 +25,14 @@ const FindApartment: FC<FindApartmentProps> = ({behavior}) => {
 
     const defaultValues: SearchApartmentsFormData = useMemo(() => ({
         date: {
-            from: add(new Date(savedSearch?.date?.from ?? new Date()), {
-                days: savedSearch?.date !== undefined ? 0 : 1,
-            }),
-            to: add(new Date(savedSearch?.date?.to ?? new Date()), {
-                days: savedSearch?.date !== undefined ? 0 : 2,
-            }),
+            from: undefined,
+                // add(new Date(savedSearch?.date?.from ?? new Date()), {
+                // days: savedSearch?.date !== undefined ? 0 : 1,
+            // }),
+            to: undefined,
+                // add(new Date(savedSearch?.date?.to ?? new Date()), {
+                // days: savedSearch?.date !== undefined ? 0 : 2,
+            // }),
         },
         general: {
             room: savedSearch?.general?.room ?? 0,

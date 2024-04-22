@@ -29,7 +29,8 @@
     "room": "{count, plural, zero {Комнат} one {Комната} few {Комнаты} other {Комнат}}",
     "find": "Найти",
     "dateRange": "Дата заезда - Дата отьезда  ",
-    "searching": "Поиск..."
+    "searching": "Поиск...",
+    "chooseFilters": "Выберите даты заезда, выезда и количество гостей"
   },
   "service": {
     "title": "наши услуги",
@@ -84,7 +85,8 @@
     "maxPeople": "До {maxPeople, plural, one {# человека} other {# людей}}",
     "price": "От {price} {currency}",
     "nights": "за {count, plural, zero {# ночей} one {# ночь} few {# ночи} other {# ночей}}",
-    "book": "Забронировать"
+    "book": "Забронировать",
+    "loading": "Загрузка..."
   },
   "addApartmentForm": {
     "title": "Владеете недвижимостью в Дубае?",
@@ -94,7 +96,8 @@
     "name": "Имя",
     "lastname": "Фамилия",
     "message": "Cообщение",
-    "agreement": "Отправляя данную форму вы соглашаетесь с политикой конфиденциальности"
+    "agreement": "Отправляя данную форму вы соглашаетесь с <policy>policy</policy>",
+    "policy": "политикой конфиденциальности"
   },
   "apartmentsDetails": {
     "maxPeople": "До {maxPeople, plural, one {# человека} other {# людей}}",

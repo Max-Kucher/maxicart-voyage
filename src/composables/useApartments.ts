@@ -6,7 +6,11 @@ import {useLocale} from "next-intl";
 
 async function fetchApartments(locale: string, params?: ApartmentsSearchParams)
 {
-    const url: URL = new URL('/api/smoobu/apartments/', appConfig.backendBase);
+    const urlRoute = params?.arrival_date || params?.departure_date
+                                        ? '/api/smoobu/apartments/'
+                                        : '/api/smoobu/apartments-rent/';
+
+    const url: URL = new URL(urlRoute, appConfig.backendBase);
 
     if (params !== undefined) {
         if (params.min_price !== undefined) {

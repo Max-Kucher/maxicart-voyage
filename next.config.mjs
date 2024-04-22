@@ -2,7 +2,7 @@ import createNextIntlPlugin from 'next-intl/plugin';
 
 const withNextIntl = createNextIntlPlugin();
 
-const BackendBaseUrl = process.env?.BACKEND_BASE_URL?.length ? process.env.BACKEND_BASE_URL : 'http://80.89.230.106:81';
+const BackendBaseUrl = process.env.NEXT_PUBLIC_BACKEND_BASE_URL;
 const imagesBackend = new URL(BackendBaseUrl);
 
 /** @type {import('next').NextConfig} */
@@ -13,6 +13,12 @@ const nextConfig = withNextIntl({
         remotePatterns: [
             {
                 protocol: imagesBackend.protocol.substring(0, imagesBackend.protocol.length - 1),
+                hostname: imagesBackend.hostname,
+                port: imagesBackend.port,
+                pathname: '/media/**',
+            },
+            {
+                protocol: 'http',
                 hostname: imagesBackend.hostname,
                 port: imagesBackend.port,
                 pathname: '/media/**',

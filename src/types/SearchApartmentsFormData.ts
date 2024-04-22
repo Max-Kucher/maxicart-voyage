@@ -1,8 +1,8 @@
 
 export default interface SearchApartmentsFormData {
     date: {
-        from: Date;
-        to: Date;
+        from?: Date;
+        to?: Date;
     };
     general: {
         room?: number;

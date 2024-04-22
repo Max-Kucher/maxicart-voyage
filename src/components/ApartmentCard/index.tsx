@@ -1,3 +1,5 @@
+'use client'
+
 import React, {FC} from 'react';
 import {MapPinIcon, Maximize2Icon} from "lucide-react";
 import {Button} from "@/components/ui/button";
@@ -5,7 +7,7 @@ import { cn } from '@/src/lib/utils';
 import UsersIcon from "@/components/icons/users";
 import BedIcon from "@/components/icons/bed";
 import BathIcon from "@/components/icons/bath";
-import {Link} from "@/navigation";
+import {Link, useRouter} from "@/navigation";
 import Image from "next/image";
 import {useTranslations} from "next-intl";
 
@@ -24,13 +26,27 @@ interface ApartmentCardProps {
 }
 
 const ApartmentCard: FC<ApartmentCardProps> = ({image, link, currency, bedCount, bathCount, name, nights, price, location, roomSize, maxPeople}) => {
-    const t = useTranslations('apartmentCard')
+    const t = useTranslations('apartmentCard');
+
+    const router = useRouter();
+    const [isLoading, setIsLoading] = React.useState(false);
+    const handleClick = async (e: React.MouseEvent) => {
+        setIsLoading(true);
+
+        await new Promise(() => router.push(link.toString()))
+        setIsLoading(false);
+    };
+
     return (
-        <div className={'xl:w-full bg-white rounded-lg flex flex-col'}>
+        <div onClick={handleClick} className={'xl:w-full cursor-pointer bg-white rounded-lg flex flex-col relative'}>
+            {isLoading && <div
+                className="absolute animate-pulse rounded-lg top-0 left-0 right-0 bottom-0 z-10 bg-black bg-opacity-10 flex items-center justify-center">
+            </div>}
             <div className={'p-[8px]'}>
                 {image === null ? (
-                    <Image className={'rounded-xl xl:h-[370px] w-full object-cover h-[316px]'} src={`/images/no-photo.png`} alt={"No image"} width={507} height={370} />
-                    ) : (
+                    <Image className={'rounded-xl xl:h-[370px] w-full object-cover h-[316px]'}
+                           src={`/images/no-photo.png`} alt={"No image"} width={507} height={370}/>
+                ) : (
                     <Image className={'rounded-xl xl:h-[370px] w-full object-cover h-[316px]'} width={507} height={0} alt={name} src={image} />
                 )}
             </div>
@@ -79,8 +95,10 @@ const ApartmentCard: FC<ApartmentCardProps> = ({image, link, currency, bedCount,
                         <b className={'text-base lg:text-xl 2xl:text-2xl font-semibold'}>{t('price', {price, currency})}</b>
                         <span className={'text-sm md:text-lg font-medium text-foreground-secondary'}>{t('nights', {count: nights})}</span>
                     </div>
-                    <Link href={link}>
-                        <Button className={cn('!min-w-[200px]')}>{t('book')}</Button>
+                    <Link onClick={(e) => e.preventDefault()} href={link}>
+                        <Button className={cn('!min-w-[200px]')}>
+                            {t(isLoading ? 'loading' : 'book')}
+                        </Button>
                     </Link>
                 </div>
             </div>

@@ -28,8 +28,9 @@
     "human": "Adults",
     "room": "{count, plural, zero {Rooms} one {Room} other {Rooms}}",
     "find": "Find",
-    "dateRange": "Chec-in date Check-out date",
-    "searching": "Searching..."
+    "dateRange": "Chec-in Check-out",
+    "searching": "Searching...",
+    "chooseFilters": "Select check-in, check-out dates and number of guests"
   },
   "service": {
     "title": "Our  services",
@@ -83,7 +84,8 @@
     "maxPeople": "Max {maxPeople, plural, one {# person} other {# persons}}",
     "price": "From {price} {currency}",
     "nights": "for {count, plural, one {# night} other {# nights}}",
-    "book": "Book now"
+    "book": "Book now",
+    "loading": "Loading..."
   },
   "addApartmentForm": {
     "title": "Do you own a property in Dubai?",
@@ -93,7 +95,8 @@
     "name": "Name",
     "lastname": "Lastname",
     "message": "Leave a comment",
-    "agreement": "I agree to the Privacy Policy"
+    "agreement": "I agree to the <policy>policy</policy>",
+    "policy": "Privacy Policy"
   },
   "apartmentsDetails": {
     "maxPeople": "Max {maxPeople, plural, one {# person} other {# persons}}",

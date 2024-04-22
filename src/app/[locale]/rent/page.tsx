@@ -11,13 +11,15 @@ import { convertSearchApartmentsFormDataToApartmentsSearchParams } from "@/src/l
 
 async function CardsList({ formData }: { formData: string }) {
     let data: ApartmentsSearchParams = {
-        items_per_page: 15,
         sort_by: 'id',
         sort_order: 'asc',
     };
 
     if(formData) {
-        data = convertSearchApartmentsFormDataToApartmentsSearchParams(JSON.parse(atob(formData)));
+        data = {
+            ...data,
+            ...convertSearchApartmentsFormDataToApartmentsSearchParams(JSON.parse(atob(formData)))
+        };
     }
 
     const { searchApartments } = useApartments();

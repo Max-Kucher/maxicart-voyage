@@ -14,8 +14,8 @@ import {useLocale} from "next-intl";
 interface DatepickerProps {
     className?: string;
     date: {
-        from: Date
-        to: Date
+        from?: Date
+        to?: Date
     };
     placeholder?: string;
     setDate: (date?: DateRange) => void;

@@ -130,7 +130,7 @@ const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={'bg-white rounded-lg px-[30px] py-[60px] mt-[30px]'}>
-            <div className={'text-base md:text-xl text-black font-semibold text-center lg:text-left'}>Выберите даты заезда, выезда и количество гостей</div>
+            <div className={'text-base md:text-xl text-black font-semibold text-center lg:text-left'}>{t('filterForm.chooseFilters')}</div>
             <div className={'flex md:flex-wrap xl:flex-nowrap md:flex-row flex-col gap-[20px] md:items-end items-center mt-[30px]'}>
                 <div className={'flex flex-col w-full'}>
                        <span className={'mb-[10px] text-lg'}>
