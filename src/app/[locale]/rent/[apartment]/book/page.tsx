@@ -117,27 +117,32 @@ export default async function RentIndex({searchParams, params: {apartment: apart
                         <div className={'my-auto h-full flex items-center p-[10px] xl:p-[20px] border border-[#D6D6D6] rounded-xl xl:hidden justify-between'}>
                             <div>
                                 <b className={'block text-lg xl:text-xl font-semibold'}>{t('checkout.details.arrivalDate')}</b>
+                                {/* @ts-ignore */}
                                 <span className={'text-base xl:text-lg'}>{format(selectedData.date.from, 'EE, dd MMMM yyyy', {locale: pikerLng})}</span>
                             </div>
                             <div className={'bg-foreground h-[70%] w-[1px] my-auto mx-3'}/>
                             <div>
                                 <b className={'block text-lg xl:text-xl font-semibold'}>{t('checkout.details.departureDate')}</b>
+                                {/* @ts-ignore */}
                                 <span className={'text-base xl:text-lg'}>{format(selectedData.date.to, 'EE, dd MMMM yyyy', {locale: pikerLng})}</span>
                             </div>
                         </div>
                     </div>
                     <b className={'block text-lg xl:text-xl font-semibold mt-[48px]'}>{t('checkout.details.stayLength')}</b>
                     <b className={'block text-lg xl:text-xl font-semibold text-primary'}>{t('apartmentsDetails.nights', {
+                        // @ts-ignore
                         count: Math.floor((new Date(selectedData.date.to).getTime() - new Date(selectedData.date.from).getTime()) / (1000 * 60 * 60 * 24)),
                     })}</b>
                     <div className={'hidden p-[20px] border border-[#D6D6D6] rounded-xl mt-[30px] xl:flex justify-between'}>
                         <div>
                             <b className={'block text-lg xl:text-xl font-semibold'}>{t('checkout.details.arrivalDate')}</b>
+                            {/* @ts-ignore */}
                             <span className={'text-base xl:text-lg'}>{format(selectedData.date.from, 'EE, dd MMMM yyyy', {locale: pikerLng})}</span>
                         </div>
                         <div className={'bg-foreground h-full w-[1px]'}/>
                         <div>
                             <b className={'block text-lg xl:text-xl font-semibold'}>{t('checkout.details.departureDate')}</b>
+                            {/* @ts-ignore */}
                             <span className={'text-base xl:text-lg'}>{format(selectedData.date.to, 'EE, dd MMMM yyyy', {locale: pikerLng})}</span>
                         </div>
                     </div>
@@ -167,7 +172,9 @@ export default async function RentIndex({searchParams, params: {apartment: apart
                                     className={'text-xl xl:text-[25px] text-primary font-extrabold'}>{fullPrice ?? 0} USD
                                 </div>
                                 <div className={'text-base xl:text-lg font-medium'}>{t('checkout.details.nightsAndDays', {
+                                   // @ts-ignore
                                     nights: Math.floor((new Date(selectedData.date.to).getTime() - new Date(selectedData.date.from).getTime()) / (1000 * 60 * 60 * 24)),
+                                    // @ts-ignore
                                     days: Math.floor((new Date(selectedData.date.to).getTime() - new Date(selectedData.date.from).getTime()) / (1000 * 60 * 60 * 24) + 1),
                                 })}
                                 </div>

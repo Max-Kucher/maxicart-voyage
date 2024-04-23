@@ -18,7 +18,9 @@ async function CardsList({ formData }: { formData: string }) {
     if(formData) {
         data = {
             ...data,
-            ...convertSearchApartmentsFormDataToApartmentsSearchParams(JSON.parse(atob(formData)))
+            ...convertSearchApartmentsFormDataToApartmentsSearchParams(JSON.parse(atob(formData))),
+            sort_by: 'id',
+            sort_order: 'desc',
         };
     }
 

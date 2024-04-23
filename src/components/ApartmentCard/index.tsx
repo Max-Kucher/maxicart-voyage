@@ -40,7 +40,7 @@ const ApartmentCard: FC<ApartmentCardProps> = ({image, link, currency, bedCount,
     return (
         <div onClick={handleClick} className={'xl:w-full cursor-pointer bg-white rounded-lg flex flex-col relative'}>
             {isLoading && <div
-                className="absolute animate-pulse rounded-lg top-0 left-0 right-0 bottom-0 z-10 bg-black bg-opacity-10 flex items-center justify-center">
+                className="absolute animate-pulse rounded-lg top-0 left-0 right-0 bottom-0 z-10 bg-black bg-opacity-5 flex items-center justify-center">
             </div>}
             <div className={'p-[8px]'}>
                 {image === null ? (

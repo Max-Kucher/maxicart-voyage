@@ -12,7 +12,7 @@ async function CardsList() {
     const apartments = await searchApartments({
         items_per_page: 3,
         sort_by: 'id',
-        sort_order: 'asc',
+        sort_order: 'desc',
     });
 
     return apartments.data.map((apartment: Apartment) => (<ApartmentCard

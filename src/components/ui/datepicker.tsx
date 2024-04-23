@@ -62,6 +62,7 @@ const Datepicker: FC<DatepickerProps> = ({className, placeholder, date, setDate}
                         initialFocus
                         mode="range"
                         defaultMonth={date?.from}
+                        // @ts-ignore
                         selected={date}
                         onSelect={setDate}
                         numberOfMonths={2}

@@ -35,47 +35,47 @@
   "service": {
     "title": "Our  services",
     "first": {
-      "title": "Cleaning Services",
-      "description": "Organization of professional cleaning before each guest"
+      "title": "Repairs and Cleaning",
+      "description": "Cleaning and inspections of properties are conducted before and after occupancy, as well as repairs when necessary."
     },
     "second": {
-      "title": "Furniture Selection",
-      "description": "Help in choosing new furniture items and interior design for minimalistic living spaces."
+      "title": "Furnishing",
+      "description": "We help choose key details for maximum results with minimal investments."
     },
     "third": {
       "title": "Photography",
-      "description": "Professional photo sessions of your property."
+      "description": "We organize a professional photo session for each object."
     },
     "fourth": {
       "title": "Online Promotion",
-      "description": "Promotion of your property on platforms via SEO, collecting and managing responses."
+      "description": "Promotion of properties on international platforms through SEO, social media, and local portals."
     },
     "fifth": {
-      "title": "Property Safety",
-      "description": "All homes are registered with the DTCM, providing safety and comfort before each guest's arrival."
+      "title": "Housing Safety",
+      "description": "All tenants are registered with DTCM. We take a deposit and check passports before check-in and out."
     }
   },
   "workStages": {
     "title": "STAGES OF WORK",
     "first": {
-      "title": "REGISTRATION",
-      "description": "Registration We will register your property, ensuring it is registered according to local regulatory standards. We will assist you with this."
+      "title": "Registration",
+      "description": "According to the law, every rental property must be registered in the state system. We will help you with this."
     },
     "second": {
-      "title": "PREPARATION",
-      "description": "Advertising Your property will be listed on top platforms, including Booking.com and Airbnb, increasing the frequency of guest bookings"
+      "title": "Preparation",
+      "description": "Professional photo shoot of the property and comprehensive cleaning so you can offer guests the perfect stay."
     },
     "third": {
-      "title": "ADVERTISING",
-      "description": "Advertising Your property will be listed on top platforms, including Booking.com and Airbnb, increasing the frequency of guest bookings"
+      "title": "Advertising",
+      "description": "Your property will be listed on 15 popular platforms, including Booking.com and Airbnb. Properly crafted listings to attract customers."
     },
     "fourth": {
-      "title": "BRIEFING",
-      "description": "Maintenance We provide full maintenance and repairs if necessary, saving you time and effort."
+      "title": "Briefing",
+      "description": "We provide instructions and the contract immediately after booking and also assist with inquiries and emergencies through our support service."
     },
     "fifth": {
-      "title": "DIVIDENDS",
-      "description": "Payments We handle all payment transactions, ensuring the full rental amount is received on time."
+      "title": "Dividends",
+      "description": "We pay owners the full rental amount monthly, deducting only our commission, with no delays."
     },
     "days": "days",
     "submit": "Leave a request"

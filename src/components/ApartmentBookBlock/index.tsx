@@ -53,7 +53,9 @@ const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
                 }),
             },
             general: {
-                room: 1,
+                room: apartmentData.smoobu.rooms.bedrooms
+                    ? apartmentData.smoobu.rooms.bedrooms
+                    : 1,
                 adult: 1,
                 child: formData?.general?.child ?? 0,
             },

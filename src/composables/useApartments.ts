@@ -3,6 +3,7 @@ import ApartmentsSearchResult from "@/types/ApartmentsSearchResult";
 import ApartmentsSearchParams from "@/types/ApartmentsSearchParams";
 import Apartment from "@/types/Apartment";
 import {useLocale} from "next-intl";
+import ApartmentsSearchDatesRange from "@/types/ApartmentsSearchDatesRange";
 
 async function fetchApartments(locale: string, params?: ApartmentsSearchParams)
 {
@@ -52,8 +53,16 @@ export default function useApartments() {
         return apartmentsSearch;
     };
 
-    const searchApartmentById = async (apartmentId: number): Promise<{ ok: true, body: Apartment, headers: {} }> => {
-        const url = new URL(`/api/smoobu/apartments/${apartmentId}`, appConfig.backendBase);
+    const searchApartmentById = async (apartmentId: number, datesRange?: ApartmentsSearchDatesRange):
+        Promise<{ ok: true, body: Apartment, headers: {} }> =>
+    {
+        const baseApiEndpoint: string =
+            datesRange === undefined
+                // ? `/api/smoobu/apartments/${apartmentId}`
+                ? `/api/smoobu/apartments-rent/${apartmentId}`
+                : `/api/smoobu/apartments/${apartmentId}`
+
+        const url = new URL(baseApiEndpoint, appConfig.backendBase);
 
         const response = await fetch(url.toString(), {
             headers: {
@@ -65,7 +74,7 @@ export default function useApartments() {
         });
 
         if (!response.ok) {
-            throw new Error('Failed to find apartment');
+            throw new Error(`Failed to find apartment by ${url.href}\nResponse: ` + await response.text());
         }
 
         return {
