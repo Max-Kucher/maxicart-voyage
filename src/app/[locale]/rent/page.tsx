@@ -12,15 +12,13 @@ import { convertSearchApartmentsFormDataToApartmentsSearchParams } from "@/src/l
 async function CardsList({ formData }: { formData: string }) {
     let data: ApartmentsSearchParams = {
         sort_by: 'id',
-        sort_order: 'asc',
+        sort_order: 'desc',
     };
 
     if(formData) {
         data = {
             ...data,
             ...convertSearchApartmentsFormDataToApartmentsSearchParams(JSON.parse(atob(formData))),
-            sort_by: 'id',
-            sort_order: 'desc',
         };
     }
 
@@ -57,7 +55,7 @@ export default function RentIndex({searchParams}: {searchParams: {formData: stri
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-[20px] md:mt-[80px] mt-[40px]">
                     <CardsList formData={searchParams.formData}/>
                 </div>
-                <AddApartmentForm isTextCentered/>
+                <AddApartmentForm isTextCentered />
             </div>
         </main>
     );

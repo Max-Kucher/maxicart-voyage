@@ -16,7 +16,7 @@ interface CountPikerProps {
 
 const CountPiker: FC<CountPikerProps> = ({className, text, onSetValue, values, list, disabled}) => {
     return (
-        <div className={cn("grid gap-2", className)}>
+        <div className={cn("grid", className)}>
             <Popover>
                 <PopoverTrigger asChild>
                     <Button
@@ -27,7 +27,7 @@ const CountPiker: FC<CountPikerProps> = ({className, text, onSetValue, values, l
                         )}
                     >
                         <UserRoundIcon className="mr-2 h-[27px] w-[27px] text-primary"/>
-                        <span className={'inline-block text-sm md:px-[0.6em] md:text-lg text-[#5F5F5F]'}>
+                        <span className={'inline-block max-w-[calc(100%-35px)] truncate text-sm md:px-[0.6em] md:text-lg text-[#5F5F5F]'}>
                            {text}
                         </span>
                     </Button>

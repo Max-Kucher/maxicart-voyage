@@ -10,7 +10,7 @@ export default function Home() {
         <main className="bg-white">
             <Main />
             <OurWork id={`homegage-our-services`} />
-            <AddApartmentForm />
+            <AddApartmentForm imageBg={true} isTextCentered={true} />
             <WorkStages id={"homegage-work-stages"} />
         </main>
     )

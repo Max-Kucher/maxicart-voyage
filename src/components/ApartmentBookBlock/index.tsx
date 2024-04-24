@@ -171,6 +171,7 @@ const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
                                         id: 'room'
                                     }
                                 ]}
+                                className={`grid-cols-1`}
                                 disabled={['room']}
                                 values={value}
                                 text={`${value.adult} ${t('filterForm.human')} - ${value.child} ${t('filterForm.child', {count: value.child})} - ${value.room} ${t('filterForm.room', {count: value.room})}`}

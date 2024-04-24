@@ -12,7 +12,7 @@ interface WorkStagesProps {
 const WorkStages: FC<WorkStagesProps> = ({ id }) => {
     const t = useTranslations('workStages');
     return (
-        <div id={id} className="container pb-[60px] pt-[90px] md:py-[100px]">
+        <div id={id} className="container pb-[60px] md:pt-[90px] pt-[50px] md:py-[100px]">
             <div className={'grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-[30px] mx-auto'}>
                 <div className={'relative'}>
                     <h2 dangerouslySetInnerHTML={{__html: t('title')}}
