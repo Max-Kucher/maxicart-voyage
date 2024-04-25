@@ -30,7 +30,7 @@ async function CardsList({ formData }: { formData: string }) {
         key={`index-apartment-${apartment.id}`}
         image={apartment.photos[0]?.photo ?? null}
         price={apartment?.smoobu_price?.price ?? apartment.smoobu.price.minimal}
-        name={apartment.smoobu.name}
+        name={apartment.title ?? apartment.smoobu.name}
         link={`/rent/${apartment.id}`}
         currency={apartment.smoobu.currency}
         bathCount={apartment.smoobu.rooms.bathrooms}
