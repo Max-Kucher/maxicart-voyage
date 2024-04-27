@@ -43,7 +43,7 @@ const appConfig = {
         },
     },
     defaultCurrency: 'USD',
-    privacyAgreementUrl: "https://docs.google.com/document/d/1YkKHnvfOrU6Z8BX3fKFcffy9rRYlGCsB/edit",
+    privacyAgreementUrl: "https://docs.google.com/document/d/1BnjLqN5myq7kAhJdiY9PxT9M723DNViN/edit",
 };
 
 export default appConfig;
