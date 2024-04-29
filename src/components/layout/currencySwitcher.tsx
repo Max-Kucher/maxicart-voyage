@@ -12,7 +12,7 @@ interface CurrencySwitcherProps {
     currenciesList?: Currency[];
 }
 
-export default function CurrencySwitcher({className, currenciesList, ...props}: CurrencySwitcherProps) {
+export default function CurrencySwitcher({className, currenciesList}: CurrencySwitcherProps) {
     const router = useRouter();
     return (
         <div className={'inline-block'}>

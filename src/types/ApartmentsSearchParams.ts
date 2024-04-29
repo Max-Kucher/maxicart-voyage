@@ -14,4 +14,5 @@ export default interface ApartmentsSearchParams extends ApartmentsSearchDatesRan
     sort_order?: 'desc' | 'asc';
     adults?: number;
     child?: number;
+    best_offer?: "True" | "False"; // some python stuff
 }
