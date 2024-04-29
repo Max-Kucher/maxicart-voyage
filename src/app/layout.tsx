@@ -1,6 +1,6 @@
 import {ReactNode} from 'react';
 import AppContextWrapper from "@/components/AppContext";
-import { Metadata } from 'next';
+import {Metadata} from 'next';
 import {getCookie, setCookie} from "cookies-next";
 import appConfig from "@/config/app";
 

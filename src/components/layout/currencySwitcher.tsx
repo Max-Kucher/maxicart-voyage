@@ -5,6 +5,7 @@ import {setCookie, getCookie} from "cookies-next";
 import appConfig from "@/config/app";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "../ui/select";
 import Currency from "@/types/Currency";
+import { useRouter } from "next/navigation";
 
 interface CurrencySwitcherProps {
     className?: string;
@@ -12,9 +13,13 @@ interface CurrencySwitcherProps {
 }
 
 export default function CurrencySwitcher({className, currenciesList, ...props}: CurrencySwitcherProps) {
+    const router = useRouter();
     return (
         <div className={'inline-block'}>
-            <Select onValueChange={(value) =>  setCookie('currency', value)} defaultValue={getCookie('currency') ?? appConfig.defaultCurrency}>
+            <Select onValueChange={(value) =>  {
+                setCookie('currency', value);
+                router.refresh()
+            }} defaultValue={getCookie('currency') ?? appConfig.defaultCurrency}>
                 <SelectTrigger className="max-w-[70px] min-w-[100px] md:max-w-[100px] !bg-transparent p-0 [&>svg]:hidden border-0 focus:ring-0 focus:ring-transparent ring-offset-transparent">
                     <SelectValue placeholder="Currency"/>
                 </SelectTrigger>
