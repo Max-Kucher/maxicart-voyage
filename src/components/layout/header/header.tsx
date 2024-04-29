@@ -13,8 +13,13 @@ import {useRouter} from "@/navigation";
 import AddApartmentForm from "@/src/components/AddApartmentForm";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import Currency from "@/types/Currency";
 
-export default function Header() {
+interface HeaderProps {
+    currenciesList?: Currency[];
+}
+
+export default function Header({ currenciesList }: HeaderProps) {
     const t = useTranslations();
     const router = useRouter()
     const searchParams = useSearchParams()
@@ -29,7 +34,7 @@ export default function Header() {
 
             <LanguageSwitcher className={"mr-8 xl:mr-0 hidden md:flex"}/>
 
-            <CurrencySwitcher className={"hidden md:flex"}/>
+            {currenciesList && <CurrencySwitcher currenciesList={currenciesList} className={"hidden md:flex"}/>}
 
             <PhoneLink className={"text-primary text-[20px] font-semibold hidden xl:block"}/>
 

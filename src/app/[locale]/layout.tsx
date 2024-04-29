@@ -3,10 +3,19 @@ import "@/app/globals.css";
 import Header from "@/components/layout/header/header";
 import {NextIntlClientProvider, useMessages} from "next-intl";
 import Footer from "@/components/layout/footer";
-// import FindApartmentProvider from "@/context/FindApartmentProvider";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
+import useCurrencies from "@/composables/useCurrencies";
+
+const RenderHeader = async () => {
+    const { getList } = useCurrencies();
+    const currencyListResult = await getList();
+
+    return (
+        <Header currenciesList={currencyListResult?.body} />
+    );
+};
 
 export default function LocaleLayout({
      children,
@@ -22,7 +31,7 @@ export default function LocaleLayout({
         <body className={montserrat.className}>
         <NextIntlClientProvider locale={locale} messages={messages}>
 
-            <Header />
+            <RenderHeader />
 
             {/*<FindApartmentProvider>*/}
                 {children}

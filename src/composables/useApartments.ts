@@ -2,8 +2,9 @@ import appConfig from "@/config/app";
 import ApartmentsSearchResult from "@/types/ApartmentsSearchResult";
 import ApartmentsSearchParams from "@/types/ApartmentsSearchParams";
 import Apartment from "@/types/Apartment";
-import {useLocale} from "next-intl";
+import { useLocale } from "next-intl";
 import ApartmentsSearchDatesRange from "@/types/ApartmentsSearchDatesRange";
+import {getCookie} from "cookies-next";
 
 async function fetchApartments(locale: string, params?: ApartmentsSearchParams)
 {
@@ -25,9 +26,15 @@ async function fetchApartments(locale: string, params?: ApartmentsSearchParams)
         Object.entries(params).forEach(([key, value]) => url.searchParams.append(key, String(value)));
     }
 
+    // console.log(getCookie('NEXT_LOCALE'), {
+    //     'Accept-Language': locale,
+    //     'X-VOYAGE-CURRENCY': getCookie('currency') ?? appConfig.defaultCurrency
+    // })
+
     const response = await fetch(url.toString(), {
         headers: {
             'Accept-Language': locale,
+            'X-VOYAGE-CURRENCY': getCookie('currency') ?? appConfig.defaultCurrency
         },
     });
 
@@ -67,6 +74,7 @@ export default function useApartments() {
         const response = await fetch(url.toString(), {
             headers: {
                 'Accept-Language': locale,
+                'X-VOYAGE-CURRENCY': getCookie('currency') ?? appConfig.defaultCurrency
             },
             next: {
                 tags: ['apartments', `apartments-${apartmentId}`],
@@ -103,6 +111,7 @@ export default function useApartments() {
             cache: "no-store",
             headers: {
                 'Accept-Language': locale,
+                'X-VOYAGE-CURRENCY': getCookie('currency') ?? appConfig.defaultCurrency,
             },
         });
 

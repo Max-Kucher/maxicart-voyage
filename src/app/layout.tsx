@@ -22,5 +22,7 @@ export default function RootLayout({children}: Props) {
         setCookie('currency', appConfig.defaultCurrency)
     }
 
-    return <AppContextWrapper>{children}</AppContextWrapper>;
+    return (<AppContextWrapper>
+        {children}
+    </AppContextWrapper>);
 }
