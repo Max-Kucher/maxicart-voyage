@@ -9,7 +9,6 @@ import {Button} from "@/components/ui/button";
 import {useTranslations} from "next-intl";
 import SearchApartmentsFormData from "@/types/SearchApartmentsFormData";
 import {convertSearchApartmentsFormDataToApartmentsSearchParams} from "@/lib/utils";
-import useApartments from "@/composables/useApartments";
 import {Link, useRouter} from "@/src/navigation";
 import Apartment from "@/types/Apartment";
 import {ApartmentContext} from "@/components/ApratmentProvider";
@@ -22,15 +21,16 @@ import { add } from 'date-fns';
 import LoadingSpinner from "@/components/ui/loadingSpinner";
 import {APIProvider, Map, Marker} from "@vis.gl/react-google-maps";
 import {GoogleMapKey} from "@/config/app";
+import useCheckApartments from "@/composables/useCheckApartment";
 
 interface ApartmentBookBlockProps {
     apartmentData: Apartment,
 }
 
 
-const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
+ const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
     const apartmentId = apartmentData.id;
-    const {checkApartment} = useApartments();
+    const {checkApartment} = useCheckApartments();
     const router = useRouter();
     const apartmentContext: any = useContext(ApartmentContext)
     const appContext: any = useContext(AppContext)

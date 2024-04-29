@@ -1,3 +1,4 @@
+
 import appConfig from "@/config/app";
 import RentOutFormData from "@/types/RentOutFormData";
 import { useLocale } from "next-intl";

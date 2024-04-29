@@ -2,7 +2,7 @@ import appConfig from "@/config/app";
 import { useLocale } from "next-intl";
 import CheckoutFormData from "@/types/checkout/CheckoutFormData";
 import CreateOrderResponseBody from "@/types/checkout/CreateOrderResponseBody";
-import { cookies } from "next/headers";
+import {getCookie} from "cookies-next";
 
 export default function useOrders() {
     const locale: string = useLocale();
@@ -27,7 +27,7 @@ export default function useOrders() {
             headers: {
                 "Content-Type": "application/json",
                 "Accept-Language": locale,
-                "X-VOYAGE-CURRENCY": cookies().get('currency')?.value ?? appConfig.defaultCurrency,
+                "X-VOYAGE-CURRENCY": getCookie('currency') ?? appConfig.defaultCurrency,
             },
             body: JSON.stringify(requestBody),
         });

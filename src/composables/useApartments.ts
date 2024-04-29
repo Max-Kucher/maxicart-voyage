@@ -1,11 +1,11 @@
+'use server'
 import appConfig from "@/config/app";
 import ApartmentsSearchResult from "@/types/ApartmentsSearchResult";
 import ApartmentsSearchParams from "@/types/ApartmentsSearchParams";
 import Apartment from "@/types/Apartment";
 import { useLocale } from "next-intl";
 import ApartmentsSearchDatesRange from "@/types/ApartmentsSearchDatesRange";
-import {getCookie} from "cookies-next";
-import { cookies } from "next/headers";
+import {cookies} from "next/headers";
 
 async function fetchApartments(locale: string, params?: ApartmentsSearchParams)
 {
@@ -46,7 +46,7 @@ async function fetchApartments(locale: string, params?: ApartmentsSearchParams)
     return await response.json();
 }
 
-export default function useApartments() {
+export default async function useApartments() {
     const locale: string = useLocale();
     const searchApartments = async (params?: ApartmentsSearchParams): Promise<ApartmentsSearchResult> => {
         let apartmentsSearch: ApartmentsSearchResult = new ApartmentsSearchResult();
@@ -111,7 +111,7 @@ export default function useApartments() {
             cache: "no-store",
             headers: {
                 'Accept-Language': locale,
-                'X-VOYAGE-CURRENCY': getCookie('currency') ?? appConfig.defaultCurrency,
+                'X-VOYAGE-CURRENCY': cookies().get('currency')?.value ?? appConfig.defaultCurrency,
             },
         });
 
@@ -126,7 +126,7 @@ export default function useApartments() {
     return {
         searchApartments,
         searchApartmentById,
-        checkApartment,
+        checkApartment
     };
 }
 

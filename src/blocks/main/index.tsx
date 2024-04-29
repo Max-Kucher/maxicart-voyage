@@ -8,7 +8,7 @@ import {Link} from "@/navigation";
 import {NoSSRFindApartamentForm} from "@/components/FindApartamentForm/NoSSRFindApartamentForm";
 
 async function CardsList() {
-    const { searchApartments } = useApartments();
+    const { searchApartments } = await useApartments();
     const apartments = await searchApartments({
         items_per_page: 3,
         sort_by: 'id',

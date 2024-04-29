@@ -22,7 +22,7 @@ async function CardsList({ formData }: { formData: string }) {
         };
     }
 
-    const { searchApartments } = useApartments();
+    const { searchApartments } = await useApartments();
     const apartments = await searchApartments(data);
 
 
