@@ -19,7 +19,7 @@ export default function CurrencySwitcher({className, currenciesList, ...props}: 
                     <SelectValue placeholder="Currency"/>
                 </SelectTrigger>
                 <SelectContent>
-                    {currenciesList && currenciesList.map((currency) => (
+                    {currenciesList && currenciesList.map((currency: Currency) => (
                         <SelectItem key={`currency-switcher-${currency.id}`} className={'[&>.check]:hidden !outline-0'} value={currency.code}>
                             <div className={'flex w-full items-center justify-between'}>
                             <span

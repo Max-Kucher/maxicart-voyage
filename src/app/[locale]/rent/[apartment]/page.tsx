@@ -9,7 +9,7 @@ import ApartmentProvider from "@/components/ApratmentProvider";
 export default async function Page({params} : {
     params: { locale: string; apartment: string };
 }) {
-    const { searchApartmentById } = useApartments();
+    const { searchApartmentById } = await useApartments();
 
     const apartmentDataSearch = await searchApartmentById(parseInt(params.apartment));
     const apartmentData = apartmentDataSearch.body;

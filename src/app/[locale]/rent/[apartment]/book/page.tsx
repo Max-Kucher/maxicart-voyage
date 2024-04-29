@@ -31,7 +31,7 @@ export default async function RentIndex({searchParams, params: {apartment: apart
         en: enUS
     }[lng];
 
-    const { searchApartmentById, checkApartment } = useApartments();
+    const { searchApartmentById, checkApartment } = await useApartments();
     const { body: apartmentData } = await searchApartmentById(apartmentId);
 
     const paramsString: string = searchParams?.bookData?.length ? atob(searchParams.bookData) : '{}';
