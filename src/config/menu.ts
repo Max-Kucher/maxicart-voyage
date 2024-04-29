@@ -4,7 +4,7 @@ const menuConfig = {
     items: [
         {
             title: "services",
-            href: "/#homegage-our-services",
+            href: "#homegage-our-services",
         },
         {
             title: "rent",
@@ -16,7 +16,7 @@ const menuConfig = {
         },
         {
             title: "workStages",
-            href: "/#homegage-work-stages",
+            href: "#homegage-work-stages",
         },
         {
             title: "contacts",
