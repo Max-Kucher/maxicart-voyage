@@ -13,22 +13,20 @@ import useApartments from "@/composables/useApartments";
 import {Link, useRouter} from "@/src/navigation";
 import Apartment from "@/types/Apartment";
 import {ApartmentContext} from "@/components/ApratmentProvider";
-import {MapContainer, Marker, Popup, TileLayer} from 'react-leaflet'
 
-import markerIconX2 from "leaflet/dist/images/marker-icon-2x.png";
-import markerIcon from "leaflet/dist/images/marker-icon.png";
-import markerShadow from "leaflet/dist/images/marker-shadow.png";
 
 import 'leaflet/dist/leaflet.css';
-import {LatLngExpression} from "leaflet";
 import {AppContext} from "@/components/AppContext";
 import {setCookie} from "cookies-next";
 import { add } from 'date-fns';
 import LoadingSpinner from "@/components/ui/loadingSpinner";
+import {APIProvider, Map, Marker} from "@vis.gl/react-google-maps";
+import {GoogleMapKey} from "@/config/app";
 
 interface ApartmentBookBlockProps {
     apartmentData: Apartment,
 }
+
 
 const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
     const apartmentId = apartmentData.id;
@@ -103,31 +101,21 @@ const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
 
     };
 
-    const showMap = apartmentData.smoobu.location.latitude !== null && apartmentData.smoobu.location.longitude !== null;
-    const latLngPositions: LatLngExpression = [apartmentData?.smoobu?.location?.latitude ?? 50, apartmentData?.smoobu?.location?.longitude ?? 50];
+    const showMap = true
 
-    React.useEffect(() => {
-        const L = require("leaflet");
 
-        delete L.Icon.Default.prototype._getIconUrl;
-
-        L.Icon.Default.mergeOptions({
-            iconRetinaUrl: markerIconX2.src,
-            iconUrl: markerIcon.src,
-            shadowUrl: markerShadow.src
-        });
-    }, []);
-
-    const Map = () => (
-        <MapContainer className={`h-[246px] mt-[30px] rounded-[10px]`} center={latLngPositions} zoom={13} scrollWheelZoom={false}>
-            <TileLayer
-                attribution='&copy; OpenStreetMap contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            <Marker position={latLngPositions}>
-                <Popup>{ apartmentData.address }</Popup>
-            </Marker>
-        </MapContainer>
+    const MapComponent = () => (
+        <div className={'w-full h-[240px] mt-[30px] rounded-lg overflow-hidden'}>
+            <APIProvider apiKey={GoogleMapKey ?? ''}>
+                <Map
+                    defaultZoom={9}
+                    defaultCenter={{lat: apartmentData?.smoobu?.location?.latitude ?? 50, lng: apartmentData?.smoobu?.location?.longitude ?? 50}}
+                    gestureHandling={'greedy'}
+                    disableDefaultUI={true}
+                />
+                <Marker position={{lat: apartmentData?.smoobu?.location?.latitude ?? 50, lng: apartmentData?.smoobu?.location?.longitude ?? 50}}/>
+            </APIProvider>
+        </div>
     )
 
     return (
@@ -209,7 +197,7 @@ const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
                     </Link>
                 </Button>
                 <div className={'md:hidden block w-full h-[250px] z-0'}>
-                    <Map/>
+                    <MapComponent/>
                 </div>
             </div>
             <div className={'flex mt-[60px] md:justify-between md:flex-row flex-col'}>
@@ -275,7 +263,7 @@ const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
                     </div>}
 
                     {showMap ? (
-                        <Map/>
+                        <MapComponent/>
                     ) : ''}
                 </div>
             </div>

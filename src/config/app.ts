@@ -1,6 +1,7 @@
 
 export const isProd: boolean = process?.env.NODE_ENV === 'production';
 export const BackendBaseUrl: string|undefined = process.env.NEXT_PUBLIC_BACKEND_BASE_URL;
+export const GoogleMapKey: string|undefined = process.env.NEXT_PUBLIC_GOGLE_MAP_API_KEY;
 
 const appConfig = {
     supportedLanguages: {
