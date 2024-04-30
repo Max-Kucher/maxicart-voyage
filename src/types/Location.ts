@@ -6,6 +6,6 @@ export default interface Location {
     city: string;
     state: string;
     country: string;
-    latitude: number;
-    longitude: number;
+    latitude: number | string;
+    longitude: number | string;
 }

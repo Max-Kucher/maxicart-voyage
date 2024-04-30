@@ -103,17 +103,16 @@ interface ApartmentBookBlockProps {
 
     const showMap = apartmentData.smoobu.location.latitude !== null && apartmentData.smoobu.location.longitude !== null;
 
-
     const MapComponent = () => (
         <div className={'w-full h-[240px] mt-[30px] rounded-lg overflow-hidden'}>
             <APIProvider apiKey={GoogleMapKey ?? ''}>
                 <Map
                     defaultZoom={9}
-                    defaultCenter={{lat: apartmentData?.smoobu?.location?.latitude, lng: apartmentData?.smoobu?.location?.longitude}}
+                    defaultCenter={{lat: parseFloat(apartmentData?.smoobu?.location?.latitude.toString()), lng: parseFloat(apartmentData?.smoobu?.location?.longitude.toString())}}
                     gestureHandling={'greedy'}
                     disableDefaultUI={true}
                 />
-                <Marker position={{lat: apartmentData?.smoobu?.location?.latitude, lng: apartmentData?.smoobu?.location?.longitude}}/>
+                <Marker position={{lat: parseFloat(apartmentData?.smoobu?.location?.latitude.toString()), lng: parseFloat(apartmentData?.smoobu?.location?.longitude.toString())}}/>
             </APIProvider>
         </div>
     )
@@ -196,9 +195,9 @@ interface ApartmentBookBlockProps {
                         {formLoading || bookPageMoving ? (<LoadingSpinner className={`w-8 h-8`} />) : t('apartment.additionalService.book')}
                     </Link>
                 </Button>
-                <div className={'md:hidden block w-full h-[250px] z-0'}>
+                {showMap ? (<div className={'md:hidden block w-full h-[250px] z-0'}>
                     <MapComponent/>
-                </div>
+                </div>) : ''}
             </div>
             <div className={'flex mt-[60px] md:justify-between md:flex-row flex-col'}>
                 <div>
