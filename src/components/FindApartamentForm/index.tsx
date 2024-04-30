@@ -6,11 +6,11 @@ import {Button} from "@/components/ui/button";
 import CountPiker from "@/components/ui/countpiker";
 import {Input} from "@/components/ui/input";
 import {Controller, useForm, SubmitHandler} from 'react-hook-form';
-import {add} from 'date-fns';
 import {useTranslations} from "next-intl";
 import SearchApartmentsFormData from "@/types/SearchApartmentsFormData";
 import {useRouter} from "@/navigation";
 import {useSearchParams} from "next/navigation";
+import { getCookie } from "cookies-next";
 
 interface FindApartmentProps {
     behavior?: string; // Defines the behavior for the component. Supports "default"|redirect" options
@@ -120,7 +120,7 @@ const FindApartment: FC<FindApartmentProps> = ({behavior}) => {
                             render={({field: {value, onChange, ...field}}) =>
                                 <Input type={"number"} value={value}
                                        onChange={(event) => onChange(parseFloat(event.target.value.replace(/[^0-9\b]/g, '')))}
-                                       className={"[appearance:textfield]"} rightText={'USD'} {...field} />
+                                       className={"[appearance:textfield]"} rightText={getCookie('currency')} {...field} />
                             }
                             name={'price.from'}
                             control={control}
@@ -135,7 +135,7 @@ const FindApartment: FC<FindApartmentProps> = ({behavior}) => {
                             render={({field: {value, onChange, ...field}}) =>
                                 <Input type={"number"} value={value}
                                        onChange={(event) => onChange(parseFloat(event.target.value.replace(/[^0-9\b]/g, '')))}
-                                       className={"[appearance:textfield]"} rightText={'USD'} {...field} />
+                                       className={"[appearance:textfield]"} rightText={getCookie('currency')} {...field} />
                             }
                             name={'price.to'}
                             control={control}
