@@ -113,9 +113,11 @@ const ApartmentCard: FC<ApartmentCardProps> = ({
                         <span
                             className={'text-sm md:text-lg font-medium text-foreground-secondary'}>{t('nights', {count: nights})}</span>
                     </div>
-                    <Button className={cn('!min-w-[200px]')}>
-                        {t(isLoading ? 'loading' : 'book')}
-                    </Button>
+                    <Link onClick={(e) => e.preventDefault()} href={link}>
+                        <Button className={cn('!min-w-[200px]')}>
+                            {t(isLoading ? 'loading' : 'book')}
+                        </Button>
+                    </Link>
                 </div>
             </div>
         </div>
