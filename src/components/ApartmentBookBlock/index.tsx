@@ -101,7 +101,7 @@ interface ApartmentBookBlockProps {
 
     };
 
-    const showMap = true
+    const showMap = apartmentData.smoobu.location.latitude !== null && apartmentData.smoobu.location.longitude !== null;
 
 
     const MapComponent = () => (
@@ -109,11 +109,11 @@ interface ApartmentBookBlockProps {
             <APIProvider apiKey={GoogleMapKey ?? ''}>
                 <Map
                     defaultZoom={9}
-                    defaultCenter={{lat: apartmentData?.smoobu?.location?.latitude ?? 50, lng: apartmentData?.smoobu?.location?.longitude ?? 50}}
+                    defaultCenter={{lat: apartmentData?.smoobu?.location?.latitude, lng: apartmentData?.smoobu?.location?.longitude}}
                     gestureHandling={'greedy'}
                     disableDefaultUI={true}
                 />
-                <Marker position={{lat: apartmentData?.smoobu?.location?.latitude ?? 50, lng: apartmentData?.smoobu?.location?.longitude ?? 50}}/>
+                <Marker position={{lat: apartmentData?.smoobu?.location?.latitude, lng: apartmentData?.smoobu?.location?.longitude}}/>
             </APIProvider>
         </div>
     )
@@ -228,7 +228,7 @@ interface ApartmentBookBlockProps {
                     {/*</div>*/}
                 </div>
                 <div className={'md:block hidden w-full xl:w-1/3 mt-[40px] md:mt-0'}>
-                    {!apartmentData.addons ? '' : <div className={'p-[23px] border border-background rounded-lg flex flex-col gap-[18px]'}>
+                    {!apartmentData.addons.length ? '' : <div className={'p-[23px] border border-background rounded-lg flex flex-col gap-[18px]'}>
                         {apartmentData.addons.map(apartmentAddon => {
                             const key = `apartment-bool-block-addon-${apartmentAddon.id}-${apartmentId}`;
                             return (
