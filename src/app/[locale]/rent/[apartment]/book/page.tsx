@@ -169,7 +169,7 @@ export default async function RentIndex({searchParams, params: {apartment: apart
                             <b className={'block text-xl font-semibold'}>{t('checkout.details.price')}</b>
                             <div>
                                 <div
-                                    className={'text-xl xl:text-[25px] text-primary font-extrabold'}>{fullPrice ?? 0} USD
+                                    className={'text-xl xl:text-[25px] text-primary font-extrabold'}>{fullPrice ?? 0} {apartmentData.smoobu.currency}
                                 </div>
                                 <div className={'text-base xl:text-lg font-medium'}>{t('checkout.details.nightsAndDays', {
                                    // @ts-ignore
@@ -182,17 +182,17 @@ export default async function RentIndex({searchParams, params: {apartment: apart
                         </div>
                         </div>
 
-                    {checkResult.ok ?
-                        (
-                        <CheckoutForm availabilityData={{
-                        isAvailable: checkResult.ok,
-                        errorMessage: checkResult?.body?.message ?? ''
-                    }}
-                     apartmentData={apartmentData}
-                     stripeClientSecret={paymentData.body?.client_secret ?? ''}
-                     price={fullPrice ?? 0}
-                />
-                )
+                    {checkResult.ok ? (
+                        <CheckoutForm
+                            availabilityData={{
+                                isAvailable: checkResult.ok,
+                                errorMessage: checkResult?.body?.message ?? ''
+                            }}
+                            apartmentData={apartmentData}
+                            stripeClientSecret={paymentData.body?.client_secret ?? ''}
+                            price={fullPrice ?? 0}
+                         />
+                    )
                 : (
                 <div className={'bg-white rounded-xl px-[80px] py-[60px] col-span-2'}>
                     <div

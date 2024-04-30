@@ -7,7 +7,7 @@ import {Input} from "@/components/ui/input";
 import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group";
 import Apartment from "@/types/Apartment";
 import appConfig from "@/config/app";
-import { useStripe, useElements, Elements } from '@stripe/react-stripe-js';
+import { useStripe, useElements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { PaymentElement } from '@stripe/react-stripe-js';
 import useOrders from "@/composables/useOrders";
@@ -24,7 +24,7 @@ interface CheckoutFormProps {
         errorMessage: string,
     },
     stripeClientSecret?: string,
-    price: number
+    price: number,
 }
 
 export default function Form({ apartmentData, availabilityData, stripeClientSecret, price }: CheckoutFormProps) {
@@ -259,7 +259,7 @@ export default function Form({ apartmentData, availabilityData, stripeClientSecr
             <div className={'flex justify-center mt-0 xl:mt-5'}>
                 <Button disabled={!availabilityData.isAvailable}>
                     {isStripePayment
-                        ? t('checkout.form.button', {total: price, currency: appConfig.defaultCurrency})
+                        ? t('checkout.form.button', {total: price, currency: apartmentData.smoobu.currency})
                         : t('checkout.form.submit')
                     }
                 </Button>
