@@ -43,7 +43,7 @@ const appConfig = {
             theme: 'flat'
         },
     },
-    defaultCurrency: 'USD',
+    defaultCurrency: 'AED',
     privacyAgreementUrl: "https://docs.google.com/document/d/1BnjLqN5myq7kAhJdiY9PxT9M723DNViN/edit",
 };
 

@@ -4,16 +4,18 @@ import { useState, useEffect  } from "react";
 import MenuIcon from "@/components/icons/menu";
 import {useTranslations} from 'next-intl';
 import menuConfig from "@/config/menu";
-import {Link} from "@/navigation";
+import {Link, useRouter} from "@/navigation";
 import CrossIcon from "@/components/icons/cross";
 import PhoneLink from "@/components/layout/header/phoneLink";
 import Logo from "@/components/layout/logo";
 import LanguageSwitcher from "@/components/layout/languageSwitcher";
 import CurrencySwitcher from "@/components/layout/currencySwitcher";
+import Currency from "@/types/Currency";
 
 
-export default function MobileMenu() {
+export default function MobileMenu({currenciesList}: {currenciesList?: Currency[]}) {
     const t = useTranslations('menu');
+    const router = useRouter();
     const [isOpen, setOpen] = useState(false);
 
     const linksClass = "text-[20px] font-semibold block text-center md:text-left md:pl-20 pb-4 pt-4";
@@ -61,9 +63,13 @@ export default function MobileMenu() {
                             <Link
                                 className={`text-highlightedText hover:text-primary ${linksClass}`}
                                 href={item.href}
-                                onClick={() => setOpen(false)}
+                                onClick={(e) => {
+                                    e.preventDefault()
+                                    setOpen(false)
+                                    router.push(item.href)
+                                }}
                             >
-                                { t(item.title) }
+                                {t(item.title) }
                             </Link>
                         </li>
                     ))}
@@ -79,7 +85,7 @@ export default function MobileMenu() {
             <div className={"flex md:hidden items-center justify-center gap-[27px] mt-[60px] mb-[30px]"}>
                 <LanguageSwitcher />
 
-                <CurrencySwitcher />
+                {currenciesList && <CurrencySwitcher currenciesList={currenciesList}/>}
             </div>
         </div>
     </div>
