@@ -15,7 +15,7 @@ interface CurrencySwitcherProps {
 export default function CurrencySwitcher({className, currenciesList}: CurrencySwitcherProps) {
     const router = useRouter();
     return (
-        <div className={'inline-block'}>
+        <div className={`flex items-center ${className}`}>
             <Select onValueChange={(value) =>  {
                 setCookie('currency', value);
                 router.refresh()

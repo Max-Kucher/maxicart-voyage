@@ -38,7 +38,7 @@ export default function Header({ currenciesList }: HeaderProps) {
 
             <PhoneLink className={"text-primary text-[20px] font-semibold hidden xl:block"}/>
 
-            <MobileMenu/>
+            <MobileMenu currenciesList={currenciesList}/>
             <Dialog
                 onOpenChange={(open) => {
                     if (!open) {

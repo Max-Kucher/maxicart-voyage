@@ -27,7 +27,7 @@ const ApartmentPhotos: FC<ApartmentPhotosProps> = ({images}) => {
                             <div
                                 className={'pointer-events-none absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-white text-4xl font-extrabold watch-more hidden'}>{images.slice(4, images.length).length}+
                             </div>
-                            <Image width={800} height={2100} className={'rounded-lg w-full object-cover'} alt={''} src={image}/>
+                            <Image width={800} height={2100} className={'rounded-lg w-full h-full object-cover'} alt={''} src={image}/>
                         </div>
                     )
                 })}

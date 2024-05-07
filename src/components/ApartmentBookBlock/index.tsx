@@ -17,18 +17,18 @@ import {ApartmentContext} from "@/components/ApratmentProvider";
 import 'leaflet/dist/leaflet.css';
 import {AppContext} from "@/components/AppContext";
 import {setCookie} from "cookies-next";
-import { add } from 'date-fns';
+import {add} from 'date-fns';
 import LoadingSpinner from "@/components/ui/loadingSpinner";
 import {APIProvider, Map, Marker} from "@vis.gl/react-google-maps";
 import {GoogleMapKey} from "@/config/app";
 import useCheckApartments from "@/composables/useCheckApartment";
+import {CheckIcon} from 'lucide-react';
 
 interface ApartmentBookBlockProps {
     apartmentData: Apartment,
 }
 
-
- const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
+const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
     const apartmentId = apartmentData.id;
     const {checkApartment} = useCheckApartments();
     const router = useRouter();
@@ -61,7 +61,7 @@ interface ApartmentBookBlockProps {
         },
     })
 
-    const [general, date]= useWatch({control, name: ['general', 'date']})
+    const [general, date] = useWatch({control, name: ['general', 'date']})
 
     useEffect(() => {
         setCookie('apartmentFormData', JSON.stringify({general, date}))
@@ -108,19 +108,27 @@ interface ApartmentBookBlockProps {
             <APIProvider apiKey={GoogleMapKey ?? ''}>
                 <Map
                     defaultZoom={9}
-                    defaultCenter={{lat: parseFloat(apartmentData?.smoobu?.location?.latitude.toString()), lng: parseFloat(apartmentData?.smoobu?.location?.longitude.toString())}}
+                    defaultCenter={{
+                        lat: parseFloat(apartmentData?.smoobu?.location?.latitude.toString()),
+                        lng: parseFloat(apartmentData?.smoobu?.location?.longitude.toString())
+                    }}
                     gestureHandling={'greedy'}
                     disableDefaultUI={true}
                 />
-                <Marker position={{lat: parseFloat(apartmentData?.smoobu?.location?.latitude.toString()), lng: parseFloat(apartmentData?.smoobu?.location?.longitude.toString())}}/>
+                <Marker position={{
+                    lat: parseFloat(apartmentData?.smoobu?.location?.latitude.toString()),
+                    lng: parseFloat(apartmentData?.smoobu?.location?.longitude.toString())
+                }}/>
             </APIProvider>
         </div>
     )
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={'bg-white rounded-lg px-[30px] py-[60px] mt-[30px]'}>
-            <div className={'text-base md:text-xl text-black font-semibold text-center lg:text-left'}>{t('filterForm.chooseFilters')}</div>
-            <div className={'flex md:flex-wrap xl:flex-nowrap md:flex-row flex-col gap-[20px] md:items-end items-center mt-[30px]'}>
+            <div
+                className={'text-base md:text-xl text-black font-semibold text-center lg:text-left'}>{t('filterForm.chooseFilters')}</div>
+            <div
+                className={'flex md:flex-wrap xl:flex-nowrap md:flex-row flex-col gap-[20px] md:items-end items-center mt-[30px]'}>
                 <div className={'flex flex-col w-full'}>
                        <span className={'mb-[10px] text-lg'}>
                            {t('filterForm.date')}
@@ -166,7 +174,7 @@ interface ApartmentBookBlockProps {
                         )}/>
                 </div>
                 <Button disabled={formLoading}>
-                    {formLoading ? (<LoadingSpinner className={`w-8 h-8`} />) : t('apartment.additionalService.apply')}
+                    {formLoading ? (<LoadingSpinner className={`w-8 h-8`}/>) : t('apartment.additionalService.apply')}
                 </Button>
                 {!!apartmentData.addons.length && <div className={'md:hidden block w-full xl:w-1/3 my-[40px] md:mt-0'}>
                     <div className={'p-[23px] border border-foreground-secondary rounded-lg flex flex-col gap-[18px]'}>
@@ -177,7 +185,7 @@ interface ApartmentBookBlockProps {
                                 <Checkbox id={key}/>
                                 <label htmlFor={key} className={'text-xs md:text-lg font-medium'}>
                                     <span dangerouslySetInnerHTML={
-                                        {__html: apartmentAddon.title.replace(/^(\+?\d+)/, '<span class="text-primary">$1</span>')}
+                                        {__html: apartmentAddon.title.replace(/^(\+?\d+)/, '<span className="text-primary">$1</span>')}
                                     }></span>
                                     <span> (+{apartmentAddon.price} {apartmentData.smoobu.currency})</span>
                                 </label>
@@ -192,74 +200,98 @@ interface ApartmentBookBlockProps {
                         className={bookingDisabled || formLoading || bookPageMoving ? 'pointer-events-none opacity-60' : ''}
                 >
                     <Link href={bookingUrl} prefetch={false}>
-                        {formLoading || bookPageMoving ? (<LoadingSpinner className={`w-8 h-8`} />) : t('apartment.additionalService.book')}
+                        {formLoading || bookPageMoving ? (
+                            <LoadingSpinner className={`w-8 h-8`}/>) : t('apartment.additionalService.book')}
                     </Link>
                 </Button>
                 {showMap ? (<div className={'md:hidden block w-full h-[250px] z-0'}>
                     <MapComponent/>
                 </div>) : ''}
             </div>
-            <div className={'flex mt-[60px] md:justify-between md:flex-row flex-col'}>
-                <div>
-                    {/*<b className={'text-base md:text-xl text-black font-semibold'}>Удобства и услуги</b>*/}
-                    {/*<div className={'grid md:grid-cols-2 grid-cols-1 gap-x-[100px] mt-[30px]'}>*/}
-                    {/*    <div>*/}
-                    {/*        <b className={'text-base md:text-xl text-black font-semibold'}>Ванная комната</b>*/}
-                    {/*        <ul className={'list-none list-inside mt-[14px]'}>*/}
-                    {/*            <li className={'text-foreground text-sm md:text-lg flex gap-[15px]'}>*/}
-                    {/*                <CheckIcon className={'text-primary'}/>*/}
-                    {/*                <span>Ванная комната</span>*/}
-                    {/*            </li>*/}
-                    {/*            <li className={'text-foreground text-sm md:text-lg flex gap-[15px]'}>*/}
-                    {/*                <CheckIcon className={'text-primary'}/>*/}
-                    {/*                <span>Ванная комната</span>*/}
-                    {/*            </li>*/}
-                    {/*            <li className={'text-foreground text-sm md:text-lg flex gap-[15px]'}>*/}
-                    {/*                <CheckIcon className={'text-primary'}/>*/}
-                    {/*                <span>Ванная комната</span>*/}
-                    {/*            </li>*/}
-                    {/*            <li className={'text-foreground text-sm md:text-lg flex gap-[15px]'}>*/}
-                    {/*                <CheckIcon className={'text-primary'}/>*/}
-                    {/*                <span>Ванная комната</span>*/}
-                    {/*            </li>*/}
-                    {/*        </ul>*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
+            <div className={'flex mt-[60px] md:justify-between md:flex-col-reverse lg:flex-row flex-col'}>
+                <div className={'flex-1 md:mt-[20px] lg:mt-0'}>
+                    <b className={'text-base md:text-xl text-black font-semibold'}>Удобства и услуги</b>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-[20px] md:mt-[40px]">
+                        <div className="grid grid-rows-[auto] gap-5">
+                            {
+                                Object.keys(apartmentData.equipments).slice(0, Object.keys(apartmentData.equipments).length / 2).map((key) => {
+                                    return <>
+                                        <div key={key}>
+                                            <b className={'text-base md:text-xl text-black font-semibold'}>{key}</b>
+                                            <ul className={'list-none list-inside mt-[14px]'}>
+                                                {apartmentData?.equipments?.[key]?.map((item) => {
+                                                    return <li key={item}
+                                                               className={'text-foreground text-sm md:text-lg flex gap-[15px]'}>
+                                                        <CheckIcon className={'text-primary min-w-[35px]'}/>
+                                                        <span>{item}</span>
+                                                    </li>;
+                                                })}
+                                            </ul>
+                                        </div>
+                                    </>
+                                })
+                            }
+                        </div>
+                        <div className="grid grid-rows-[auto] gap-5">
+                            {
+                                Object.keys(apartmentData.equipments).slice(Object.keys(apartmentData.equipments).length / 2).map((key) => {
+                                    return <>
+                                        <div key={key}>
+                                            <b className={'text-base md:text-xl text-black font-semibold'}>{key}</b>
+                                            <ul className={'list-none list-inside mt-[14px]'}>
+                                                {apartmentData?.equipments?.[key]?.map((item) => {
+                                                    return <li key={item}
+                                                        className={'text-foreground text-sm md:text-lg flex gap-[15px]'}>
+                                                        <CheckIcon className={'text-primary min-w-[35px]'}/>
+                                                        <span>{item}</span>
+                                                    </li>;
+                                                })}
+                                            </ul>
+                                        </div>
+                                    </>
+                                })
+                            }
+                        </div>
+                    </div>
                 </div>
                 <div className={'md:block hidden w-full xl:w-1/3 mt-[40px] md:mt-0'}>
-                    {!apartmentData.addons.length ? '' : <div className={'p-[23px] border border-background rounded-lg flex flex-col gap-[18px]'}>
-                        {apartmentData.addons.map(apartmentAddon => {
-                            const key = `apartment-bool-block-addon-${apartmentAddon.id}-${apartmentId}`;
-                            return (
-                            <div key={key}
-                                 className={'flex items-center gap-[10px] md:gap-[30px]'}>
-                                <Controller
-                                    name={'addons'}
-                                    control={control}
-                                    render={({field: {onChange, value }}) => {
-                                        const isChecked = (value as number[]).includes(apartmentAddon.id);
-                                        const setValue = isChecked ? (value as number[]).filter((i: number) => i !== apartmentAddon.id) : [...value, apartmentAddon.id];
+                    {!apartmentData.addons.length ? '' :
+                        <div className={'p-[23px] border border-background rounded-lg flex flex-col gap-[18px]'}>
+                            {apartmentData.addons.map(apartmentAddon => {
+                                const key = `apartment-bool-block-addon-${apartmentAddon.id}-${apartmentId}`;
+                                return (
+                                    <div key={key}
+                                         className={'flex items-center gap-[10px] md:gap-[30px]'}>
+                                        <Controller
+                                            name={'addons'}
+                                            control={control}
+                                            render={({field: {onChange, value}}) => {
+                                                const isChecked = (value as number[]).includes(apartmentAddon.id);
+                                                const setValue = isChecked ? (value as number[]).filter((i: number) => i !== apartmentAddon.id) : [...value, apartmentAddon.id];
 
-                                        return (
-                                            <>
-                                                <Checkbox id={key} checked={isChecked} onClick={() => onChange(setValue)}/>
-                                            </>
-                                        )
-                                    }}
-                                />
-                                <label htmlFor={key} className={'text-xs md:text-lg font-medium cursor-pointer'}>
+                                                return (
+                                                    <>
+                                                        <Checkbox id={key} checked={isChecked}
+                                                                  onClick={() => onChange(setValue)}/>
+                                                    </>
+                                                )
+                                            }}
+                                        />
+                                        <label htmlFor={key}
+                                               className={'text-xs md:text-lg font-medium cursor-pointer'}>
                                     <span
-                                        dangerouslySetInnerHTML={{__html: apartmentAddon.title.replace(/^(\+?\d+)/, '<span class="text-primary">$1</span>')}}></span>
-                                    <span> (+{apartmentAddon.price})</span>
-                                </label>
-                            </div>
-                            )
-                        })}
-                        {/*<span className={'text-primary'}>+1</span>*/}
-                        {/*<div className={'text-lg font-medium'}>*/}
-                        {/*    {t('apartment.additionalService.service')} <span className={'text-primary cursor-pointer'}>{t('apartment.additionalService.more')}</span>*/}
-                        {/*</div>*/}
-                    </div>}
+                                        dangerouslySetInnerHTML={{__html: apartmentAddon.title.replace(/^(\+?\d+)/, '<span className="text-primary">$1</span>')}}></span>
+                                            <span> (+{apartmentAddon.price})</span>
+                                        </label>
+                                    </div>
+                                )
+                            })}
+                            {/*<span className={'text-primary'}>+1</span>*/}
+                            {/*<div className={'text-lg font-medium'}>*/}
+                            {/*    {t('apartment.additionalService.service')} <span className={'text-primary cursor-pointer'}>{t('apartment.additionalService.more')}</span>*/}
+                            {/*</div>*/}
+                        </div>}
 
                     {showMap ? (
                         <MapComponent/>

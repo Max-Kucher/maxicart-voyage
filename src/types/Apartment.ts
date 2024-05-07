@@ -29,7 +29,9 @@ export default interface Apartment
     m2: number|null,
     photos: Photo[];
     amenities: Amenity[];
-    equipments: Equipments,
+    equipments: {
+        [key: string]: string[]
+    },
     addons: ApartmentAddon[],
     smoobu_price: {
         price: number;

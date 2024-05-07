@@ -28,7 +28,7 @@
     "human": "Adults",
     "room": "{count, plural, zero {Rooms} one {Room} other {Rooms}}",
     "find": "Find",
-    "dateRange": "Chec-in Check-out",
+    "dateRange": "Check-in Check-out",
     "searching": "Searching...",
     "chooseFilters": "Select check-in, check-out dates and number of guests"
   },
