@@ -23,7 +23,7 @@ const CountPiker: FC<CountPikerProps> = ({className, text, onSetValue, values, l
                         id="date"
                         variant={"outline"}
                         className={cn(
-                            "justify-start text-left font-normal p-[14px] md:p-[20px] h-auto",
+                            "justify-start text-left font-normal p-[14px] md:p-[20px] h-auto overflow-hidden sm:overflow-visible",
                         )}
                     >
                         <UserRoundIcon className="mr-2 h-[27px] w-[27px] text-primary"/>

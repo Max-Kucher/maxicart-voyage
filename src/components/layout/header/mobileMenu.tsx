@@ -61,12 +61,12 @@ export default function MobileMenu({currenciesList}: {currenciesList?: Currency[
                     {menuConfig.items.map((item, index) => (
                         <li key={`mobile-menu-${index}`}>
                             <Link
-                                className={`text-highlightedText hover:text-primary ${linksClass}`}
+                                className={`text-highlightedText ${linksClass}`}
                                 href={item.href}
                                 onClick={(e) => {
                                     e.preventDefault()
-                                    setOpen(false)
                                     router.push(item.href)
+                                    setOpen(false)
                                 }}
                             >
                                 {t(item.title) }
