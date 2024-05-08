@@ -104,7 +104,7 @@ const ApartmentCard: FC<ApartmentCardProps> = ({
                     <MapPinIcon className={'h-[26px] w-[21px]'}/>
                     <span className={'text-sm md:text-lg font-medium flex-1'}>{location}</span>
                 </div>
-                <div className={'flex justify-between items-center mt-[25px] md:mt-[30px]'}>
+                <div className={'xs:flex justify-between items-center mt-[25px] md:mt-[30px]'}>
                     <div className={'flex flex-col'}>
                         <b className={'text-base lg:text-xl 2xl:text-2xl font-semibold'}>{t('price', {
                             price,
@@ -114,7 +114,7 @@ const ApartmentCard: FC<ApartmentCardProps> = ({
                             className={'text-sm md:text-lg font-medium text-foreground-secondary'}>{t('nights', {count: nights})}</span>
                     </div>
                     <Link onClick={(e) => e.preventDefault()} href={link}>
-                        <Button className={cn('!min-w-[200px]')}>
+                        <Button className={cn('xs:!min-w-[200px] !w-full xs:mt-0 mt-2')}>
                             {t(isLoading ? 'loading' : 'book')}
                         </Button>
                     </Link>
