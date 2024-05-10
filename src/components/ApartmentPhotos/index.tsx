@@ -18,7 +18,7 @@ const ApartmentPhotos: FC<ApartmentPhotosProps> = ({images}) => {
     return (
         <>
             <div
-                className={cn('grid grid-cols-3 gap-[20px] [&>div:first-child]:!col-span-3 [&>div:first-child]:!row-span-2 [&>div]:col-span-1 [&>div]:cursor-pointer', images.length > 4 && '[&>div:last-child>div.watch-more]:!inline-block')}>
+                className={cn('lg:sticky lg:top-5 grid grid-cols-3 gap-[20px] [&>div:first-child]:!col-span-3 [&>div:first-child]:!row-span-2 [&>div]:col-span-1 [&>div]:cursor-pointer', images.length > 4 && '[&>div:last-child>div.watch-more]:!inline-block')}>
                 {images.slice(0, 4).map((image, i) => {
                     return (
                         <div onClick={() => setOpen(true)} key={i} className={cn('rounded-lg', images.length > 4 && 'relative')}>

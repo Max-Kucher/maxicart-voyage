@@ -112,8 +112,8 @@
   "popupForm": {
     "title": "Leave a request and our specialists will contact you shortly"
   },
-  "successPupup": {
-    "title": "THANK YOU FOR YOUR APPLICATION!",
+  "successPopup": {
+    "title": "Thank you for your application!",
     "description": "Our specialists will contact you shortly"
   },
   "navigationNameSpace": {
@@ -132,7 +132,7 @@
       "book": "Book now"
     },
     "service": {
-      "title": "AMENITIES AND SERVICES"
+      "title": "Amenities and services"
     }
   },
   "checkout": {

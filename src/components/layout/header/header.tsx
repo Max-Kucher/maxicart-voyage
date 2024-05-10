@@ -67,9 +67,9 @@ export default function Header({ currenciesList }: HeaderProps) {
                         <Image className={'max-h-[124px] max-w-[124px] mx-auto'} src={'/images/success.svg'} width={124} height={124} alt={""} />
                     </DialogHeader>
                    <div className={'text-center mt-[51px]'}>
-                       <DialogTitle className={'font-semibold text-xl text-black'}>{t('successPupup.title')}</DialogTitle>
+                       <DialogTitle className={'font-semibold text-xl text-black uppercase'}>{t('successPopup.title')}</DialogTitle>
                        <DialogDescription className={'mt-[31px] font-medium text-lg'}>
-                           {t('successPupup.description')}
+                           {t('successPopup.description')}
                        </DialogDescription>
                    </div>
                 </DialogContent>

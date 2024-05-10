@@ -123,6 +123,8 @@ const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
         </div>
     )
 
+    const equipmentsKeys: string[] = Object.keys(apartmentData.equipments ?? {});
+
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={'bg-white rounded-lg px-[30px] py-[60px] mt-[30px]'}>
             <div
@@ -209,15 +211,15 @@ const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
                 </div>) : ''}
             </div>
             <div className={'flex mt-[60px] md:justify-between md:flex-col-reverse lg:flex-row flex-col'}>
+                {equipmentsKeys.length &&
                 <div className={'flex-1 md:mt-[20px] lg:mt-0'}>
-                    <b className={'text-base md:text-xl text-black font-semibold'}>Удобства и услуги</b>
+                    <b className={'text-base md:text-xl text-black font-semibold'}>{t('apartment.service.title')}</b>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-[20px] md:mt-[40px]">
                         <div className="grid grid-rows-[auto] gap-5">
                             {
-                                Object.keys(apartmentData.equipments).slice(0, Object.keys(apartmentData.equipments).length / 2).map((key) => {
-                                    return <>
-                                        <div key={key}>
+                                equipmentsKeys.slice(0, equipmentsKeys.length / 2).map((key: string) => {
+                                    return <div key={key}>
                                             <b className={'text-base md:text-xl text-black font-semibold'}>{key}</b>
                                             <ul className={'list-none list-inside mt-[14px]'}>
                                                 {apartmentData?.equipments?.[key]?.map((item) => {
@@ -229,15 +231,13 @@ const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
                                                 })}
                                             </ul>
                                         </div>
-                                    </>
                                 })
                             }
                         </div>
                         <div className="grid grid-rows-[auto] gap-5">
                             {
-                                Object.keys(apartmentData.equipments).slice(Object.keys(apartmentData.equipments).length / 2).map((key) => {
-                                    return <>
-                                        <div key={key}>
+                                equipmentsKeys.slice(equipmentsKeys.length / 2).map((key: string) => {
+                                    return <div key={key}>
                                             <b className={'text-base md:text-xl text-black font-semibold'}>{key}</b>
                                             <ul className={'list-none list-inside mt-[14px]'}>
                                                 {apartmentData?.equipments?.[key]?.map((item) => {
@@ -249,12 +249,11 @@ const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
                                                 })}
                                             </ul>
                                         </div>
-                                    </>
                                 })
                             }
                         </div>
                     </div>
-                </div>
+                </div>}
                 <div className={'md:block hidden w-full xl:w-1/3 mt-[40px] md:mt-0'}>
                     {!apartmentData.addons.length ? '' :
                         <div className={'p-[23px] border border-background rounded-lg flex flex-col gap-[18px]'}>

@@ -51,7 +51,9 @@ const ApartmentDetails: FC<ApartmentDetailsProps> = ({
                 <div className={'flex md:justify-between md:w-full flex-col md:flex-row gap-[20px] md:gap-[0px]'}>
                     <h1 className={'text-lg md:text-2xl text-black font-semibold'}>{name}</h1>
                     <div className={'flex flex-col'}>
-                        <b className={'text-lg md:text-2xl text-primary font-extrabold'}>{t('price', {price: apartmentContext.apartmentPrice ?? price, currency})}</b>
+                        <b className={'text-lg md:text-2xl text-primary font-extrabold w-[max-content]'}>
+                            {t('price', {price: apartmentContext.apartmentPrice ?? price, currency})}
+                        </b>
                         <span className={'text-sm md:text-lg text-foreground-secondary'}>{t('nights', {count:  apartmentContext.apartmentNights ?? nights})}</span>
                     </div>
                 </div>
