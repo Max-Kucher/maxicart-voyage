@@ -6,15 +6,13 @@ import { useLocale } from "next-intl";
 async function submitForm(formData: RentOutFormData, locale: string): Promise<{ ok: boolean, body: {}, headers: {} }>
 {
     const url = new URL('/api/applications/', appConfig.backendBase);
-    const body = new FormData();
-
-    Object.entries(formData).forEach(([key, value]: [string, string]) => body.append(key, value));
 
     const response = await fetch(url.toString(), {
         method: 'POST',
-        body,
+        body: JSON.stringify(formData),
         headers: {
             "Accept-Language": locale,
+            'Content-Type': 'application/json',
         },
     });
 

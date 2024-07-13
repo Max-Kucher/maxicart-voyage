@@ -14,6 +14,18 @@ export const metadata: Metadata = {
         icon: '/favicon.ico',
         apple: '/apple-touch-icon.png?v=4',
         shortcut: '/apple-touch-icon.png',
+        other: [
+            {
+                sizes: '180x180',
+                rel: 'apple-touch-icon',
+                url: '/apple-touch-icon.png'
+            },
+            {
+                sizes: '180x180',
+                rel: 'apple-touch-icon-precomposed',
+                url: '/apple-touch-icon.png'
+            }
+        ]
     }
 }
 

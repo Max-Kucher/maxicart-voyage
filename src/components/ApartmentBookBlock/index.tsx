@@ -210,9 +210,9 @@ const ApartmentBookBlock = ({apartmentData}: ApartmentBookBlockProps) => {
                     <MapComponent/>
                 </div>) : ''}
             </div>
-            <div className={'flex mt-[60px] md:justify-between md:flex-col-reverse lg:flex-row flex-col'}>
+            <div className={'flex mt-[60px] md:justify-between md:flex-col-reverse xl:flex-row flex-col'}>
                 {equipmentsKeys.length &&
-                <div className={'flex-1 md:mt-[20px] lg:mt-0'}>
+                <div className={'flex-1 md:mt-[20px] xl:mt-0'}>
                     <b className={'text-base md:text-xl text-black font-semibold'}>{t('apartment.service.title')}</b>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-[20px] md:mt-[40px]">
